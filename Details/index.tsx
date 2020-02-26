@@ -1,7 +1,8 @@
+import Cards from "./Cards"
 import React from "react"
-import { Button, Platform, ScrollView, View, Text } from "react-native"
-import { Description, Thumbnail, Title } from "./SetListing"
-import { Set } from "./types"
+import { Button, Platform, ScrollView, View } from "react-native"
+import { Description, Thumbnail, Title } from "../SetListing"
+import { Set } from "../types"
 
 interface Props {
 	onStudy: () => void
@@ -41,7 +42,7 @@ export default class Details extends React.Component<Props> {
 					</View>
 				</ScrollView>
 				<View>
-					<Text>TODO</Text>
+					<Cards set={this.props.set} />
 					<View
 						style={{
 							margin: 8,
