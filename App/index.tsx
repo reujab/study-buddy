@@ -66,7 +66,7 @@ export default class App extends React.Component {
 						<Stack.Screen
 							name="details"
 							options={{
-								title: this.state.set && this.state.set.title
+								title: this.state.set && this.state.set.title,
 							}}
 						>
 							{({ navigation }) => (
