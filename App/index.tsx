@@ -70,7 +70,7 @@ export default class App extends React.Component {
 							}}
 						>
 							{({ navigation }) => (
-								<Details set={this.state.set} />
+								<DetailsScreen set={this.state.set} />
 							)}
 						</Stack.Screen>
 					</Stack.Navigator>
