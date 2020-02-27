@@ -1,20 +1,36 @@
 import "react-native-gesture-handler"
 
 import Details from "./Details"
+import HomeScreen from "./HomeScreen"
 import React from "react"
-import SetListing from "./SetListing"
+import RxDB from "rxdb"
 import styles from "./styles"
 import { NavigationContainer } from "@react-navigation/native"
-import { ScrollView } from "react-native-gesture-handler"
-import sets from "./exampleSets"
-import { StatusBar, View, Text } from "react-native"
+import { StatusBar, View } from "react-native"
 import { createStackNavigator } from "@react-navigation/stack"
 
 const Stack = createStackNavigator()
 
+RxDB.plugin(require('pouchdb-adapter-asyncstorage'))
+
 export default class App extends React.Component {
 	state = {
+		db: null,
 		set: null,
+	}
+
+	constructor(props) {
+		super(props)
+
+		RxDB.create({
+			name: "studybuddy",
+			adapter: "asyncstorage",
+
+			ignoreDuplicate: true,
+			multiInstance: false,
+		}).then((db) => {
+			this.setState({ db })
+		})
 	}
 
 	render() {
@@ -36,29 +52,20 @@ export default class App extends React.Component {
 					>
 						<Stack.Screen name="Study Buddy">
 							{({ navigation }) => (
-								<ScrollView style={{ flex: 1 }}>
-									{sets.map((set) => (
-										<SetListing
-											key={set.id}
-											onPress={() => {
-												this.setState({ set })
-												navigation.navigate("details")
-											}}
-										>
-											{set}
-										</SetListing>
-									))}
-								</ScrollView>
+								<HomeScreen onSelect={(set) => {
+									this.setState({ set })
+									navigation.navigate("details")
+								}} />
 							)}
 						</Stack.Screen>
-						<Stack.Screen name="details" options={{ title: this.state.set && this.state.set.title }}>
+						<Stack.Screen
+							name="details"
+							options={{
+								title: this.state.set && this.state.set.title
+							}}
+						>
 							{({ navigation }) => (
-								<Details onStudy={() => { navigation.navigate("set") }} set={this.state.set} />
-							)}
-						</Stack.Screen>
-						<Stack.Screen name="set">
-							{({ navigation }) => (
-								<Text>{this.state.set.title}</Text>
+								<Details set={this.state.set} />
 							)}
 						</Stack.Screen>
 					</Stack.Navigator>

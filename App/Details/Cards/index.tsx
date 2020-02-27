@@ -1,14 +1,13 @@
 import Carousel from "react-native-snap-carousel"
 import FlipCard from "react-native-flip-card"
 import React from "react"
+import styles from "../../styles"
 import { Dimensions, Platform, Text, View } from "react-native"
-import { Set } from "../types"
+import { Set } from "../../types"
 
-interface Props {
+export default class Cards extends React.Component<{
 	set: Set
-}
-
-export default class Cards extends React.Component<Props> {
+}> {
 	carousel = null
 
 	render() {
@@ -16,20 +15,23 @@ export default class Cards extends React.Component<Props> {
 			<View
 				style={{
 					height: 0.75 * Dimensions.get("window").width + 16,
+					// FIXME
+					marginBottom: 40,
 				}}
 			>
 				<Carousel
-					data={this.props.set.cards}
-					itemWidth={0.75 * Dimensions.get("window").width}
 					ref={(c) => { this.carousel = c }}
+					data={this.props.set.cards}
+					sliderWidth={Dimensions.get("window").width}
+					itemWidth={0.75 * Dimensions.get("window").width}
 					removeClippedSubviews={Platform.OS !== "ios"}
 					renderItem={({ item }) => (
+						// FIXME: doesn't render properly on Android
 						<FlipCard>
 							<Card>{item.front}</Card>
 							<Card>{item.back}</Card>
 						</FlipCard>
 					)}
-					sliderWidth={Dimensions.get("window").width}
 				/>
 			</View>
 		)
@@ -47,7 +49,7 @@ class Card extends React.Component {
 				}}
 			>
 				<View
-					style={{
+					style={[styles.shadow, {
 						alignItems: "center",
 						backgroundColor: "white",
 						borderColor: "lightgray",
@@ -56,13 +58,10 @@ class Card extends React.Component {
 						height: 0.75 * Dimensions.get("window").width,
 						justifyContent: "center",
 						padding: 20,
-						shadowColor: "lightgray",
-						shadowOpacity: 1,
-						shadowRadius: 3,
 						width: 0.75 * Dimensions.get("window").width,
-					}}
+					}]}
 				>
-					<Text style={{ fontSize: 32 }} >{this.props.children}</Text>
+					<Text style={{ fontSize: 32 }}>{this.props.children}</Text>
 				</View>
 			</View>
 		)

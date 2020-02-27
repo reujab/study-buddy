@@ -1,14 +1,12 @@
 import React from "react"
-import { Set } from "./types"
-import styles from "./styles"
+import styles from "../styles"
+import { Set } from "../types"
 import { Text, TouchableOpacity, View } from "react-native"
 
-interface Props {
-	children: Set,
-	onPress: () => void,
-}
-
-export default class SetList extends React.Component<Props> {
+export default class SetList extends React.Component<{
+	set: Set,
+	onPress: any,
+}> {
 	render() {
 		return (
 			<TouchableOpacity onPress={this.props.onPress}>
@@ -18,18 +16,16 @@ export default class SetList extends React.Component<Props> {
 						display: "flex",
 						flexDirection: "row",
 						margin: 16,
-						marginBottom: 0,
 						padding: 8,
+
+						// FIXME: last item won't have a margin
+						marginBottom: 0,
 					}]}
 				>
 					<Thumbnail />
-					<View
-						style={{
-							flexShrink: 1,
-						}}
-					>
-						<Title>{this.props.children.title}</Title>
-						<Description>{this.props.children.description}</Description>
+					<View style={{ flexShrink: 1 }}>
+						<Title>{this.props.set.title}</Title>
+						<Description>{this.props.set.description}</Description>
 					</View>
 				</View>
 			</TouchableOpacity>
