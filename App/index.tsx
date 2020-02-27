@@ -1,6 +1,6 @@
 import "react-native-gesture-handler"
 
-import Details from "./Details"
+import DetailsScreen from "./DetailsScreen"
 import HomeScreen from "./HomeScreen"
 import React from "react"
 import RxDB from "rxdb"
