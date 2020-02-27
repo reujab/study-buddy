@@ -1,10 +1,13 @@
 import "react-native-gesture-handler"
 
 import DetailsScreen from "./DetailsScreen"
+import EditSetScreen from "./EditSetScreen"
 import HomeScreen from "./HomeScreen"
+import Icon from "react-native-vector-icons/Ionicons"
 import React from "react"
 import RxDB from "rxdb"
 import styles from "./styles"
+import { HeaderButton, HeaderButtons, Item as HeaderItem } from "react-navigation-header-buttons"
 import { NavigationContainer } from "@react-navigation/native"
 import { StatusBar, View } from "react-native"
 import { createStackNavigator } from "@react-navigation/stack"
@@ -55,12 +58,45 @@ export default class App extends React.Component {
 							headerTintColor: "white",
 						}}
 					>
-						<Stack.Screen name="Study Buddy">
+						<Stack.Screen
+							name="Study Buddy"
+							options={({ navigation }) => ({
+								headerRight: () => (
+									<HeaderButtons HeaderButtonComponent={(props) => (
+										<HeaderButton
+											IconComponent={Icon}
+											iconSize={24}
+											color="white"
+											{...props}
+										/>
+									)}>
+										<HeaderItem
+											title="Add"
+											iconName="md-add"
+											onPress={() => {
+												navigation.navigate("edit-set")
+											}}
+										/>
+									</HeaderButtons>
+								),
+							})}
+						>
 							{({ navigation }) => (
 								<HomeScreen onSelect={(set) => {
 									this.setState({ set })
 									navigation.navigate("details")
 								}} />
+							)}
+						</Stack.Screen>
+						<Stack.Screen
+							name="edit-set"
+							options={{
+								// TODO: dynamically change to "New Set" or "Edit Set"
+								title: "Edit Set"
+							}}
+						>
+							{({ navigation }) => (
+								<EditSetScreen />
 							)}
 						</Stack.Screen>
 						<Stack.Screen
