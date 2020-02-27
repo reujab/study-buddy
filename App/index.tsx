@@ -26,7 +26,10 @@ export default class App extends React.Component {
 			name: "studybuddy",
 			adapter: "asyncstorage",
 
+			// prevents errors on fast reload
 			ignoreDuplicate: true,
+
+			// won't work without this
 			multiInstance: false,
 		}).then((db) => {
 			this.setState({ db })
@@ -44,8 +47,10 @@ export default class App extends React.Component {
 								backgroundColor: "#5856d6",
 								borderBottomLeftRadius: 8,
 								borderBottomRightRadius: 8,
-								borderWidth: 0,
 								shadowOffset: { width: 0, height: 4 },
+
+								// borderWidth is set by `styles.shadow`
+								borderWidth: 0,
 							}],
 							headerTintColor: "white",
 						}}
