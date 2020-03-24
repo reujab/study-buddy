@@ -5,7 +5,6 @@ import EditSetScreen from "./EditSetScreen"
 import HomeScreen from "./HomeScreen"
 import Icon from "react-native-vector-icons/Ionicons"
 import React from "react"
-import RxDB from "rxdb"
 import styles from "./styles"
 import { HeaderButton, HeaderButtons, Item as HeaderItem } from "react-navigation-header-buttons"
 import { NavigationContainer } from "@react-navigation/native"
@@ -14,29 +13,9 @@ import { createStackNavigator } from "@react-navigation/stack"
 
 const Stack = createStackNavigator()
 
-RxDB.plugin(require('pouchdb-adapter-asyncstorage'))
-
 export default class App extends React.Component {
 	state = {
-		db: null,
 		set: null,
-	}
-
-	constructor(props) {
-		super(props)
-
-		RxDB.create({
-			name: "studybuddy",
-			adapter: "asyncstorage",
-
-			// prevents errors on fast reload
-			ignoreDuplicate: true,
-
-			// won't work without this
-			multiInstance: false,
-		}).then((db) => {
-			this.setState({ db })
-		})
 	}
 
 	render() {
