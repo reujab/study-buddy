@@ -2,11 +2,11 @@ import Card from "./Card"
 import Carousel from "react-native-snap-carousel"
 import React from "react"
 import { Dimensions, Platform, View } from "react-native"
-import { TSet } from "../../types"
+import { ISet } from "../../types"
 import { connect } from "react-redux"
 
 class Cards extends React.Component<{
-	set: TSet
+	set: ISet
 }> {
 	carousel = null
 

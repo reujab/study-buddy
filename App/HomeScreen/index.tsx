@@ -1,11 +1,11 @@
 import React from "react"
 import SetListing from "./SetListing"
 import { ScrollView } from "react-native-gesture-handler"
-import { TSet } from "../types"
+import { ISet } from "../types"
 import { connect } from "react-redux"
 
 class HomeScreen extends React.Component<{
-	sets: TSet[]
+	sets: ISet[]
 }> {
 	render() {
 		return (

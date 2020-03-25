@@ -6,14 +6,14 @@ import React from "react"
 import styles from "./styles"
 import { NavigationContainer } from "@react-navigation/native"
 import { StatusBar, View } from "react-native"
-import { TSet } from "./types"
+import { ISet } from "./types"
 import { connect } from "react-redux"
 import { createStackNavigator } from "@react-navigation/stack"
 
 const Stack = createStackNavigator()
 
 class Root extends React.Component<{
-	set: TSet,
+	set: ISet,
 }> {
 	render() {
 		return (

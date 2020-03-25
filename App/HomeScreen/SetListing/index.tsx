@@ -2,7 +2,7 @@ import React from "react"
 import Thumbnail from "./Thumbnail"
 import Title from "./Title"
 import styles from "../../styles"
-import { TSet } from "../../types"
+import { ISet } from "../../types"
 import { Text, TouchableOpacity, View } from "react-native"
 import { connect } from "react-redux"
 import { setSet } from "../../state"
@@ -10,8 +10,8 @@ import { useNavigation } from "@react-navigation/native"
 
 class SetList extends React.Component<{
 	navigation: any
-	set: TSet,
-	select: (TSet) => void
+	set: ISet,
+	select: (ISet) => void
 }> {
 	render() {
 		return (
@@ -45,7 +45,7 @@ class SetList extends React.Component<{
 export default connect(
 	null,
 	(dispatch) => ({
-		select: (value: TSet) => dispatch({ type: setSet, value })
+		select: (value: ISet) => dispatch({ type: setSet, value })
 	})
 )((props) => (
 	<SetList navigation={useNavigation()} {...props} />

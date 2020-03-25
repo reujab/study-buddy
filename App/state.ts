@@ -1,7 +1,7 @@
-import { TSet } from "./types"
+import { ISet } from "./types"
 
 export class State {
-	sets: TSet[] = [{
+	sets: ISet[] = [{
 		id: "0",
 		title: "Title",
 		description: "Description",
@@ -11,7 +11,7 @@ export class State {
 			{ front: "3", back: "three" },
 		]
 	}]
-	set: null | TSet = null
+	set: null | ISet = null
 }
 
 export const setSet = "set-set"
