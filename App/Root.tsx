@@ -35,9 +35,10 @@ class Root extends React.Component<{
 						}}
 					>
 						<Stack.Screen
-							name="Study Buddy"
+							name="home-screen"
 							component={HomeScreen}
 							options={{
+								title: "Study Buddy",
 								headerRight: () => <HomeScreenHeaderRight />,
 							}}
 						/>
