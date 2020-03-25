@@ -1,9 +1,11 @@
 import React from "react"
-import styles from "../styles"
-import { TSet } from "../types"
+import Thumbnail from "./Thumbnail"
+import Title from "./Title"
+import styles from "../../styles"
+import { TSet } from "../../types"
 import { Text, TouchableOpacity, View } from "react-native"
 import { connect } from "react-redux"
-import { setSet } from "../state"
+import { setSet } from "../../state"
 import { useNavigation } from "@react-navigation/native"
 
 class SetList extends React.Component<{
@@ -32,48 +34,13 @@ class SetList extends React.Component<{
 					<Thumbnail />
 					<View style={{ flexShrink: 1 }}>
 						<Title>{this.props.set.title}</Title>
-						<Description>{this.props.set.description}</Description>
+						<Text>{this.props.set.description}</Text>
 					</View>
 				</View>
 			</TouchableOpacity>
 		)
 	}
 }
-
-export class Thumbnail extends React.Component {
-	render() {
-		return (
-			<View
-				style={{
-					backgroundColor: "#eee",
-					borderRadius: 5,
-					flexShrink: 0,
-					marginRight: 8,
-					padding: 24,
-				}}
-			>
-				<Text
-					style={{
-						color: "#bbb",
-						fontSize: 48,
-					}}
-				>
-					?
-				</Text>
-			</View>
-		)
-	}
-}
-
-export class Title extends React.Component<{
-	children: string
-}> {
-	render() {
-		return <Text style={{ fontSize: 24 }}>{this.props.children}</Text>
-	}
-}
-
-export const Description = Text
 
 export default connect(
 	null,

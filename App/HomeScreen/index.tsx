@@ -1,5 +1,5 @@
 import React from "react"
-import SetListing from "../SetListing"
+import SetListing from "./SetListing"
 import { ScrollView } from "react-native-gesture-handler"
 import { TSet } from "../types"
 import { connect } from "react-redux"
