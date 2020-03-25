@@ -1,14 +1,7 @@
 import { TSet } from "./types"
 
-export interface TState {
-	sets: TSet[]
-	set: null | TSet
-}
-
-export const setSet = "set-set"
-
-export default function appReducer(state: TState = {
-	sets: [{
+export class State {
+	sets: TSet[] = [{
 		id: "0",
 		title: "Title",
 		description: "Description",
@@ -17,9 +10,13 @@ export default function appReducer(state: TState = {
 			{ front: "2", back: "two" },
 			{ front: "3", back: "three" },
 		]
-	}],
-	set: null,
-}, action) {
+	}]
+	set: null | TSet = null
+}
+
+export const setSet = "set-set"
+
+export default function appReducer(state = new State(), action) {
 	switch (action.type) {
 		case setSet:
 			return Object.assign({}, state, {
