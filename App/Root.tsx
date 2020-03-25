@@ -1,10 +1,9 @@
 import DetailsScreen from "./DetailsScreen"
 import EditSetScreen from "./EditSetScreen"
 import HomeScreen from "./HomeScreen"
-import Icon from "react-native-vector-icons/Ionicons"
+import HomeScreenHeaderRight from "./HomeScreen/HeaderRight"
 import React from "react"
 import styles from "./styles"
-import { HeaderButton, HeaderButtons, Item as HeaderItem } from "react-navigation-header-buttons"
 import { NavigationContainer } from "@react-navigation/native"
 import { StatusBar, View } from "react-native"
 import { TSet } from "./types"
@@ -38,26 +37,9 @@ class Root extends React.Component<{
 						<Stack.Screen
 							name="Study Buddy"
 							component={HomeScreen}
-							options={({ navigation }) => ({
-								headerRight: () => (
-									<HeaderButtons HeaderButtonComponent={(props) => (
-										<HeaderButton
-											IconComponent={Icon}
-											iconSize={24}
-											color="white"
-											{...props}
-										/>
-									)}>
-										<HeaderItem
-											title="Add"
-											iconName="md-add"
-											onPress={() => {
-												navigation.navigate("edit-set")
-											}}
-										/>
-									</HeaderButtons>
-								),
-							})}
+							options={{
+								headerRight: () => <HomeScreenHeaderRight />,
+							}}
 						/>
 						<Stack.Screen
 							name="edit-set"
