@@ -82,7 +82,7 @@ class Root extends React.Component<{
 }
 
 export default connect(
-	(state) => ({
+	(state: any) => ({
 		set: state.app.set,
 	}),
 )(Root)
