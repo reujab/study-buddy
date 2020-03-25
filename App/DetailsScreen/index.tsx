@@ -1,11 +1,8 @@
 import Cards from "./Cards"
 import React from "react"
 import { ScrollView, View } from "react-native"
-import { Set } from "../types"
 
-export default class Details extends React.Component<{
-	set: Set
-}> {
+export default class Details extends React.Component {
 	render() {
 		return (
 			<View style={{ flex: 1 }}>
@@ -13,7 +10,7 @@ export default class Details extends React.Component<{
 					{/* TODO */}
 				</ScrollView>
 				<View>
-					<Cards set={this.props.set} />
+					<Cards />
 				</View>
 			</View>
 		)

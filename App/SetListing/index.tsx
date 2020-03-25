@@ -1,15 +1,22 @@
 import React from "react"
 import styles from "../styles"
-import { Set } from "../types"
+import { TSet } from "../types"
 import { Text, TouchableOpacity, View } from "react-native"
+import { connect } from "react-redux"
+import { setSet } from "../state"
+import { useNavigation } from "@react-navigation/native"
 
-export default class SetList extends React.Component<{
-	set: Set,
-	onPress: any,
+class SetList extends React.Component<{
+	navigation: any
+	set: TSet,
+	select: (TSet) => void
 }> {
 	render() {
 		return (
-			<TouchableOpacity onPress={this.props.onPress}>
+			<TouchableOpacity onPress={() => {
+				this.props.select(this.props.set)
+				this.props.navigation.navigate("details")
+			}}>
 				<View
 					style={[styles.shadow, {
 						borderRadius: 10,
@@ -67,3 +74,12 @@ export class Title extends React.Component<{
 }
 
 export const Description = Text
+
+export default connect(
+	null,
+	(dispatch) => ({
+		select: (value: TSet) => dispatch({ type: setSet, value })
+	})
+)((props) => (
+	<SetList navigation={useNavigation()} {...props} />
+))

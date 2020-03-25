@@ -3,10 +3,11 @@ import FlipCard from "react-native-flip-card"
 import React from "react"
 import styles from "../../styles"
 import { Dimensions, Platform, Text, View } from "react-native"
-import { Set } from "../../types"
+import { TSet } from "../../types"
+import { connect } from "react-redux"
 
-export default class Cards extends React.Component<{
-	set: Set
+class Cards extends React.Component<{
+	set: TSet
 }> {
 	carousel = null
 
@@ -71,3 +72,9 @@ class Card extends React.Component {
 		)
 	}
 }
+
+export default connect(
+	(state: any) => ({
+		set: state.app.set,
+	}),
+)(Cards)

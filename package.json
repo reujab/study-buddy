@@ -12,6 +12,8 @@
     "@react-navigation/native": "^5.0.7",
     "@react-navigation/stack": "^5.0.8",
     "@types/react-native-snap-carousel": "^3.7.4",
+    "@types/react-redux": "^7.1.7",
+    "@types/redux": "^3.6.0",
     "expo": "~36.0.0",
     "react": "~16.9.0",
     "react-dom": "~16.9.0",
@@ -24,7 +26,9 @@
     "react-native-snap-carousel": "^3.8.4",
     "react-native-vector-icons": "^6.6.0",
     "react-native-web": "~0.11.7",
-    "react-navigation-header-buttons": "^3.0.5"
+    "react-navigation-header-buttons": "^3.0.5",
+    "react-redux": "^7.2.0",
+    "redux": "^4.0.5"
   },
   "devDependencies": {
     "@types/react": "~16.9.0",

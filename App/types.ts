@@ -1,11 +1,11 @@
-export interface Card {
+export interface TCard {
 	front: string
 	back: string
 }
 
-export interface Set {
+export interface TSet {
 	id: string
 	title: string
 	description: string
-	cards: Card[]
+	cards: TCard[]
 }

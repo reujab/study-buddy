@@ -1,38 +1,27 @@
 import React from "react"
 import SetListing from "../SetListing"
 import { ScrollView } from "react-native-gesture-handler"
-import { Set } from "../types"
+import { TSet } from "../types"
+import { connect } from "react-redux"
 
-export default class MainScreen extends React.Component<{
-	onSelect: Function
+class HomeScreen extends React.Component<{
+	sets: TSet[]
 }> {
 	render() {
 		return (
 			(
 				<ScrollView style={{ flex: 1 }}>
-					{[{
-						id: "id",
-						title: "Title",
-						description: "Description",
-						cards: [
-							{
-								front: "1",
-								back: "2",
-							},
-							{
-								front: "3",
-								back: "4",
-							}
-						],
-					} as Set].map((set) => (
-						<SetListing
-							key={set.id}
-							set={set}
-							onPress={() => this.props.onSelect(set)}
-						/>
+					{this.props.sets.map((set) => (
+						<SetListing key={set.id} set={set} />
 					))}
 				</ScrollView>
 			)
 		)
 	}
 }
+
+export default connect(
+	(state) => ({
+		sets: state.app.sets,
+	}),
+)(HomeScreen)
