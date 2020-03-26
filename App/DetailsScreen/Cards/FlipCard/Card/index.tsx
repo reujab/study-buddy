@@ -1,6 +1,6 @@
 import React from "react"
-import styles from "../../../styles"
-import { Dimensions, Text, View } from "react-native"
+import styles from "../../../../styles"
+import { Text, View } from "react-native"
 
 export default class Card extends React.Component {
 	render() {
@@ -10,6 +10,7 @@ export default class Card extends React.Component {
 					alignItems: "center",
 					flex: 1,
 					justifyContent: "center",
+					padding: 8,
 				}}
 			>
 				<View
@@ -19,10 +20,10 @@ export default class Card extends React.Component {
 						borderColor: "lightgray",
 						borderRadius: 20,
 						borderWidth: 1,
-						height: 0.75 * Dimensions.get("window").width,
+						height: "100%",
 						justifyContent: "center",
 						padding: 20,
-						width: 0.75 * Dimensions.get("window").width,
+						width: "100%",
 					}]}
 				>
 					<Text style={{ fontSize: 32 }}>{this.props.children}</Text>

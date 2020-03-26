@@ -1,9 +1,10 @@
-import Card from "./Card"
 import Carousel from "react-native-snap-carousel"
+import FlipCard from "./FlipCard"
 import React from "react"
-import { Dimensions, Platform, View } from "react-native"
 import { ISet } from "../../types"
+import { Dimensions, Platform, View } from "react-native"
 import { connect } from "react-redux"
+import { size as cardSize } from "./FlipCard/Card/constants"
 
 class Cards extends React.Component<{
 	set: ISet
@@ -14,7 +15,7 @@ class Cards extends React.Component<{
 		return (
 			<View
 				style={{
-					height: 0.75 * Dimensions.get("window").width + 16,
+					height: cardSize + 16,
 
 					// FIXME
 					marginBottom: 40,
@@ -24,9 +25,9 @@ class Cards extends React.Component<{
 					ref={(c) => { this.carousel = c }}
 					data={this.props.set.cards}
 					sliderWidth={Dimensions.get("window").width}
-					itemWidth={0.75 * Dimensions.get("window").width}
+					itemWidth={cardSize}
 					renderItem={({ item }) => (
-						<Card>{item.front}</Card>
+						<FlipCard front={item.front} back={item.back} />
 					)}
 
 					// prevents the subviews from not being rendered on iOS
