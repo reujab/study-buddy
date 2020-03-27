@@ -4,18 +4,19 @@ import HomeScreen from "./HomeScreen"
 import HomeScreenHeaderRight from "./HomeScreen/HeaderRight"
 import React from "react"
 import styles from "./styles"
+import { ISet } from "./types"
+import { IState } from "./store"
 import { NavigationContainer } from "@react-navigation/native"
 import { StatusBar, View } from "react-native"
-import { ISet } from "./types"
 import { connect } from "react-redux"
 import { createStackNavigator } from "@react-navigation/stack"
 
 const Stack = createStackNavigator()
 
 class Root extends React.Component<{
-	set: ISet,
+	set: ISet
 }> {
-	render() {
+	render(): JSX.Element {
 		return (
 			<NavigationContainer>
 				<View style={{ flex: 1 }}>
@@ -39,7 +40,7 @@ class Root extends React.Component<{
 							component={HomeScreen}
 							options={{
 								title: "Study Buddy",
-								headerRight: () => <HomeScreenHeaderRight />,
+								headerRight: (): JSX.Element => <HomeScreenHeaderRight />,
 							}}
 						/>
 						<Stack.Screen
@@ -47,7 +48,7 @@ class Root extends React.Component<{
 							component={EditSetScreen}
 							options={{
 								// TODO: dynamically change to "New Set" or "Edit Set"
-								title: "Edit Set"
+								title: "Edit Set",
 							}}
 						/>
 						<Stack.Screen
@@ -65,7 +66,7 @@ class Root extends React.Component<{
 }
 
 export default connect(
-	(state: any) => ({
+	(state: IState) => ({
 		set: state.app.set,
 	}),
 )(Root)

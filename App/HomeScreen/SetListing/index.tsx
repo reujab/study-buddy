@@ -9,16 +9,19 @@ import { setSet } from "../../state"
 import { useNavigation } from "@react-navigation/native"
 
 class SetList extends React.Component<{
+	// eslint-disable-next-line
 	navigation: any
-	set: ISet,
+	set: ISet
 	select: (ISet) => void
 }> {
-	render() {
+	render(): JSX.Element {
 		return (
-			<TouchableOpacity onPress={() => {
-				this.props.select(this.props.set)
-				this.props.navigation.navigate("details")
-			}}>
+			<TouchableOpacity
+				onPress={(): void => {
+					this.props.select(this.props.set)
+					this.props.navigation.navigate("details")
+				}}
+			>
 				<View
 					style={[styles.shadow, {
 						borderRadius: 10,
@@ -45,8 +48,8 @@ class SetList extends React.Component<{
 export default connect(
 	null,
 	(dispatch) => ({
-		select: (value: ISet) => dispatch({ type: setSet, value })
-	})
+		select: (value: ISet): void => { dispatch({ type: setSet, value }) },
+	}),
 )((props) => (
 	<SetList navigation={useNavigation()} {...props} />
 ))

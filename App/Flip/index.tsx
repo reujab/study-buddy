@@ -11,12 +11,14 @@ const style = {
 
 export default class Flip extends React.Component<{
 	flipped: boolean
-	front: any
-	back: any
+	front: JSX.Element
+	back: JSX.Element
 }> {
-	animatedValue = new Animated.Value(0)
-	frontInterpolate = null
-	backInterpolate = null
+	private animatedValue = new Animated.Value(0)
+
+	private frontInterpolate = null
+
+	private backInterpolate = null
 
 	constructor(props) {
 		super(props)
@@ -31,13 +33,13 @@ export default class Flip extends React.Component<{
 		})
 	}
 
-	componentDidUpdate(prevProps) {
+	componentDidUpdate(prevProps): void {
 		if (prevProps.flipped !== this.props.flipped) {
 			this.update()
 		}
 	}
 
-	update() {
+	private update(): void {
 		Animated.spring(this.animatedValue, {
 			toValue: this.props.flipped ? 1 : 0,
 			friction: 6,
@@ -46,7 +48,7 @@ export default class Flip extends React.Component<{
 		}).start()
 	}
 
-	render() {
+	render(): JSX.Element {
 		const backAnimatedStyle = { transform: [{ rotateY: this.frontInterpolate }] }
 		const frontAnimatedStyle = { transform: [{ rotateY: this.backInterpolate }] }
 

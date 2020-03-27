@@ -3,7 +3,7 @@ import React from "react"
 import { ScrollView, View } from "react-native"
 
 export default class Details extends React.Component {
-	render() {
+	render(): JSX.Element {
 		return (
 			<View style={{ flex: 1 }}>
 				<ScrollView style={{ flex: 1 }}>

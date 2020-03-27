@@ -14,13 +14,13 @@ export default class FlipCard extends React.Component<{
 		flipped: false,
 	}
 
-	flipCard() {
+	flipCard(): void {
 		this.setState((state) => ({
-			flipped: !state.flipped
+			flipped: !state.flipped,
 		}))
 	}
 
-	render() {
+	render(): JSX.Element {
 		return (
 			<TouchableWithoutFeedback onPress={this.flipCard.bind(this)}>
 				<View

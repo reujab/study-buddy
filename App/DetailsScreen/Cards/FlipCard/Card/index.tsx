@@ -2,8 +2,10 @@ import React from "react"
 import styles from "../../../../styles"
 import { Text, View } from "react-native"
 
-export default class Card extends React.Component {
-	render() {
+export default class Card extends React.Component<{
+	children: string
+}> {
+	render(): JSX.Element {
 		return (
 			<View
 				style={{

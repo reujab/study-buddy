@@ -1,17 +1,18 @@
 import Carousel from "react-native-snap-carousel"
 import FlipCard from "./FlipCard"
 import React from "react"
-import { ISet } from "../../types"
 import { Dimensions, Platform, View } from "react-native"
+import { ISet } from "../../types"
+import { IState } from "../../store"
 import { connect } from "react-redux"
 import { size as cardSize } from "./FlipCard/Card/constants"
 
 class Cards extends React.Component<{
 	set: ISet
 }> {
-	carousel = null
+	private carousel = null
 
-	render() {
+	render(): JSX.Element {
 		return (
 			<View
 				style={{
@@ -22,11 +23,11 @@ class Cards extends React.Component<{
 				}}
 			>
 				<Carousel
-					ref={(c) => { this.carousel = c }}
+					ref={(c): void => { this.carousel = c }}
 					data={this.props.set.cards}
 					sliderWidth={Dimensions.get("window").width}
 					itemWidth={cardSize}
-					renderItem={({ item }) => (
+					renderItem={({ item }): JSX.Element => (
 						<FlipCard front={item.front} back={item.back} />
 					)}
 
@@ -40,7 +41,7 @@ class Cards extends React.Component<{
 }
 
 export default connect(
-	(state: any) => ({
+	(state: IState) => ({
 		set: state.app.set,
 	}),
 )(Cards)

@@ -6,7 +6,7 @@ import store from "./store"
 import { Provider } from "react-redux"
 
 export default class App extends React.Component {
-	render() {
+	render(): JSX.Element {
 		return (
 			<Provider store={store}>
 				<Root />

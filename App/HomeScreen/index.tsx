@@ -1,13 +1,14 @@
 import React from "react"
 import SetListing from "./SetListing"
-import { ScrollView } from "react-native-gesture-handler"
 import { ISet } from "../types"
+import { IState } from "../store"
+import { ScrollView } from "react-native-gesture-handler"
 import { connect } from "react-redux"
 
 class HomeScreen extends React.Component<{
 	sets: ISet[]
 }> {
-	render() {
+	render(): JSX.Element {
 		return (
 			(
 				<ScrollView style={{ flex: 1 }}>
@@ -21,7 +22,7 @@ class HomeScreen extends React.Component<{
 }
 
 export default connect(
-	(state: any) => ({
+	(state: IState) => ({
 		sets: state.app.sets,
 	}),
 )(HomeScreen)
