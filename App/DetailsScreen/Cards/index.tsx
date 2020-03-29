@@ -24,8 +24,7 @@ export default class Cards extends React.Component {
 				}}
 			>
 				<Carousel
-					ref={(c): void => { this.carousel = c }}
-					data={this.props.set.cards}
+					data={this.context.selectedSet.cards}
 					sliderWidth={Dimensions.get("window").width}
 					itemWidth={cardSize}
 					renderItem={({ item }): JSX.Element => (
