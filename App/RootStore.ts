@@ -1,7 +1,10 @@
 import { ISet } from "./types"
 import { observable } from "mobx"
+import EditSetStore from "./EditSetScreen/EditSetStore"
 
 export default class RootStore {
+	editSetStore: EditSetStore
+
 	@observable
 	sets: ISet[] = [{
 		id: "0",
@@ -26,4 +29,8 @@ export default class RootStore {
 
 	@observable
 	selectedSet: ISet | null = null
+
+	constructor() {
+		this.editSetStore = new EditSetStore()
+	}
 }

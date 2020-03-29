@@ -50,8 +50,7 @@ export default class Root extends React.Component {
 							name="edit-set"
 							component={EditSetScreen}
 							options={{
-								// TODO: dynamically change to "New Set" or "Edit Set"
-								title: "Edit Set",
+								title: this.context.editSetStore.title,
 							}}
 						/>
 						<Stack.Screen

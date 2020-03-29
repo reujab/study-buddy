@@ -1,12 +1,17 @@
 import Icon from "react-native-vector-icons/Ionicons"
 import React from "react"
+import RootStore from "../../RootStore"
+import context from "../../context"
 import { HeaderButton, HeaderButtons, Item as HeaderItem } from "react-navigation-header-buttons"
 import { useNavigation } from "@react-navigation/native"
 
 class HeaderRight extends React.Component<{
-	// eslint-disable-next-line
 	navigation: any
 }> {
+	static contextType = context
+
+	context: RootStore
+
 	render(): JSX.Element {
 		return (
 			<HeaderButtons
@@ -22,12 +27,15 @@ class HeaderRight extends React.Component<{
 				<HeaderItem
 					title="Add"
 					iconName="md-add"
-					onPress={(): void => {
-						this.props.navigation.navigate("edit-set")
-					}}
+					onPress={this.addSet.bind(this)}
 				/>
 			</HeaderButtons>
 		)
+	}
+
+	addSet(): void {
+		this.context.editSetStore.title = "Add Set"
+		this.props.navigation.navigate("edit-set")
 	}
 }
 
