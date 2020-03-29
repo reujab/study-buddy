@@ -3,19 +3,22 @@ import EditSetScreen from "./EditSetScreen"
 import HomeScreen from "./HomeScreen"
 import HomeScreenHeaderRight from "./HomeScreen/HeaderRight"
 import React from "react"
+import context from "./context"
 import styles from "./styles"
-import { ISet } from "./types"
-import { IState } from "./store"
 import { NavigationContainer } from "@react-navigation/native"
 import { StatusBar, View } from "react-native"
-import { connect } from "react-redux"
 import { createStackNavigator } from "@react-navigation/stack"
+import { observer } from "mobx-react"
+import RootStore from "./RootStore"
 
 const Stack = createStackNavigator()
 
-class Root extends React.Component<{
-	set: ISet
-}> {
+@observer
+export default class Root extends React.Component {
+	static contextType = context
+
+	context: RootStore
+
 	render(): JSX.Element {
 		return (
 			<NavigationContainer>
@@ -55,7 +58,7 @@ class Root extends React.Component<{
 							name="details"
 							component={DetailsScreen}
 							options={{
-								title: this.props.set && this.props.set.title,
+								title: this.context.selectedSet && this.context.selectedSet.title,
 							}}
 						/>
 					</Stack.Navigator>
@@ -64,9 +67,3 @@ class Root extends React.Component<{
 		)
 	}
 }
-
-export default connect(
-	(state: IState) => ({
-		set: state.app.set,
-	}),
-)(Root)

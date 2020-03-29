@@ -1,16 +1,17 @@
 import Carousel from "react-native-snap-carousel"
 import FlipCard from "./FlipCard"
 import React from "react"
+import RootStore from "../../RootStore"
+import context from "../../context"
 import { Dimensions, Platform, View } from "react-native"
-import { ISet } from "../../types"
-import { IState } from "../../store"
-import { connect } from "react-redux"
+import { observer } from "mobx-react"
 import { size as cardSize } from "./FlipCard/Card/constants"
 
-class Cards extends React.Component<{
-	set: ISet
-}> {
-	private carousel = null
+@observer
+export default class Cards extends React.Component {
+	static contextType = context
+
+	context: RootStore
 
 	render(): JSX.Element {
 		return (
@@ -39,9 +40,3 @@ class Cards extends React.Component<{
 		)
 	}
 }
-
-export default connect(
-	(state: IState) => ({
-		set: state.app.set,
-	}),
-)(Cards)

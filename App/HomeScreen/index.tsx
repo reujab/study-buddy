@@ -1,18 +1,18 @@
 import React from "react"
 import SetListing from "./SetListing"
-import { ISet } from "../types"
-import { IState } from "../store"
+import context from "../context"
 import { ScrollView } from "react-native-gesture-handler"
-import { connect } from "react-redux"
+import { observer } from "mobx-react"
 
-class HomeScreen extends React.Component<{
-	sets: ISet[]
-}> {
+@observer
+export default class HomeScreen extends React.Component {
+	static contextType = context
+
 	render(): JSX.Element {
 		return (
 			(
 				<ScrollView style={{ flex: 1 }}>
-					{this.props.sets.map((set) => (
+					{this.context.sets.map((set) => (
 						<SetListing key={set.id} set={set} />
 					))}
 				</ScrollView>
@@ -20,9 +20,3 @@ class HomeScreen extends React.Component<{
 		)
 	}
 }
-
-export default connect(
-	(state: IState) => ({
-		sets: state.app.sets,
-	}),
-)(HomeScreen)

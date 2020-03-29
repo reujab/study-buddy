@@ -1,24 +1,24 @@
 import React from "react"
 import Thumbnail from "./Thumbnail"
 import Title from "./Title"
+import context from "../../context"
 import styles from "../../styles"
 import { ISet } from "../../types"
 import { Text, TouchableOpacity, View } from "react-native"
-import { connect } from "react-redux"
-import { setSet } from "../../state"
+import { observer } from "mobx-react"
 import { useNavigation } from "@react-navigation/native"
 
-class SetList extends React.Component<{
-	// eslint-disable-next-line
+@observer class SetList extends React.Component<{
 	navigation: any
 	set: ISet
-	select: (ISet) => void
 }> {
+	static contextType = context
+
 	render(): JSX.Element {
 		return (
 			<TouchableOpacity
 				onPress={(): void => {
-					this.props.select(this.props.set)
+					this.context.selectedSet = this.props.set
 					this.props.navigation.navigate("details")
 				}}
 			>
@@ -45,11 +45,6 @@ class SetList extends React.Component<{
 	}
 }
 
-export default connect(
-	null,
-	(dispatch) => ({
-		select: (value: ISet): void => { dispatch({ type: setSet, value }) },
-	}),
-)((props) => (
+export default (props): JSX.Element => (
 	<SetList navigation={useNavigation()} {...props} />
-))
+)
