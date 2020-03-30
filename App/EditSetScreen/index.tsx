@@ -34,27 +34,25 @@ export default class EditSetScreen extends React.Component {
 							padding: 20,
 						}]}
 					>
-						<View>
-							<Input
-								ref={(ref): void => this.addInput(ref, card.id, "front")}
-								label="Front"
-								defaultValue={card.front}
-								onChangeText={(text): void => { card.front = text }}
-								containerStyle={{ marginBottom: 20 }}
-								returnKeyType="next"
-								blurOnSubmit={false}
-								onSubmitEditing={(): void => this.focusNextInput(card, "front")}
-							/>
-							<Input
-								ref={(ref): void => this.addInput(ref, card.id, "back")}
-								label="Back"
-								defaultValue={card.back}
-								onChangeText={(text): void => { card.back = text }}
-								returnKeyType="next"
-								blurOnSubmit={false}
-								onSubmitEditing={(): void => this.focusNextInput(card, "back")}
-							/>
-						</View>
+						<Input
+							ref={(ref): void => this.addInput(ref, card.id, "front")}
+							label="Front"
+							defaultValue={card.front}
+							onChangeText={(text): void => { card.front = text }}
+							containerStyle={{ marginBottom: 20 }}
+							returnKeyType="next"
+							blurOnSubmit={false}
+							onSubmitEditing={(): void => this.focusNextInput(card, "front")}
+						/>
+						<Input
+							ref={(ref): void => this.addInput(ref, card.id, "back")}
+							label="Back"
+							defaultValue={card.back}
+							onChangeText={(text): void => { card.back = text }}
+							returnKeyType="next"
+							blurOnSubmit={false}
+							onSubmitEditing={(): void => this.focusNextInput(card, "back")}
+						/>
 					</View>
 				))}
 				<View style={{ alignSelf: "center", marginVertical: 20 }}>
