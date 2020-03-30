@@ -43,6 +43,7 @@ export default class EditSetScreen extends React.Component {
 							returnKeyType="next"
 							blurOnSubmit={false}
 							onSubmitEditing={(): void => this.focusNextInput(card, "front")}
+							autoCapitalize="none"
 						/>
 						<Input
 							ref={(ref): void => this.addInput(ref, card.id, "back")}
@@ -52,6 +53,7 @@ export default class EditSetScreen extends React.Component {
 							returnKeyType="next"
 							blurOnSubmit={false}
 							onSubmitEditing={(): void => this.focusNextInput(card, "back")}
+							autoCapitalize="none"
 						/>
 					</View>
 				))}
