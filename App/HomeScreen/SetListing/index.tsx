@@ -3,14 +3,14 @@ import Thumbnail from "./Thumbnail"
 import Title from "./Title"
 import context from "../../context"
 import styles from "../../styles"
-import { ISet } from "../../types"
+import Set from "../../Set"
 import { Text, TouchableOpacity, View } from "react-native"
 import { observer } from "mobx-react"
 import { useNavigation } from "@react-navigation/native"
 
 @observer class SetList extends React.Component<{
 	navigation: any
-	set: ISet
+	set: Set
 }> {
 	static contextType = context
 

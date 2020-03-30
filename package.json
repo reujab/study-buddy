@@ -21,13 +21,15 @@
     "react-native-snap-carousel": "^3.8.4",
     "react-native-vector-icons": "^6.6.0",
     "react-native-web": "~0.11.7",
-    "react-navigation-header-buttons": "^3.0.5"
+    "react-navigation-header-buttons": "^3.0.5",
+    "shortid": "^2.2.15"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",
     "@types/react": "^16.9.25",
     "@types/react-native": "~0.60.23",
     "@types/react-native-snap-carousel": "^3.8.1",
+    "@types/shortid": "0.0.29",
     "@typescript-eslint/eslint-plugin": "^2.25.0",
     "@typescript-eslint/parser": "^2.25.0",
     "babel-preset-expo": "~8.0.0",
