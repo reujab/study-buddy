@@ -49,8 +49,8 @@ export default class Flip extends React.Component<{
 	}
 
 	render(): JSX.Element {
-		const backAnimatedStyle = { transform: [{ rotateY: this.frontInterpolate }] }
-		const frontAnimatedStyle = { transform: [{ rotateY: this.backInterpolate }] }
+		const frontAnimatedStyle = { transform: [{ rotateY: this.frontInterpolate }] }
+		const backAnimatedStyle = { transform: [{ rotateY: this.backInterpolate }] }
 
 		return (
 			<React.Fragment>
