@@ -4,6 +4,7 @@ import RootStore from "../../RootStore"
 import context from "../../context"
 import { HeaderButton, HeaderButtons, Item as HeaderItem } from "react-navigation-header-buttons"
 import { useNavigation } from "@react-navigation/native"
+import Set from "../../Set"
 
 class HeaderRight extends React.Component<{
 	navigation: any
@@ -34,6 +35,7 @@ class HeaderRight extends React.Component<{
 	}
 
 	addSet(): void {
+		this.context.selectedSet = new Set()
 		this.props.navigation.navigate("edit-set")
 	}
 }
