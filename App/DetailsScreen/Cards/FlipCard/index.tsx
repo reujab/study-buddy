@@ -22,7 +22,7 @@ export default class FlipCard extends React.Component<{
 
 	render(): JSX.Element {
 		return (
-			<TouchableWithoutFeedback onPress={this.flipCard.bind(this)}>
+			<TouchableWithoutFeedback onPress={(): void => this.flipCard()}>
 				<View
 					style={{
 						height: size,

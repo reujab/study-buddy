@@ -28,7 +28,7 @@ class HeaderRight extends React.Component<{
 				<HeaderItem
 					title="Add"
 					iconName="md-add"
-					onPress={this.addSet.bind(this)}
+					onPress={(): void => this.addSet()}
 				/>
 			</HeaderButtons>
 		)
