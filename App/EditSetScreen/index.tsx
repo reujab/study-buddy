@@ -15,6 +15,8 @@ export default class EditSetScreen extends React.Component {
 
 	context: RootStore
 
+	inputs: {} = {}
+
 	render(): JSX.Element {
 		return (
 			<KeyboardAwareScrollView
@@ -34,15 +36,23 @@ export default class EditSetScreen extends React.Component {
 					>
 						<View>
 							<Input
+								ref={(ref): void => this.addInput(ref, card.id, "front")}
 								label="Front"
 								defaultValue={card.front}
 								onChangeText={(text): void => { card.front = text }}
 								containerStyle={{ marginBottom: 20 }}
+								returnKeyType="next"
+								blurOnSubmit={false}
+								onSubmitEditing={(): void => this.focusNextInput(card, "front")}
 							/>
 							<Input
+								ref={(ref): void => this.addInput(ref, card.id, "back")}
 								label="Back"
 								defaultValue={card.back}
 								onChangeText={(text): void => { card.back = text }}
+								returnKeyType="next"
+								blurOnSubmit={false}
+								onSubmitEditing={(): void => this.focusNextInput(card, "back")}
 							/>
 						</View>
 					</View>
@@ -60,5 +70,28 @@ export default class EditSetScreen extends React.Component {
 		}
 
 		this.context.selectedSet.cards.push(new Card())
+	}
+
+	addInput(ref: Input, id: string, side: "front" | "back"): void {
+		this.inputs[id] = {
+			...this.inputs[id],
+			[side]: ref,
+		}
+	}
+
+	focusNextInput(card: Card, side: "front" | "back"): void {
+		if (side === "front") {
+			this.inputs[card.id].back.focus()
+		} else {
+			const index = this.context.selectedSet.cards.indexOf(card) + 1
+			if (index in this.context.selectedSet.cards) {
+				const id = this.context.selectedSet.cards[index].id
+				this.inputs[id].front.focus()
+			} else {
+				this.addCard()
+				// gives time for ref to initialize
+				setImmediate(() => this.focusNextInput(card, side))
+			}
+		}
 	}
 }
