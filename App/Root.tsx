@@ -50,7 +50,7 @@ export default class Root extends React.Component {
 							name="edit-set"
 							component={EditSetScreen}
 							options={{
-								title: this.context.editSetStore.title,
+								title: "Edit Set",
 							}}
 						/>
 						<Stack.Screen

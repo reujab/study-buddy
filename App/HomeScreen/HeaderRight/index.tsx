@@ -34,7 +34,6 @@ class HeaderRight extends React.Component<{
 	}
 
 	addSet(): void {
-		this.context.editSetStore.title = "Add Set"
 		this.props.navigation.navigate("edit-set")
 	}
 }
