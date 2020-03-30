@@ -3,13 +3,13 @@ import EditSetScreen from "./EditSetScreen"
 import HomeScreen from "./HomeScreen"
 import HomeScreenHeaderRight from "./HomeScreen/HeaderRight"
 import React from "react"
+import RootStore from "./RootStore"
 import context from "./context"
 import styles from "./styles"
 import { NavigationContainer } from "@react-navigation/native"
 import { StatusBar, View } from "react-native"
 import { createStackNavigator } from "@react-navigation/stack"
 import { observer } from "mobx-react"
-import RootStore from "./RootStore"
 
 const Stack = createStackNavigator()
 
