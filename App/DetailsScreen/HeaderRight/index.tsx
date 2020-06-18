@@ -26,12 +26,21 @@ class HeaderRight extends React.Component<{
 				)}
 			>
 				<HeaderItem
+					title="Edit"
+					iconName="edit"
+					onPress={(): void => this.editSet()}
+				/>
+				<HeaderItem
 					title="Add"
 					iconName="trash"
 					onPress={(): void => this.promptDeleteSet()}
 				/>
 			</HeaderButtons>
 		)
+	}
+
+	editSet(): void {
+		this.props.navigation.replace("edit-set")
 	}
 
 	promptDeleteSet(): void {
