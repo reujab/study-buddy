@@ -1,4 +1,5 @@
 import DetailsScreen from "./DetailsScreen"
+import DetailsScreenHeaderRight from "./DetailsScreen/HeaderRight"
 import EditSetScreen from "./EditSetScreen"
 import HomeScreen from "./HomeScreen"
 import HomeScreenHeaderRight from "./HomeScreen/HeaderRight"
@@ -58,6 +59,7 @@ export default class Root extends React.Component {
 							component={DetailsScreen}
 							options={{
 								title: this.context.selectedSet && this.context.selectedSet.title,
+								headerRight: (): JSX.Element => <DetailsScreenHeaderRight />,
 							}}
 						/>
 					</Stack.Navigator>
