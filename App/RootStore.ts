@@ -9,4 +9,8 @@ export default class RootStore {
 	@observable
 	@ignore
 	selectedSet: Set | null = null
+
+	// workaround since the details screen doesn't automatically update when editing a set
+	@observable
+	forceDetailsUpdate = 0
 }

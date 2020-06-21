@@ -23,6 +23,7 @@ export default class Cards extends React.Component {
 					marginBottom: 40,
 				}}
 			>
+				{void this.context.forceDetailsUpdate}
 				<Carousel
 					data={this.context.selectedSet.cards}
 					sliderWidth={Dimensions.get("window").width}

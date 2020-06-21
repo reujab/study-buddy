@@ -40,7 +40,7 @@ class HeaderRight extends React.Component<{
 	}
 
 	editSet(): void {
-		this.props.navigation.replace("edit-set")
+		this.props.navigation.push("edit-set")
 	}
 
 	promptDeleteSet(): void {

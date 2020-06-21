@@ -38,7 +38,10 @@ export default class EditSetScreen extends React.Component {
 							ref={(ref): void => this.addInput(ref, card.id, "front")}
 							label="Front"
 							defaultValue={card.front}
-							onChangeText={(text): void => { card.front = text }}
+							onChangeText={(text): void => {
+								card.front = text
+								this.context.forceDetailsUpdate++
+							}}
 							containerStyle={{ marginBottom: 20 }}
 							returnKeyType="next"
 							blurOnSubmit={false}
@@ -49,7 +52,10 @@ export default class EditSetScreen extends React.Component {
 							ref={(ref): void => this.addInput(ref, card.id, "back")}
 							label="Back"
 							defaultValue={card.back}
-							onChangeText={(text): void => { card.back = text }}
+							onChangeText={(text): void => {
+								card.back = text
+								this.context.forceDetailsUpdate++
+							}}
 							returnKeyType="next"
 							blurOnSubmit={false}
 							onSubmitEditing={(): void => this.focusNextInput(card, "back")}
@@ -70,6 +76,7 @@ export default class EditSetScreen extends React.Component {
 		}
 
 		this.context.selectedSet.cards.push(new Card())
+		this.context.forceDetailsUpdate++
 	}
 
 	addInput(ref: Input, id: string, side: "front" | "back"): void {
