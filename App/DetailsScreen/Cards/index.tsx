@@ -6,12 +6,20 @@ import context from "../../context"
 import { Dimensions, Platform, View } from "react-native"
 import { observer } from "mobx-react"
 import { size as cardSize } from "./FlipCard/Card/constants"
+import { useNavigation } from "@react-navigation/native"
 
-@observer
-export default class Cards extends React.Component {
+@observer class Cards extends React.Component<{
+	navigation: any
+}> {
 	static contextType = context
 
 	context: RootStore
+
+	componentDidMount(): void {
+		this.props.navigation.addListener("focus", (): void => {
+			this.forceUpdate()
+		})
+	}
 
 	render(): JSX.Element {
 		return (
@@ -23,7 +31,6 @@ export default class Cards extends React.Component {
 					marginBottom: 40,
 				}}
 			>
-				{void this.context.forceDetailsUpdate}
 				<Carousel
 					data={this.context.selectedSet.cards}
 					sliderWidth={Dimensions.get("window").width}
@@ -40,3 +47,5 @@ export default class Cards extends React.Component {
 		)
 	}
 }
+
+export default (props): JSX.Element => <Cards navigation={useNavigation()} {...props} />

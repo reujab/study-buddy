@@ -4,16 +4,25 @@ import React from "react"
 import RootStore from "../RootStore"
 import context from "../context"
 import styles from "../styles"
-import { Input } from "react-native-elements"
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view"
 import { Platform, View } from "react-native"
+import { TextInput } from "react-native-paper"
 import { observer } from "mobx-react"
+
+const cardStyle = {
+	borderRadius: 4,
+	margin: 20,
+	marginBottom: 0,
+	padding: 20,
+}
 
 @observer
 export default class EditSetScreen extends React.Component {
 	static contextType = context
 
 	context: RootStore
+
+	descriptionRef = null
 
 	inputs: {} = {}
 
@@ -24,38 +33,47 @@ export default class EditSetScreen extends React.Component {
 				contentContainerStyle={{ flexGrow: 1 }}
 				extraScrollHeight={Platform.OS === "android" ? 100 : 0}
 			>
+				<View style={[styles.shadow, cardStyle]}>
+					<TextInput
+						mode="outlined"
+						label="Title"
+						defaultValue={this.context.selectedSet.title}
+						onChangeText={(text): void => { this.context.selectedSet.title = text }}
+						returnKeyType="next"
+						blurOnSubmit={false}
+						onSubmitEditing={(): void => this.descriptionRef.focus()}
+						style={{ marginBottom: 20 }}
+					/>
+					<TextInput
+						mode="outlined"
+						multiline
+						ref={(ref): void => { this.descriptionRef = ref }}
+						label="Description"
+						defaultValue={this.context.selectedSet.description}
+						onChangeText={(text): void => { this.context.selectedSet.description = text }}
+						blurOnSubmit={false}
+					/>
+				</View>
 				{this.context.selectedSet.cards.map((card) => (
-					<View
-						key={card.id}
-						style={[styles.shadow, {
-							borderRadius: 4,
-							margin: 20,
-							marginBottom: 0,
-							padding: 20,
-						}]}
-					>
-						<Input
+					<View key={card.id} style={[styles.shadow, cardStyle]}>
+						<TextInput
 							ref={(ref): void => this.addInput(ref, card.id, "front")}
+							mode="outlined"
 							label="Front"
 							defaultValue={card.front}
-							onChangeText={(text): void => {
-								card.front = text
-								this.context.forceDetailsUpdate++
-							}}
-							containerStyle={{ marginBottom: 20 }}
+							onChangeText={(text): void => { card.front = text }}
 							returnKeyType="next"
 							blurOnSubmit={false}
 							onSubmitEditing={(): void => this.focusNextInput(card, "front")}
 							autoCapitalize="none"
+							style={{ marginBottom: 20 }}
 						/>
-						<Input
+						<TextInput
 							ref={(ref): void => this.addInput(ref, card.id, "back")}
+							mode="outlined"
 							label="Back"
 							defaultValue={card.back}
-							onChangeText={(text): void => {
-								card.back = text
-								this.context.forceDetailsUpdate++
-							}}
+							onChangeText={(text): void => { card.back = text }}
 							returnKeyType="next"
 							blurOnSubmit={false}
 							onSubmitEditing={(): void => this.focusNextInput(card, "back")}
@@ -76,10 +94,9 @@ export default class EditSetScreen extends React.Component {
 		}
 
 		this.context.selectedSet.cards.push(new Card())
-		this.context.forceDetailsUpdate++
 	}
 
-	addInput(ref: Input, id: string, side: "front" | "back"): void {
+	addInput(ref: any, id: string, side: "front" | "back"): void {
 		this.inputs[id] = {
 			...this.inputs[id],
 			[side]: ref,
