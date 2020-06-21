@@ -1,8 +1,10 @@
+import Icon from "react-native-vector-icons/Ionicons"
 import React from "react"
 import styles from "../../styles"
 import { TouchableOpacity } from "react-native"
-import Icon from "react-native-vector-icons/Ionicons"
+import { observer } from "mobx-react"
 
+@observer
 export default class AddButton extends React.Component<{
 	onPress: any
 }> {

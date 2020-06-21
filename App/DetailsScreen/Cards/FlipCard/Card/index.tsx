@@ -1,7 +1,9 @@
 import React from "react"
 import styles from "../../../../styles"
 import { Text, View } from "react-native"
+import { observer } from "mobx-react"
 
+@observer
 export default class Card extends React.Component<{
 	children: string
 }> {

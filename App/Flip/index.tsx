@@ -1,5 +1,6 @@
 import React from "react"
 import { Animated } from "react-native"
+import { observer } from "mobx-react"
 
 const style = {
 	backfaceVisibility: "hidden",
@@ -9,6 +10,7 @@ const style = {
 	width: "100%",
 }
 
+@observer
 export default class Flip extends React.Component<{
 	flipped: boolean
 	front: JSX.Element

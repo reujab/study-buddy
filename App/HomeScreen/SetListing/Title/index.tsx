@@ -1,6 +1,8 @@
 import React from "react"
 import { Text } from "react-native"
+import { observer } from "mobx-react"
 
+@observer
 export default class Title extends React.Component<{
 	children: string
 }> {

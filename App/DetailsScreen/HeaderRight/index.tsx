@@ -4,9 +4,10 @@ import RootStore from "../../RootStore"
 import context from "../../context"
 import { Alert } from "react-native"
 import { HeaderButton, HeaderButtons, Item as HeaderItem } from "react-navigation-header-buttons"
+import { observer } from "mobx-react"
 import { useNavigation } from "@react-navigation/native"
 
-class HeaderRight extends React.Component<{
+@observer class HeaderRight extends React.Component<{
 	navigation: any
 }> {
 	static contextType = context

@@ -1,12 +1,13 @@
 import Icon from "react-native-vector-icons/Ionicons"
 import React from "react"
 import RootStore from "../../RootStore"
+import Set from "../../Set"
 import context from "../../context"
 import { HeaderButton, HeaderButtons, Item as HeaderItem } from "react-navigation-header-buttons"
+import { observer } from "mobx-react"
 import { useNavigation } from "@react-navigation/native"
-import Set from "../../Set"
 
-class HeaderRight extends React.Component<{
+@observer class HeaderRight extends React.Component<{
 	navigation: any
 }> {
 	static contextType = context

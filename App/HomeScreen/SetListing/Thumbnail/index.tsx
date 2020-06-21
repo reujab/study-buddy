@@ -1,6 +1,8 @@
 import React from "react"
 import { Text, View } from "react-native"
+import { observer } from "mobx-react"
 
+@observer
 export default class Thumbnail extends React.Component {
 	render(): JSX.Element {
 		return (
