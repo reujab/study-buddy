@@ -11,7 +11,7 @@ export default class Card {
 	back = ""
 
 	@observable
-	lastStudied: Date = new Date(0)
+	lastStudied = 0
 
 	@observable
 	baseConfidence = 0.5
@@ -24,7 +24,7 @@ export default class Card {
 	// b = 0.990448
 	@computed
 	get confidence(): number {
-		const hoursSinceLastStudy = (Date.now() - Number(this.lastStudied)) / (1000 * 60 * 60)
+		const hoursSinceLastStudy = (Date.now() - this.lastStudied) / (1000 * 60 * 60)
 		return Math.max(0.2, Math.min(1, 1.00214 * 0.990448 ** hoursSinceLastStudy * this.baseConfidence))
 	}
 }
