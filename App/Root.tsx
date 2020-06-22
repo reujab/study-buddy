@@ -30,8 +30,6 @@ export default class Root extends React.Component {
 						screenOptions={{
 							headerStyle: [styles.shadow, {
 								backgroundColor: "#5856d6",
-								borderBottomLeftRadius: 8,
-								borderBottomRightRadius: 8,
 								shadowOffset: { width: 0, height: 4 },
 
 								// borderWidth is set by `styles.shadow`
