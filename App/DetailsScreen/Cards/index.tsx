@@ -27,9 +27,7 @@ import { useNavigation } from "@react-navigation/native"
 			<View
 				style={{
 					height: cardSize + 16,
-
-					// FIXME
-					marginBottom: 40,
+					marginBottom: 32,
 				}}
 			>
 				<Carousel
