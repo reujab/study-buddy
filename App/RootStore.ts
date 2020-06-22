@@ -1,6 +1,6 @@
-import { observable } from "mobx"
 import Set from "./Set"
 import { ignore } from "mobx-sync"
+import { observable } from "mobx"
 
 export default class RootStore {
 	@observable
