@@ -1,12 +1,11 @@
-import AddButton from "./AddButton"
 import Card from "../Card"
 import React from "react"
 import RootStore from "../RootStore"
 import context from "../context"
 import styles from "../styles"
+import { FAB, TextInput } from "react-native-paper"
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view"
 import { Platform, View } from "react-native"
-import { TextInput } from "react-native-paper"
 import { observer } from "mobx-react"
 
 const cardStyle = {
@@ -82,7 +81,12 @@ export default class EditSetScreen extends React.Component {
 					</View>
 				))}
 				<View style={{ alignSelf: "center", marginVertical: 20 }}>
-					<AddButton onPress={(): void => this.addCard()} />
+					{/* eslint-disable-next-line react/jsx-pascal-case */}
+					<FAB
+						icon="plus"
+						style={{ backgroundColor: "#673ab7" }}
+						onPress={(): void => this.addCard()}
+					/>
 				</View>
 			</KeyboardAwareScrollView>
 		)
