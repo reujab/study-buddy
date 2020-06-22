@@ -28,7 +28,9 @@ export default class App extends React.Component {
 		trunk.init().then(() => {
 			for (let i = 0; i < this.store.sets.length; i++) {
 				this.store.sets[i] = Object.assign(new Set(), this.store.sets[i])
-				this.store.sets[i].cards.map((card) => Object.assign(new Card(), card))
+				for (let j = 0; j < this.store.sets[i].cards.length; j++) {
+					this.store.sets[i].cards[j] = Object.assign(new Card(), this.store.sets[i].cards[j])
+				}
 			}
 
 			this.initialized = true
