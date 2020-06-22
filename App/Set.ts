@@ -16,7 +16,7 @@ export default class Set {
 
 	@computed
 	get studyCards(): Card[] {
-		return this.cards.slice().sort((a, b) => (
+		return this.cards.slice().filter((card) => card.confidence < 0.8).sort((a, b) => (
 			a.confidence === b.confidence ? 0 :
 				a.confidence > b.confidence ? 1 :
 					-1
