@@ -1,10 +1,15 @@
+import CCard from "../Card"
+import Card from "../DetailsScreen/Cards/FlipCard/Card"
 import Face from "./Face"
-import FlipCard from "../DetailsScreen/Cards/FlipCard"
+import Flip from "../Flip"
 import React from "react"
 import RootStore from "../RootStore"
 import context from "../context"
-import { View } from "react-native"
+import { TouchableWithoutFeedback } from "react-native-gesture-handler"
+import { View, Text } from "react-native"
+import { computed, observable } from "mobx"
 import { observer } from "mobx-react"
+import { size as cardSize } from "../DetailsScreen/Cards/FlipCard/Card/constants"
 
 @observer
 export default class StudyScreen extends React.Component {
@@ -12,8 +17,11 @@ export default class StudyScreen extends React.Component {
 
 	context: RootStore = null
 
+	@observable
+	flipped = false
+
 	render(): JSX.Element {
-		return (
+		return this.currentCard && (
 			<View style={{ flex: 1 }}>
 				<View
 					style={{
@@ -23,7 +31,20 @@ export default class StudyScreen extends React.Component {
 						width: "100%",
 					}}
 				>
-					<FlipCard front={this.context.selectedSet.studyCards[0].front} back={this.context.selectedSet.studyCards[0].back} />
+					<TouchableWithoutFeedback onPress={(): void => { this.flipped = true }}>
+						<View
+							style={{
+								width: cardSize,
+								height: cardSize,
+							}}
+						>
+							<Flip
+								flipped={this.flipped}
+								front={<Card>{this.currentCard.front}</Card>}
+								back={<Card>{this.currentCard.back}</Card>}
+							/>
+						</View>
+					</TouchableWithoutFeedback>
 				</View>
 				<View
 					style={{
@@ -36,26 +57,42 @@ export default class StudyScreen extends React.Component {
 							flexDirection: "row",
 							justifyContent: "space-evenly",
 							width: "100%",
+							display: this.flipped ? "flex" : "none",
 						}}
 					>
 						<Face
 							icon="frown"
 							color="#f44336"
-							onPress={(): void => console.log(":(")}
+							onPress={(): void => { this.nextCard(0.6) }}
 						/>
 						<Face
 							icon="meh"
 							color="#ffc107"
-							onPress={(): void => console.log(":|")}
+							onPress={(): void => { this.nextCard(1) }}
 						/>
 						<Face
 							icon="smile"
 							color="#4caf50"
-							onPress={(): void => console.log(":)")}
+							onPress={(): void => { this.nextCard(1.6) }}
 						/>
 					</View>
 				</View>
+				<Text>ID: {this.currentCard.id}</Text>
+				<Text>Base Confidence: {this.currentCard.baseConfidence}</Text>
+				<Text>Confidence: {this.currentCard.confidence}</Text>
 			</View>
 		)
+	}
+
+	@computed
+	get currentCard(): CCard | null {
+		return this.context.selectedSet.studyCards[0] || null
+	}
+
+	nextCard(confidenceMultiplier: number): void {
+		const currentCard = this.currentCard
+		currentCard.baseConfidence = Math.max(0.2, Math.min(1, this.currentCard.confidence * confidenceMultiplier))
+		currentCard.lastStudied = Date.now()
+		this.flipped = false
 	}
 }
