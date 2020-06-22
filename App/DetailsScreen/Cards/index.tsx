@@ -15,6 +15,7 @@ import { useNavigation } from "@react-navigation/native"
 
 	context: RootStore
 
+	// component does not automatically update after editing set
 	componentDidMount(): void {
 		this.props.navigation.addListener("focus", (): void => {
 			this.forceUpdate()

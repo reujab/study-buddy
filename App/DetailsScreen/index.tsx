@@ -5,8 +5,10 @@ import context from "../context"
 import { ScrollView, Text, View } from "react-native"
 import { observer } from "mobx-react"
 
-@observer
-export default class Details extends React.Component<{
+import { Button } from "react-native-paper"
+import { useNavigation } from "@react-navigation/native"
+
+@observer class Details extends React.Component<{
 	navigation: any
 }> {
 	static contextType = context
@@ -22,8 +24,20 @@ export default class Details extends React.Component<{
 				</ScrollView>
 				<View>
 					<Cards />
+					<Button
+						mode="contained"
+						style={{
+							margin: 20,
+							marginTop: 0,
+						}}
+						onPress={(): void => { this.props.navigation.navigate("study") }}
+					>
+						Study
+					</Button>
 				</View>
 			</View>
 		)
 	}
 }
+
+export default (props): JSX.Element => <Details navigation={useNavigation()} {...props} />

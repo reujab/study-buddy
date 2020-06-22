@@ -5,6 +5,7 @@ import HomeScreen from "./HomeScreen"
 import HomeScreenHeaderRight from "./HomeScreen/HeaderRight"
 import React from "react"
 import RootStore from "./RootStore"
+import StudyScreen from "./StudyScreen"
 import context from "./context"
 import styles from "./styles"
 import { NavigationContainer } from "@react-navigation/native"
@@ -60,6 +61,13 @@ export default class Root extends React.Component {
 							options={{
 								title: this.context.selectedSet && this.context.selectedSet.title,
 								headerRight: (): JSX.Element => <DetailsScreenHeaderRight />,
+							}}
+						/>
+						<Stack.Screen
+							name="study"
+							component={StudyScreen}
+							options={{
+								title: "Study",
 							}}
 						/>
 					</Stack.Navigator>
