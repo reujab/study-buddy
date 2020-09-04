@@ -93,7 +93,7 @@ rules:
   no-constructor-return: warn
   no-div-regex: off
   no-else-return: warn
-  "@typescript-eslint/no-empty-function": warn
+  "@typescript-eslint/no-empty-function": off
   no-empty-pattern: warn
   no-eq-null: warn
   no-eval: warn

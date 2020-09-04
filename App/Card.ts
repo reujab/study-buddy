@@ -11,6 +11,9 @@ export default class Card {
 	back = ""
 
 	@observable
+	description = ""
+
+	@observable
 	lastStudied = 0
 
 	@observable

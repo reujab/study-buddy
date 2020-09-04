@@ -8,6 +8,12 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 import { Platform, View } from "react-native"
 import { observer } from "mobx-react"
 
+enum Input {
+	Front,
+	Back,
+	Description,
+}
+
 const cardStyle = {
 	borderRadius: 4,
 	margin: 20,
@@ -56,26 +62,38 @@ export default class EditSetScreen extends React.Component {
 				{this.context.selectedSet.cards.map((card) => (
 					<View key={card.id} style={[styles.shadow, cardStyle]}>
 						<TextInput
-							ref={(ref): void => this.addInput(ref, card.id, "front")}
+							ref={(ref): void => this.addInput(ref, card.id, Input.Front)}
 							mode="outlined"
 							label="Front"
 							defaultValue={card.front}
 							onChangeText={(text): void => { card.front = text }}
 							returnKeyType="next"
 							blurOnSubmit={false}
-							onSubmitEditing={(): void => this.focusNextInput(card, "front")}
+							onSubmitEditing={(): void => this.focusNextInput(card, Input.Front)}
 							autoCapitalize="none"
 							style={{ marginBottom: 20 }}
 						/>
 						<TextInput
-							ref={(ref): void => this.addInput(ref, card.id, "back")}
+							ref={(ref): void => this.addInput(ref, card.id, Input.Back)}
 							mode="outlined"
 							label="Back"
 							defaultValue={card.back}
 							onChangeText={(text): void => { card.back = text }}
 							returnKeyType="next"
 							blurOnSubmit={false}
-							onSubmitEditing={(): void => this.focusNextInput(card, "back")}
+							onSubmitEditing={(): void => this.focusNextInput(card, Input.Back)}
+							autoCapitalize="none"
+							style={{ marginBottom: 20 }}
+						/>
+						<TextInput
+							ref={(ref): void => this.addInput(ref, card.id, Input.Description)}
+							mode="outlined"
+							label="Description"
+							defaultValue={card.description}
+							onChangeText={(text): void => { card.description = text }}
+							returnKeyType="next"
+							blurOnSubmit={false}
+							onSubmitEditing={(): void => this.focusNextInput(card, Input.Description)}
 							autoCapitalize="none"
 						/>
 					</View>
@@ -100,26 +118,26 @@ export default class EditSetScreen extends React.Component {
 		this.context.selectedSet.cards.push(new Card())
 	}
 
-	addInput(ref: any, id: string, side: "front" | "back"): void {
+	addInput(ref: any, id: string, input: Input): void {
 		this.inputs[id] = {
 			...this.inputs[id],
-			[side]: ref,
+			[input]: ref,
 		}
 	}
 
-	focusNextInput(card: Card, side: "front" | "back"): void {
-		if (side === "front") {
-			this.inputs[card.id].back.focus()
-		} else {
+	focusNextInput(card: Card, input: number): void {
+		if (input === Input.Description) {
 			const index = this.context.selectedSet.cards.indexOf(card) + 1
 			if (index in this.context.selectedSet.cards) {
 				const id = this.context.selectedSet.cards[index].id
-				this.inputs[id].front.focus()
+				this.inputs[id][0].focus()
 			} else {
 				this.addCard()
 				// gives time for ref to initialize
-				setImmediate(() => this.focusNextInput(card, side))
+				setImmediate(() => this.focusNextInput(card, input))
 			}
+		} else {
+			this.inputs[card.id][input + 1].focus()
 		}
 	}
 }

@@ -5,6 +5,7 @@ import Flip from "../Flip"
 import React from "react"
 import RootStore from "../RootStore"
 import context from "../context"
+import { Snackbar } from "react-native-paper"
 import { TouchableWithoutFeedback } from "react-native-gesture-handler"
 import { View, Text } from "react-native"
 import { computed, observable } from "mobx"
@@ -80,6 +81,12 @@ export default class StudyScreen extends React.Component {
 				<Text>ID: {this.currentCard.id}</Text>
 				<Text>Base Confidence: {this.currentCard.baseConfidence}</Text>
 				<Text>Confidence: {this.currentCard.confidence}</Text>
+				<Snackbar
+					visible={this.flipped && this.currentCard.description && true}
+					onDismiss={(): void => {}}
+				>
+					{this.currentCard.description}
+				</Snackbar>
 			</View>
 		)
 	}
