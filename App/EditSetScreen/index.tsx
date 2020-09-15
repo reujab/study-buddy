@@ -138,7 +138,7 @@ export default class EditSetScreen extends React.Component {
 										/>
 									) : (
 										<Icon
-											name="plus"
+											name="image"
 											size={32}
 										/>
 									)}
