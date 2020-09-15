@@ -1,11 +1,12 @@
 import Card from "../Card"
+import Icon from "react-native-vector-icons/FontAwesome5"
 import React from "react"
 import RootStore from "../RootStore"
 import context from "../context"
 import styles from "../styles"
 import { FAB, TextInput } from "react-native-paper"
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view"
-import { Platform, View } from "react-native"
+import { Platform, Text, TouchableWithoutFeedback, View } from "react-native"
 import { observer } from "mobx-react"
 
 enum Input {
@@ -95,7 +96,31 @@ export default class EditSetScreen extends React.Component {
 							blurOnSubmit={false}
 							onSubmitEditing={(): void => this.focusNextInput(card, Input.Description)}
 							autoCapitalize="none"
+							style={{ marginBottom: 20 }}
 						/>
+						<View
+							style={{
+								flexDirection: "row",
+							}}
+						>
+							<View
+								style={{
+									alignItems: "center",
+									flex: 1,
+									justifyContent: "center",
+								}}
+							>
+								<TouchableWithoutFeedback onPress={(): void => { card.mastered = !card.mastered }}>
+									<Icon
+										name="star"
+										color="#ff9800"
+										size={32}
+										solid={card.mastered}
+									/>
+								</TouchableWithoutFeedback>
+								<Text>Mastered</Text>
+							</View>
+						</View>
 					</View>
 				))}
 				<View style={{ alignSelf: "center", marginVertical: 20 }}>

@@ -14,6 +14,9 @@ export default class Card {
 	description = ""
 
 	@observable
+	mastered = false
+
+	@observable
 	lastStudied = 0
 
 	@observable
@@ -27,6 +30,10 @@ export default class Card {
 	// b = 0.990448
 	@computed
 	get confidence(): number {
+		if (this.mastered) {
+			return 1
+		}
+
 		const hoursSinceLastStudy = (Date.now() - this.lastStudied) / (1000 * 60 * 60)
 		return Math.max(0.2, Math.min(1, 1.00214 * 0.990448 ** hoursSinceLastStudy * this.baseConfidence))
 	}
