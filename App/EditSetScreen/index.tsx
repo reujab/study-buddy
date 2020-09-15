@@ -1,3 +1,4 @@
+import * as Haptics from "expo-haptics"
 import * as ImagePicker from "expo-image-picker"
 import Flashcard from "../Flashcard"
 import Icon from "react-native-vector-icons/FontAwesome5"
@@ -118,7 +119,7 @@ export default class EditSetScreen extends React.Component {
 						/>
 						<View style={styles.buttons}>
 							<View style={styles.button}>
-								<TouchableWithoutFeedback onPress={(): void => { card.mastered = !card.mastered }}>
+								<TouchableWithoutFeedback onPress={(): void => { EditSetScreen.master(card) }}>
 									<Icon
 										name="star"
 										color="#ff9800"
@@ -206,5 +207,10 @@ export default class EditSetScreen extends React.Component {
 			// eslint-disable-next-line require-atomic-updates
 			card.image = `data:image/png;base64,${result.base64}`
 		}
+	}
+
+	static master(card: Flashcard): void {
+		card.mastered = !card.mastered
+		Haptics.impactAsync()
 	}
 }

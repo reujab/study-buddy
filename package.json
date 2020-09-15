@@ -26,7 +26,8 @@
     "react-native-vector-icons": "^7.1.0",
     "react-native-web": "~0.11.7",
     "react-navigation-header-buttons": "^3.0.5",
-    "shortid": "^2.2.15"
+    "shortid": "^2.2.15",
+    "expo-haptics": "~8.2.1"
   },
   "devDependencies": {
     "@babel/core": "^7.10.3",
