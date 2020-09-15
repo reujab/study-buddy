@@ -1,5 +1,5 @@
-import CCard from "../Card"
-import Card from "../DetailsScreen/Cards/FlipCard/Card"
+import CCard from "../Flashcard"
+import Card from "../DetailsScreen/CardCarousel/FlipCard/Card"
 import Face from "./Face"
 import Flip from "../Flip"
 import React from "react"
@@ -10,7 +10,7 @@ import { TouchableWithoutFeedback } from "react-native-gesture-handler"
 import { View, Text } from "react-native"
 import { computed, observable } from "mobx"
 import { observer } from "mobx-react"
-import { size as cardSize } from "../DetailsScreen/Cards/FlipCard/Card/constants"
+import { size as cardSize } from "../DetailsScreen/CardCarousel/FlipCard/Card/constants"
 
 @observer
 export default class StudyScreen extends React.Component {

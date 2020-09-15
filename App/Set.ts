@@ -1,4 +1,4 @@
-import Card from "./Card"
+import Flashcard from "./Flashcard"
 import shortid from "shortid"
 import { computed, observable } from "mobx"
 
@@ -12,10 +12,10 @@ export default class Set {
 	description = ""
 
 	@observable
-	cards: Card[] = []
+	cards: Flashcard[] = []
 
 	@computed
-	get studyCards(): Card[] {
+	get studyCards(): Flashcard[] {
 		return this.cards.slice().filter((card) => card.confidence < 0.8).sort((a, b) => (
 			a.confidence === b.confidence ? 0 :
 				a.confidence > b.confidence ? 1 :

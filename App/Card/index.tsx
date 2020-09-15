@@ -1,11 +1,12 @@
 import React from "react"
-import styles from "../../../../styles"
-import { Text, View } from "react-native"
+import commonStyles from "../../../../commonStyles"
+import { Image, Text, View } from "react-native"
 import { observer } from "mobx-react"
 
 @observer
 export default class Card extends React.Component<{
-	children: string
+	text: string
+	image?: null | string
 }> {
 	render(): JSX.Element {
 		return (
@@ -18,7 +19,7 @@ export default class Card extends React.Component<{
 				}}
 			>
 				<View
-					style={[styles.shadow, {
+					style={[commonStyles.shadow, {
 						alignItems: "center",
 						backgroundColor: "white",
 						borderColor: "lightgray",
@@ -30,7 +31,17 @@ export default class Card extends React.Component<{
 						width: "100%",
 					}]}
 				>
-					<Text style={{ fontSize: 32 }}>{this.props.children}</Text>
+					<Text style={{ fontSize: 32 }}>{this.props.text}</Text>
+					{this.props.image ? (
+						<Image
+							source={{ uri: this.props.image }}
+							style={{
+								aspectRatio: 1,
+								marginTop: 20,
+								width: "50%",
+							}}
+						/>
+					) : null}
 				</View>
 			</View>
 		)

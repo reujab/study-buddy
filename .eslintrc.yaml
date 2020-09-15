@@ -78,7 +78,7 @@ rules:
   complexity: off
   consistent-return: off
   curly: warn
-  default-case: warn
+  default-case: off
   # default-case-last: warn
   "@typescript-eslint/default-param-last": off
   dot-location: warn

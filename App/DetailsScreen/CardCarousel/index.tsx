@@ -1,14 +1,14 @@
 import Carousel from "react-native-snap-carousel"
-import FlipCard from "./FlipCard"
+import FlippableCard from "../../FlippableCard"
 import React from "react"
 import RootStore from "../../RootStore"
 import context from "../../context"
 import { Dimensions, Platform, View } from "react-native"
 import { observer } from "mobx-react"
-import { size as cardSize } from "./FlipCard/Card/constants"
+import { size as cardSize } from "../../Card/constants"
 import { useNavigation } from "@react-navigation/native"
 
-@observer class Cards extends React.Component<{
+@observer class CardCarousel extends React.Component<{
 	navigation: any
 }> {
 	static contextType = context
@@ -35,7 +35,7 @@ import { useNavigation } from "@react-navigation/native"
 					sliderWidth={Dimensions.get("window").width}
 					itemWidth={cardSize}
 					renderItem={({ item }): JSX.Element => (
-						<FlipCard front={item.front} back={item.back} />
+						<FlippableCard card={item} />
 					)}
 
 					// prevents the subviews from not being rendered on iOS
@@ -47,4 +47,4 @@ import { useNavigation } from "@react-navigation/native"
 	}
 }
 
-export default (props): JSX.Element => <Cards navigation={useNavigation()} {...props} />
+export default (props): JSX.Element => <CardCarousel navigation={useNavigation()} {...props} />

@@ -7,13 +7,19 @@ import React from "react"
 import RootStore from "./RootStore"
 import StudyScreen from "./StudyScreen"
 import context from "./context"
-import styles from "./styles"
+import commonStyles from "./commonStyles"
 import { NavigationContainer } from "@react-navigation/native"
-import { StatusBar, View } from "react-native"
+import { StatusBar, View, StyleSheet } from "react-native"
 import { createStackNavigator } from "@react-navigation/stack"
 import { observer } from "mobx-react"
 
 const Stack = createStackNavigator()
+const styles = StyleSheet.create({
+	header: {
+		backgroundColor: "#5856d6",
+		shadowOffset: { width: 0, height: 4 },
+	},
+})
 
 @observer
 export default class Root extends React.Component {
@@ -28,13 +34,7 @@ export default class Root extends React.Component {
 					<StatusBar barStyle="light-content" />
 					<Stack.Navigator
 						screenOptions={{
-							headerStyle: [styles.shadow, {
-								backgroundColor: "#5856d6",
-								shadowOffset: { width: 0, height: 4 },
-
-								// borderWidth is set by `styles.shadow`
-								borderWidth: 0,
-							}],
+							headerStyle: [commonStyles.shadow, styles.header],
 							headerTintColor: "white",
 						}}
 					>

@@ -1,7 +1,7 @@
 import shortid from "shortid"
 import { computed, observable } from "mobx"
 
-export default class Card {
+export default class Flashcard {
 	id: string = shortid.generate()
 
 	@observable
@@ -15,6 +15,9 @@ export default class Card {
 
 	@observable
 	mastered = false
+
+	@observable
+	photo: null | string = null
 
 	@observable
 	lastStudied = 0

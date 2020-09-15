@@ -2,7 +2,7 @@ import React from "react"
 import Thumbnail from "./Thumbnail"
 import Title from "./Title"
 import context from "../../context"
-import styles from "../../styles"
+import commonStyles from "../../commonStyles"
 import Set from "../../Set"
 import { Text, TouchableOpacity, View } from "react-native"
 import { observer } from "mobx-react"
@@ -23,7 +23,7 @@ import { useNavigation } from "@react-navigation/native"
 				}}
 			>
 				<View
-					style={[styles.shadow, {
+					style={[commonStyles.shadow, {
 						borderRadius: 10,
 						display: "flex",
 						flexDirection: "row",

@@ -1,12 +1,13 @@
-import Card from "../Card"
+import * as ImagePicker from "expo-image-picker"
+import Flashcard from "../Flashcard"
 import Icon from "react-native-vector-icons/FontAwesome5"
 import React from "react"
 import RootStore from "../RootStore"
+import commonStyles from "../commonStyles"
 import context from "../context"
-import styles from "../styles"
 import { FAB, TextInput } from "react-native-paper"
+import { Image, Platform, Text, TouchableWithoutFeedback, View, TouchableOpacity } from "react-native"
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view"
-import { Platform, Text, TouchableWithoutFeedback, View } from "react-native"
 import { observer } from "mobx-react"
 
 enum Input {
@@ -39,7 +40,7 @@ export default class EditSetScreen extends React.Component {
 				contentContainerStyle={{ flexGrow: 1 }}
 				extraScrollHeight={Platform.OS === "android" ? 100 : 0}
 			>
-				<View style={[styles.shadow, cardStyle]}>
+				<View style={[commonStyles.shadow, cardStyle]}>
 					<TextInput
 						mode="outlined"
 						label="Title"
@@ -61,7 +62,7 @@ export default class EditSetScreen extends React.Component {
 					/>
 				</View>
 				{this.context.selectedSet.cards.map((card) => (
-					<View key={card.id} style={[styles.shadow, cardStyle]}>
+					<View key={card.id} style={[commonStyles.shadow, cardStyle]}>
 						<TextInput
 							ref={(ref): void => this.addInput(ref, card.id, Input.Front)}
 							mode="outlined"
@@ -120,6 +121,31 @@ export default class EditSetScreen extends React.Component {
 								</TouchableWithoutFeedback>
 								<Text>Mastered</Text>
 							</View>
+							<View
+								style={{
+									alignItems: "center",
+									flex: 1,
+									justifyContent: "center",
+								}}
+							>
+								<TouchableOpacity onPress={(): void => { EditSetScreen.addPhoto(card) }}>
+									{card.photo ? (
+										<Image
+											source={{ uri: card.photo }}
+											style={{
+												width: 32,
+												height: 32,
+											}}
+										/>
+									) : (
+										<Icon
+											name="plus"
+											size={32}
+										/>
+									)}
+								</TouchableOpacity>
+								<Text>Photo</Text>
+							</View>
 						</View>
 					</View>
 				))}
@@ -140,7 +166,7 @@ export default class EditSetScreen extends React.Component {
 			this.context.sets.push(this.context.selectedSet)
 		}
 
-		this.context.selectedSet.cards.push(new Card())
+		this.context.selectedSet.cards.push(new Flashcard())
 	}
 
 	addInput(ref: any, id: string, input: Input): void {
@@ -150,7 +176,7 @@ export default class EditSetScreen extends React.Component {
 		}
 	}
 
-	focusNextInput(card: Card, input: number): void {
+	focusNextInput(card: Flashcard, input: number): void {
 		if (input === Input.Description) {
 			const index = this.context.selectedSet.cards.indexOf(card) + 1
 			if (index in this.context.selectedSet.cards) {
@@ -164,5 +190,21 @@ export default class EditSetScreen extends React.Component {
 		} else {
 			this.inputs[card.id][input + 1].focus()
 		}
+	}
+
+	static async addPhoto(card: Flashcard): Promise<void> {
+		if (card.photo) {
+			card.photo = null
+			return
+		}
+
+		const result: any = await ImagePicker.launchImageLibraryAsync({
+			allowsEditing: true,
+			quality: 0,
+			base64: true,
+		})
+
+		// eslint-disable-next-line
+		card.photo = `data:image/png;base64,${result.base64}`
 	}
 }

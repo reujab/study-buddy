@@ -1,11 +1,10 @@
-import Cards from "./Cards"
+import CardCarousel from "./CardCarousel"
 import React from "react"
 import RootStore from "../RootStore"
 import context from "../context"
+import { Button } from "react-native-paper"
 import { ScrollView, Text, View } from "react-native"
 import { observer } from "mobx-react"
-
-import { Button } from "react-native-paper"
 import { useNavigation } from "@react-navigation/native"
 
 @observer class Details extends React.Component<{
@@ -23,7 +22,7 @@ import { useNavigation } from "@react-navigation/native"
 					<Text style={{ fontSize: 18 }}>{this.context.selectedSet.description}</Text>
 				</ScrollView>
 				<View>
-					<Cards />
+					<CardCarousel />
 					<Button
 						mode="contained"
 						style={{
