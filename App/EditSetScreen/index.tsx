@@ -6,7 +6,7 @@ import RootStore from "../RootStore"
 import commonStyles from "../commonStyles"
 import context from "../context"
 import { FAB, TextInput } from "react-native-paper"
-import { Image, Platform, Text, TouchableWithoutFeedback, View, TouchableOpacity } from "react-native"
+import { Image, Platform, Text, TouchableWithoutFeedback, View, TouchableOpacity, StyleSheet } from "react-native"
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view"
 import { observer } from "mobx-react"
 
@@ -16,12 +16,29 @@ enum Input {
 	Description,
 }
 
-const cardStyle = {
-	borderRadius: 4,
-	margin: 20,
-	marginBottom: 0,
-	padding: 20,
-}
+const styles = StyleSheet.create({
+	card: {
+		borderRadius: 4,
+		margin: 20,
+		marginBottom: 0,
+		padding: 20,
+	},
+	buttons: { flexDirection: "row" },
+	button: {
+		alignItems: "center",
+		flex: 1,
+		justifyContent: "center",
+	},
+	image: {
+		height: 32,
+		width: 32,
+	},
+	addButtonWrapper: {
+		alignSelf: "center",
+		marginVertical: 20,
+	},
+	addButton: { backgroundColor: "#673ab7" },
+})
 
 @observer
 export default class EditSetScreen extends React.Component {
@@ -40,7 +57,7 @@ export default class EditSetScreen extends React.Component {
 				contentContainerStyle={{ flexGrow: 1 }}
 				extraScrollHeight={Platform.OS === "android" ? 100 : 0}
 			>
-				<View style={[commonStyles.shadow, cardStyle]}>
+				<View style={[commonStyles.shadow, styles.card]}>
 					<TextInput
 						mode="outlined"
 						label="Title"
@@ -48,7 +65,7 @@ export default class EditSetScreen extends React.Component {
 						onChangeText={(text): void => { this.context.selectedSet.title = text }}
 						returnKeyType="next"
 						blurOnSubmit={false}
-						onSubmitEditing={(): void => this.descriptionRef.focus()}
+						onSubmitEditing={(): void => { this.descriptionRef.focus() }}
 						style={{ marginBottom: 20 }}
 					/>
 					<TextInput
@@ -62,55 +79,45 @@ export default class EditSetScreen extends React.Component {
 					/>
 				</View>
 				{this.context.selectedSet.cards.map((card) => (
-					<View key={card.id} style={[commonStyles.shadow, cardStyle]}>
+					<View key={card.id} style={[commonStyles.shadow, styles.card]}>
 						<TextInput
-							ref={(ref): void => this.addInput(ref, card.id, Input.Front)}
+							ref={(ref): void => { this.addInput(ref, card.id, Input.Front) }}
 							mode="outlined"
 							label="Front"
 							defaultValue={card.front}
 							onChangeText={(text): void => { card.front = text }}
 							returnKeyType="next"
 							blurOnSubmit={false}
-							onSubmitEditing={(): void => this.focusNextInput(card, Input.Front)}
+							onSubmitEditing={(): void => { this.focusNextInput(card, Input.Front) }}
 							autoCapitalize="none"
 							style={{ marginBottom: 20 }}
 						/>
 						<TextInput
-							ref={(ref): void => this.addInput(ref, card.id, Input.Back)}
+							ref={(ref): void => { this.addInput(ref, card.id, Input.Back) }}
 							mode="outlined"
 							label="Back"
 							defaultValue={card.back}
 							onChangeText={(text): void => { card.back = text }}
 							returnKeyType="next"
 							blurOnSubmit={false}
-							onSubmitEditing={(): void => this.focusNextInput(card, Input.Back)}
+							onSubmitEditing={(): void => { this.focusNextInput(card, Input.Back) }}
 							autoCapitalize="none"
 							style={{ marginBottom: 20 }}
 						/>
 						<TextInput
-							ref={(ref): void => this.addInput(ref, card.id, Input.Description)}
+							ref={(ref): void => { this.addInput(ref, card.id, Input.Description) }}
 							mode="outlined"
 							label="Description"
 							defaultValue={card.description}
 							onChangeText={(text): void => { card.description = text }}
 							returnKeyType="next"
 							blurOnSubmit={false}
-							onSubmitEditing={(): void => this.focusNextInput(card, Input.Description)}
+							onSubmitEditing={(): void => { this.focusNextInput(card, Input.Description) }}
 							autoCapitalize="none"
 							style={{ marginBottom: 20 }}
 						/>
-						<View
-							style={{
-								flexDirection: "row",
-							}}
-						>
-							<View
-								style={{
-									alignItems: "center",
-									flex: 1,
-									justifyContent: "center",
-								}}
-							>
+						<View style={styles.buttons}>
+							<View style={styles.button}>
 								<TouchableWithoutFeedback onPress={(): void => { card.mastered = !card.mastered }}>
 									<Icon
 										name="star"
@@ -121,21 +128,12 @@ export default class EditSetScreen extends React.Component {
 								</TouchableWithoutFeedback>
 								<Text>Mastered</Text>
 							</View>
-							<View
-								style={{
-									alignItems: "center",
-									flex: 1,
-									justifyContent: "center",
-								}}
-							>
-								<TouchableOpacity onPress={(): void => { EditSetScreen.addPhoto(card) }}>
-									{card.photo ? (
+							<View style={styles.button}>
+								<TouchableOpacity onPress={(): void => { EditSetScreen.addImage(card) }}>
+									{card.image ? (
 										<Image
-											source={{ uri: card.photo }}
-											style={{
-												width: 32,
-												height: 32,
-											}}
+											source={{ uri: card.image }}
+											style={styles.image}
 										/>
 									) : (
 										<Icon
@@ -144,17 +142,17 @@ export default class EditSetScreen extends React.Component {
 										/>
 									)}
 								</TouchableOpacity>
-								<Text>Photo</Text>
+								<Text>Image</Text>
 							</View>
 						</View>
 					</View>
 				))}
-				<View style={{ alignSelf: "center", marginVertical: 20 }}>
+				<View style={styles.addButtonWrapper}>
 					{/* eslint-disable-next-line react/jsx-pascal-case */}
 					<FAB
 						icon="plus"
-						style={{ backgroundColor: "#673ab7" }}
-						onPress={(): void => this.addCard()}
+						style={styles.addButton}
+						onPress={(): void => { this.addCard() }}
 					/>
 				</View>
 			</KeyboardAwareScrollView>
@@ -192,9 +190,9 @@ export default class EditSetScreen extends React.Component {
 		}
 	}
 
-	static async addPhoto(card: Flashcard): Promise<void> {
-		if (card.photo) {
-			card.photo = null
+	static async addImage(card: Flashcard): Promise<void> {
+		if (card.image) {
+			card.image = null
 			return
 		}
 
@@ -204,7 +202,9 @@ export default class EditSetScreen extends React.Component {
 			base64: true,
 		})
 
-		// eslint-disable-next-line
-		card.photo = `data:image/png;base64,${result.base64}`
+		if (result.cancelled === false) {
+			// eslint-disable-next-line require-atomic-updates
+			card.image = `data:image/png;base64,${result.base64}`
+		}
 	}
 }

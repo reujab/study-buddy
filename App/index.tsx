@@ -2,7 +2,7 @@
 
 import "react-native-gesture-handler"
 
-import Card from "./Flashcard"
+import Flashcard from "./Flashcard"
 import React from "react"
 import Root from "./Root"
 import RootStore from "./RootStore"
@@ -32,7 +32,7 @@ export default class App extends React.Component {
 			for (let i = 0; i < this.store.sets.length; i++) {
 				this.store.sets[i] = Object.assign(new Set(), this.store.sets[i])
 				for (let j = 0; j < this.store.sets[i].cards.length; j++) {
-					this.store.sets[i].cards[j] = Object.assign(new Card(), this.store.sets[i].cards[j])
+					this.store.sets[i].cards[j] = Object.assign(new Flashcard(), this.store.sets[i].cards[j])
 				}
 			}
 

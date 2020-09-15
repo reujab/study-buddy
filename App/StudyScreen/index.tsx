@@ -1,16 +1,35 @@
-import CCard from "../Flashcard"
-import Card from "../DetailsScreen/CardCarousel/FlipCard/Card"
+import Card from "../Card"
 import Face from "./Face"
+import Flashcard from "../Flashcard"
 import Flip from "../Flip"
 import React from "react"
 import RootStore from "../RootStore"
 import context from "../context"
 import { Snackbar } from "react-native-paper"
 import { TouchableWithoutFeedback } from "react-native-gesture-handler"
-import { View, Text } from "react-native"
+import { View, Text, StyleSheet } from "react-native"
 import { computed, observable } from "mobx"
 import { observer } from "mobx-react"
-import { size as cardSize } from "../DetailsScreen/CardCarousel/FlipCard/Card/constants"
+import { size as cardSize } from "../Card/constants"
+
+const styles = StyleSheet.create({
+	cardTouchWrapper: {
+		alignItems: "center",
+		aspectRatio: 1,
+		justifyContent: "center",
+		width: "100%",
+	},
+	cardWrapper: {
+		width: cardSize,
+		height: cardSize,
+	},
+	faceWrapper: {
+		alignItems: "center",
+		flex: 1,
+		flexDirection: "row",
+		justifyContent: "space-evenly",
+	},
+})
 
 @observer
 export default class StudyScreen extends React.Component {
@@ -24,65 +43,39 @@ export default class StudyScreen extends React.Component {
 	render(): JSX.Element {
 		return this.currentCard && (
 			<View style={{ flex: 1 }}>
-				<View
-					style={{
-						alignItems: "center",
-						aspectRatio: 1,
-						justifyContent: "center",
-						width: "100%",
-					}}
-				>
+				<View style={styles.cardTouchWrapper}>
 					<TouchableWithoutFeedback onPress={(): void => { this.flipped = true }}>
-						<View
-							style={{
-								width: cardSize,
-								height: cardSize,
-							}}
-						>
+						<View style={styles.cardWrapper}>
 							<Flip
 								flipped={this.flipped}
-								front={<Card>{this.currentCard.front}</Card>}
-								back={<Card>{this.currentCard.back}</Card>}
+								front={<Card text={this.currentCard.front} />}
+								back={<Card text={this.currentCard.back} image={this.currentCard.image} />}
 							/>
 						</View>
 					</TouchableWithoutFeedback>
 				</View>
-				<View
-					style={{
-						alignItems: "center",
-						flex: 1,
-					}}
-				>
-					<View
-						style={{
-							flexDirection: "row",
-							justifyContent: "space-evenly",
-							width: "100%",
-							display: this.flipped ? "flex" : "none",
-						}}
-					>
-						<Face
-							icon="frown"
-							color="#f44336"
-							onPress={(): void => { this.nextCard(0.6) }}
-						/>
-						<Face
-							icon="meh"
-							color="#ffc107"
-							onPress={(): void => { this.nextCard(1) }}
-						/>
-						<Face
-							icon="smile"
-							color="#4caf50"
-							onPress={(): void => { this.nextCard(1.6) }}
-						/>
-					</View>
+				<View style={[styles.faceWrapper, { display: this.flipped ? "flex" : "none" }]}>
+					<Face
+						icon="frown"
+						color="#f44336"
+						onPress={(): void => { this.nextCard(0.6) }}
+					/>
+					<Face
+						icon="meh"
+						color="#ffc107"
+						onPress={(): void => { this.nextCard(1) }}
+					/>
+					<Face
+						icon="smile"
+						color="#4caf50"
+						onPress={(): void => { this.nextCard(1.6) }}
+					/>
 				</View>
-				<Text>ID: {this.currentCard.id}</Text>
+				{/* TODO: remove */}
 				<Text>Base Confidence: {this.currentCard.baseConfidence}</Text>
 				<Text>Confidence: {this.currentCard.confidence}</Text>
 				<Snackbar
-					visible={this.flipped && this.currentCard.description && true}
+					visible={this.currentCard.description && this.flipped}
 					onDismiss={(): void => {}}
 				>
 					{this.currentCard.description}
@@ -92,7 +85,7 @@ export default class StudyScreen extends React.Component {
 	}
 
 	@computed
-	get currentCard(): CCard | null {
+	get currentCard(): Flashcard | null {
 		return this.context.selectedSet.studyCards[0] || null
 	}
 

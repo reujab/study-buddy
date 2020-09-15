@@ -29,7 +29,7 @@ import { useNavigation } from "@react-navigation/native"
 				<HeaderItem
 					title="Add"
 					iconName="md-add"
-					onPress={(): void => this.addSet()}
+					onPress={(): void => { this.addSet() }}
 				/>
 			</HeaderButtons>
 		)

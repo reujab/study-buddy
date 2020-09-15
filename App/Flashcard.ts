@@ -17,7 +17,7 @@ export default class Flashcard {
 	mastered = false
 
 	@observable
-	photo: null | string = null
+	image: null | string = null
 
 	@observable
 	lastStudied = 0

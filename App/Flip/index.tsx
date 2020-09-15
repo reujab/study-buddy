@@ -1,14 +1,16 @@
 import React from "react"
-import { Animated } from "react-native"
+import { Animated, StyleSheet } from "react-native"
 import { observer } from "mobx-react"
 
-const style = {
-	backfaceVisibility: "hidden",
-	height: "100%",
-	position: "absolute",
-	top: 0,
-	width: "100%",
-}
+const styles = StyleSheet.create({
+	view: {
+		backfaceVisibility: "hidden",
+		height: "100%",
+		position: "absolute",
+		top: 0,
+		width: "100%",
+	},
+})
 
 @observer
 export default class Flip extends React.Component<{
@@ -56,10 +58,10 @@ export default class Flip extends React.Component<{
 
 		return (
 			<React.Fragment>
-				<Animated.View style={[style, frontAnimatedStyle]}>
+				<Animated.View style={[styles.view, frontAnimatedStyle]}>
 					{this.props.front}
 				</Animated.View>
-				<Animated.View style={[backAnimatedStyle, style]}>
+				<Animated.View style={[backAnimatedStyle, styles.view]}>
 					{this.props.back}
 				</Animated.View>
 			</React.Fragment>

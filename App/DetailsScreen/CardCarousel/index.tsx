@@ -3,10 +3,17 @@ import FlippableCard from "../../FlippableCard"
 import React from "react"
 import RootStore from "../../RootStore"
 import context from "../../context"
-import { Dimensions, Platform, View } from "react-native"
+import { Dimensions, Platform, View, StyleSheet } from "react-native"
 import { observer } from "mobx-react"
 import { size as cardSize } from "../../Card/constants"
 import { useNavigation } from "@react-navigation/native"
+
+const styles = StyleSheet.create({
+	carouselWrapper: {
+		height: cardSize + 16,
+		marginBottom: 32,
+	},
+})
 
 @observer class CardCarousel extends React.Component<{
 	navigation: any
@@ -24,12 +31,7 @@ import { useNavigation } from "@react-navigation/native"
 
 	render(): JSX.Element {
 		return (
-			<View
-				style={{
-					height: cardSize + 16,
-					marginBottom: 32,
-				}}
-			>
+			<View style={styles.carouselWrapper}>
 				<Carousel
 					data={this.context.selectedSet.cards}
 					sliderWidth={Dimensions.get("window").width}

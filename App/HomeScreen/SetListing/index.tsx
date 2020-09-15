@@ -4,9 +4,23 @@ import Title from "./Title"
 import context from "../../context"
 import commonStyles from "../../commonStyles"
 import Set from "../../Set"
-import { Text, TouchableOpacity, View } from "react-native"
+import { Text, TouchableOpacity, View, StyleSheet } from "react-native"
 import { observer } from "mobx-react"
 import { useNavigation } from "@react-navigation/native"
+
+const styles = StyleSheet.create({
+	listing: {
+		borderRadius: 10,
+		display: "flex",
+		flexDirection: "row",
+		margin: 16,
+		padding: 8,
+
+		// FIXME: last item won't have a margin
+		marginBottom: 0,
+	},
+	listingRight: { flexShrink: 1 },
+})
 
 @observer class SetList extends React.Component<{
 	navigation: any
@@ -22,20 +36,9 @@ import { useNavigation } from "@react-navigation/native"
 					this.props.navigation.navigate("details")
 				}}
 			>
-				<View
-					style={[commonStyles.shadow, {
-						borderRadius: 10,
-						display: "flex",
-						flexDirection: "row",
-						margin: 16,
-						padding: 8,
-
-						// FIXME: last item won't have a margin
-						marginBottom: 0,
-					}]}
-				>
+				<View style={[commonStyles.shadow, styles.listing]}>
 					<Thumbnail />
-					<View style={{ flexShrink: 1 }}>
+					<View style={styles.listingRight}>
 						<Title>{this.props.set.title}</Title>
 						<Text>{this.props.set.description}</Text>
 					</View>
@@ -45,6 +48,5 @@ import { useNavigation } from "@react-navigation/native"
 	}
 }
 
-export default (props): JSX.Element => (
-	<SetList navigation={useNavigation()} {...props} />
-)
+export default (props): JSX.Element => <SetList navigation={useNavigation()} {...props} />
+
