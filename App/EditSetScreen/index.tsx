@@ -10,6 +10,7 @@ import { FAB, TextInput } from "react-native-paper"
 import { Image, Platform, Text, TouchableWithoutFeedback, View, TouchableOpacity, StyleSheet } from "react-native"
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view"
 import { observer } from "mobx-react"
+import { useActionSheet } from "@expo/react-native-action-sheet"
 
 enum Input {
 	Front,
@@ -42,7 +43,9 @@ const styles = StyleSheet.create({
 })
 
 @observer
-export default class EditSetScreen extends React.Component {
+class EditSetScreen extends React.Component<{
+		actionSheet: any
+	}> {
 	static contextType = context
 
 	context: RootStore
@@ -130,7 +133,7 @@ export default class EditSetScreen extends React.Component {
 								<Text>Mastered</Text>
 							</View>
 							<View style={styles.button}>
-								<TouchableOpacity onPress={(): void => { EditSetScreen.addImage(card) }}>
+								<TouchableOpacity onPress={(): void => { this.addImage(card) }}>
 									{card.image ? (
 										<Image
 											source={{ uri: card.image }}
@@ -191,22 +194,57 @@ export default class EditSetScreen extends React.Component {
 		}
 	}
 
-	static async addImage(card: Flashcard): Promise<void> {
+	addImage(card: Flashcard): void {
+		const options = [
+			"Cancel",
+			"Paste", card.image ? "Replace" : "Add",
+		]
 		if (card.image) {
-			card.image = null
-			return
+			options.push("Delete")
 		}
 
+		this.props.actionSheet.showActionSheetWithOptions({
+			options,
+			cancelButtonIndex: 0,
+		}, async (index) => {
+			switch (index) {
+				// Paste
+				case 1: {
+					// TODO: pasting from clipboard
+					break
+				}
+
+				// Replace
+				case 2: {
+					const image = await EditSetScreen.pickImage()
+					if (image) {
+						card.image = image
+					}
+					break
+				}
+
+				// Delete
+				case 3: {
+					card.image = null
+					break
+				}
+			}
+		})
+	}
+
+	static async pickImage(): Promise<null | string> {
 		const result: any = await ImagePicker.launchImageLibraryAsync({
 			allowsEditing: true,
 			quality: 0,
 			base64: true,
 		})
 
-		if (result.cancelled === false) {
-			// eslint-disable-next-line require-atomic-updates
-			card.image = `data:image/png;base64,${result.base64}`
+		if (result.cancelled) {
+			return null
 		}
+
+		// eslint-disable-next-line require-atomic-updates
+		return `data:image/png;base64,${result.base64}`
 	}
 
 	static master(card: Flashcard): void {
@@ -214,3 +252,5 @@ export default class EditSetScreen extends React.Component {
 		Haptics.impactAsync()
 	}
 }
+
+export default (props): JSX.Element => <EditSetScreen actionSheet={useActionSheet()} {...props} />

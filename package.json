@@ -5,10 +5,12 @@
     "lint-fix": "eslint . --ext .ts,.tsx --fix"
   },
   "dependencies": {
+    "@expo/react-native-action-sheet": "^3.8.0",
     "@react-native-community/masked-view": "0.1.10",
     "@react-navigation/native": "^5.5.1",
     "@react-navigation/stack": "^5.5.1",
     "expo": "^38.0.0",
+    "expo-haptics": "~8.2.1",
     "expo-image-picker": "~8.3.0",
     "mobx": "^5.15.4",
     "mobx-react": "^6.2.2",
@@ -26,8 +28,7 @@
     "react-native-vector-icons": "^7.1.0",
     "react-native-web": "~0.11.7",
     "react-navigation-header-buttons": "^3.0.5",
-    "shortid": "^2.2.15",
-    "expo-haptics": "~8.2.1"
+    "shortid": "^2.2.15"
   },
   "devDependencies": {
     "@babel/core": "^7.10.3",
