@@ -11,7 +11,7 @@ export default class Flashcard {
 	back = ""
 
 	@observable
-	description = ""
+	example = ""
 
 	@observable
 	mastered = false

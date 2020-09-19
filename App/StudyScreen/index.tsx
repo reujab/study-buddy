@@ -75,10 +75,10 @@ export default class StudyScreen extends React.Component {
 				<Text>Base Confidence: {this.currentCard.baseConfidence}</Text>
 				<Text>Confidence: {this.currentCard.confidence}</Text>
 				<Snackbar
-					visible={this.currentCard.description && this.flipped}
+					visible={this.currentCard.example && this.flipped}
 					onDismiss={(): void => {}}
 				>
-					{this.currentCard.description}
+					{this.currentCard.example}
 				</Snackbar>
 			</View>
 		)

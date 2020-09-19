@@ -16,7 +16,6 @@ import { useActionSheet } from "@expo/react-native-action-sheet"
 enum Input {
 	front,
 	back,
-	description,
 }
 
 const styles = StyleSheet.create({
@@ -110,14 +109,12 @@ class EditSetScreen extends React.Component<{
 							style={{ marginBottom: 20 }}
 						/>
 						<TextInput
-							ref={(ref): void => { this.addInput(ref, card.id, Input.description) }}
 							mode="outlined"
-							label="Description"
-							defaultValue={card.description}
-							onChangeText={(text): void => { card.description = text }}
-							returnKeyType="next"
+							multiline
+							label="Example"
+							defaultValue={card.example}
+							onChangeText={(text): void => { card.example = text }}
 							blurOnSubmit={false}
-							onSubmitEditing={(): void => { this.focusNextInput(card, Input.description) }}
 							autoCapitalize="none"
 							style={{ marginBottom: 20 }}
 						/>
@@ -180,7 +177,7 @@ class EditSetScreen extends React.Component<{
 	}
 
 	focusNextInput(card: Flashcard, input: number): void {
-		if (input === Input.description) {
+		if (input === Input.back) {
 			const index = this.context.selectedSet.cards.indexOf(card) + 1
 			if (index in this.context.selectedSet.cards) {
 				const id = this.context.selectedSet.cards[index].id
