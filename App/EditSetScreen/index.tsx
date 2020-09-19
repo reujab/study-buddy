@@ -7,15 +7,16 @@ import RootStore from "../RootStore"
 import commonStyles from "../commonStyles"
 import context from "../context"
 import { FAB, TextInput } from "react-native-paper"
-import { Image, Platform, Text, TouchableWithoutFeedback, View, TouchableOpacity, StyleSheet } from "react-native"
+import { Image, Platform, Text, TouchableWithoutFeedback, View, TouchableOpacity, StyleSheet, Clipboard } from "react-native"
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view"
 import { observer } from "mobx-react"
 import { useActionSheet } from "@expo/react-native-action-sheet"
 
+// eslint-disable-next-line no-shadow
 enum Input {
-	Front,
-	Back,
-	Description,
+	front,
+	back,
+	description,
 }
 
 const styles = StyleSheet.create({
@@ -52,7 +53,7 @@ class EditSetScreen extends React.Component<{
 
 	descriptionRef = null
 
-	inputs: {} = {}
+	inputs = {}
 
 	render(): JSX.Element {
 		return (
@@ -85,38 +86,38 @@ class EditSetScreen extends React.Component<{
 				{this.context.selectedSet.cards.map((card) => (
 					<View key={card.id} style={[commonStyles.shadow, styles.card]}>
 						<TextInput
-							ref={(ref): void => { this.addInput(ref, card.id, Input.Front) }}
+							ref={(ref): void => { this.addInput(ref, card.id, Input.front) }}
 							mode="outlined"
 							label="Front"
 							defaultValue={card.front}
 							onChangeText={(text): void => { card.front = text }}
 							returnKeyType="next"
 							blurOnSubmit={false}
-							onSubmitEditing={(): void => { this.focusNextInput(card, Input.Front) }}
+							onSubmitEditing={(): void => { this.focusNextInput(card, Input.front) }}
 							autoCapitalize="none"
 							style={{ marginBottom: 20 }}
 						/>
 						<TextInput
-							ref={(ref): void => { this.addInput(ref, card.id, Input.Back) }}
+							ref={(ref): void => { this.addInput(ref, card.id, Input.back) }}
 							mode="outlined"
 							label="Back"
 							defaultValue={card.back}
 							onChangeText={(text): void => { card.back = text }}
 							returnKeyType="next"
 							blurOnSubmit={false}
-							onSubmitEditing={(): void => { this.focusNextInput(card, Input.Back) }}
+							onSubmitEditing={(): void => { this.focusNextInput(card, Input.back) }}
 							autoCapitalize="none"
 							style={{ marginBottom: 20 }}
 						/>
 						<TextInput
-							ref={(ref): void => { this.addInput(ref, card.id, Input.Description) }}
+							ref={(ref): void => { this.addInput(ref, card.id, Input.description) }}
 							mode="outlined"
 							label="Description"
 							defaultValue={card.description}
 							onChangeText={(text): void => { card.description = text }}
 							returnKeyType="next"
 							blurOnSubmit={false}
-							onSubmitEditing={(): void => { this.focusNextInput(card, Input.Description) }}
+							onSubmitEditing={(): void => { this.focusNextInput(card, Input.description) }}
 							autoCapitalize="none"
 							style={{ marginBottom: 20 }}
 						/>
@@ -179,7 +180,7 @@ class EditSetScreen extends React.Component<{
 	}
 
 	focusNextInput(card: Flashcard, input: number): void {
-		if (input === Input.Description) {
+		if (input === Input.description) {
 			const index = this.context.selectedSet.cards.indexOf(card) + 1
 			if (index in this.context.selectedSet.cards) {
 				const id = this.context.selectedSet.cards[index].id
@@ -197,7 +198,8 @@ class EditSetScreen extends React.Component<{
 	addImage(card: Flashcard): void {
 		const options = [
 			"Cancel",
-			"Paste", card.image ? "Replace" : "Add",
+			"Paste",
+			card.image ? "Replace" : "Add",
 		]
 		if (card.image) {
 			options.push("Delete")
@@ -210,7 +212,7 @@ class EditSetScreen extends React.Component<{
 			switch (index) {
 				// Paste
 				case 1: {
-					// TODO: pasting from clipboard
+					card.image = await Clipboard.getString()
 					break
 				}
 
