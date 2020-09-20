@@ -40,16 +40,27 @@ export default class StudyScreen extends React.Component {
 	@observable
 	flipped = false
 
+	// these values are copied from this.currentCard so that the next card's answer isn't revealed
+	// during the flip card animation
+	@observable
+	front = null
+
+	@observable
+	back = null
+
+	@observable
+	example = null
+
 	render(): JSX.Element {
 		return this.currentCard && (
 			<View style={{ flex: 1 }}>
 				<View style={styles.cardTouchWrapper}>
-					<TouchableWithoutFeedback onPress={(): void => { this.flipped = true }}>
+					<TouchableWithoutFeedback onPress={(): void => { this.update(true) }}>
 						<View style={styles.cardWrapper}>
 							<Flip
 								flipped={this.flipped}
-								front={<Card text={this.currentCard.front} />}
-								back={<Card text={this.currentCard.back} image={this.currentCard.image} />}
+								front={this.front}
+								back={this.back}
 							/>
 						</View>
 					</TouchableWithoutFeedback>
@@ -58,30 +69,34 @@ export default class StudyScreen extends React.Component {
 					<Face
 						icon="frown"
 						color="#f44336"
-						onPress={(): void => { this.nextCard(0.6) }}
+						onPress={(): void => { this.rate(0.6) }}
 					/>
 					<Face
 						icon="meh"
 						color="#ffc107"
-						onPress={(): void => { this.nextCard(1) }}
+						onPress={(): void => { this.rate(1) }}
 					/>
 					<Face
 						icon="smile"
 						color="#4caf50"
-						onPress={(): void => { this.nextCard(1.6) }}
+						onPress={(): void => { this.rate(1.6) }}
 					/>
 				</View>
 				{/* TODO: remove */}
 				<Text>Base Confidence: {this.currentCard.baseConfidence}</Text>
 				<Text>Confidence: {this.currentCard.confidence}</Text>
 				<Snackbar
-					visible={this.currentCard.example && this.flipped}
+					visible={this.example && this.flipped}
 					onDismiss={(): void => {}}
 				>
-					{this.currentCard.example}
+					{this.example}
 				</Snackbar>
 			</View>
 		)
+	}
+
+	componentDidMount(): void {
+		this.front = this.displayedCard
 	}
 
 	@computed
@@ -89,10 +104,29 @@ export default class StudyScreen extends React.Component {
 		return this.context.selectedSet.studyCards[0] || null
 	}
 
-	nextCard(confidenceMultiplier: number): void {
+	@computed
+	get displayedCard(): JSX.Element {
+		return <Card text={this.currentCard[this.flipped ? "back" : "front"]} />
+	}
+
+	update(flipped: boolean): void {
+		if (flipped === this.flipped) {
+			return
+		}
+
+		this.flipped = flipped
+		if (this.flipped) {
+			this.back = this.displayedCard
+			this.example = this.currentCard.example
+		} else {
+			this.front = this.displayedCard
+		}
+	}
+
+	rate(confidenceMultiplier: number): void {
 		const currentCard = this.currentCard
 		currentCard.baseConfidence = Math.max(0.2, Math.min(1, this.currentCard.confidence * confidenceMultiplier))
 		currentCard.lastStudied = Date.now()
-		this.flipped = false
+		this.update(false)
 	}
 }
