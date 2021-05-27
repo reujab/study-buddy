@@ -1,23 +1,42 @@
 import Icon from "react-native-vector-icons/FontAwesome5"
 import React from "react"
-import { TouchableOpacity } from "react-native"
+import { Animated, TouchableOpacity } from "react-native"
 import { observer } from "mobx-react"
 
 @observer
 export default class Face extends React.Component<{
 	icon: string
 	color: string
+	scale: Animated.Value
 	onPress: any
 }> {
+	hoverScale = new Animated.Value(1)
+
 	render(): JSX.Element {
 		return (
-			<TouchableOpacity onPress={this.props.onPress}>
-				<Icon
-					name={this.props.icon}
-					size={96}
-					color={this.props.color}
-				/>
-			</TouchableOpacity>
+			<Animated.View style={{ transform: [{ scale: Animated.multiply(this.props.scale, this.hoverScale) }] }}>
+				<TouchableOpacity
+					activeOpacity={1}
+					onPressIn={(): void => { this.animateHoverScale(1.2) }}
+					onPressOut={(): void => { this.animateHoverScale(1) }}
+					onPress={this.props.onPress}
+				>
+					<Icon
+						name={this.props.icon}
+						size={96}
+						color={this.props.color}
+					/>
+				</TouchableOpacity>
+			</Animated.View>
 		)
+	}
+
+	animateHoverScale(toValue: number): void {
+		Animated.spring(this.hoverScale, {
+			toValue,
+			speed: 45,
+			bounciness: 15,
+			useNativeDriver: true,
+		}).start()
 	}
 }

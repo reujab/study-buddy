@@ -1,14 +1,15 @@
+import * as Haptics from "expo-haptics"
 import Face from "./Face"
 import Flashcard from "../Flashcard"
+import FlippableCard from "../FlippableCard"
 import React from "react"
 import RootStore from "../RootStore"
 import context from "../context"
-import { View, StyleSheet } from "react-native"
+import { Animated, View, StyleSheet } from "react-native"
+import { ProgressBar } from "react-native-paper"
 import { computed, observable } from "mobx"
 import { observer } from "mobx-react"
 import { size as cardSize } from "../Card/constants"
-import FlippableCard from "../FlippableCard"
-import { ProgressBar } from "react-native-paper"
 
 const styles = StyleSheet.create({
 	totalProgressWrapper: {
@@ -44,6 +45,8 @@ export default class StudyScreen extends React.Component {
 	@observable
 	displayedCard = new Flashcard()
 
+	faceScale = new Animated.Value(0)
+
 	render(): JSX.Element {
 		return this.currentCard && (
 			<View style={{ flex: 1 }}>
@@ -60,23 +63,33 @@ export default class StudyScreen extends React.Component {
 								this.displayedCard.back = this.currentCard.back
 								this.displayedCard.example = this.currentCard.example
 							}
+
+							Animated.spring(this.faceScale, {
+								toValue: flipped ? 1 : 0,
+								speed: 45,
+								bounciness: flipped ? 15 : 0,
+								useNativeDriver: true,
+							}).start()
 						}}
 						flippable={!this.flippableCard?.flipped}
 					/>
 				</View>
-				<View style={[styles.faceWrapper, { display: this.flippableCard?.flipped ? "flex" : "none" }]}>
+				<View style={styles.faceWrapper}>
 					<Face
 						icon="frown"
+						scale={this.faceScale}
 						color="#f44336"
 						onPress={(): void => { this.rate(0.6) }}
 					/>
 					<Face
 						icon="meh"
+						scale={this.faceScale}
 						color="#ffc107"
 						onPress={(): void => { this.rate(1) }}
 					/>
 					<Face
 						icon="smile"
+						scale={this.faceScale}
 						color="#4caf50"
 						onPress={(): void => { this.rate(1.6) }}
 					/>
@@ -103,6 +116,8 @@ export default class StudyScreen extends React.Component {
 	}
 
 	rate(confidenceMultiplier: number): void {
+		Haptics.impactAsync()
+
 		const currentCard = this.currentCard
 		currentCard.baseConfidence = Math.max(0.2, Math.min(1, this.currentCard.confidence * confidenceMultiplier))
 		currentCard.lastStudied = Date.now()
