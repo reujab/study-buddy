@@ -1,3 +1,4 @@
+import Flashcard from "../Flashcard"
 import React from "react"
 import commonStyles from "../commonStyles"
 import { Image, Text, View, StyleSheet } from "react-native"
@@ -21,6 +22,7 @@ const styles = StyleSheet.create({
 		padding: 20,
 		width: "100%",
 	},
+	textWrapper: { flex: 1, justifyContent: "center" },
 	text: { fontSize: 32 },
 	image: {
 		aspectRatio: 1,
@@ -31,19 +33,24 @@ const styles = StyleSheet.create({
 
 @observer
 export default class Card extends React.Component<{
-	text: string
-	image?: null | string
+	card: Flashcard
+	flipped?: boolean
 }> {
 	render(): JSX.Element {
 		return (
 			<View style={styles.container}>
 				<View style={[commonStyles.shadow, styles.card]}>
-					<Text style={styles.text}>{this.props.text}</Text>
-					{this.props.image ? (
+					<View style={styles.textWrapper}>
+						<Text style={styles.text}>{this.props.card[this.props.flipped ? "back" : "front"]}</Text>
+					</View>
+					{this.props.card.image ? (
 						<Image
-							source={{ uri: this.props.image }}
+							source={{ uri: this.props.card.image }}
 							style={styles.image}
 						/>
+					) : null}
+					{this.props.card.example && this.props.flipped ? (
+						<Text>{this.props.card.example}</Text>
 					) : null}
 				</View>
 			</View>

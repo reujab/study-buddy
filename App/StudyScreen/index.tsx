@@ -3,7 +3,6 @@ import Flashcard from "../Flashcard"
 import React from "react"
 import RootStore from "../RootStore"
 import context from "../context"
-import { Snackbar } from "react-native-paper"
 import { View, Text, StyleSheet } from "react-native"
 import { computed, observable } from "mobx"
 import { observer } from "mobx-react"
@@ -41,9 +40,6 @@ export default class StudyScreen extends React.Component {
 	@observable
 	displayedCard = new Flashcard()
 
-	@observable
-	example = null
-
 	render(): JSX.Element {
 		return this.currentCard && (
 			<View style={{ flex: 1 }}>
@@ -55,7 +51,7 @@ export default class StudyScreen extends React.Component {
 						onFlip={(flipped): void => {
 							if (flipped) {
 								this.displayedCard.back = this.currentCard.back
-								this.example = this.currentCard.example
+								this.displayedCard.example = this.currentCard.example
 							}
 						}}
 						flippable={!this.flippableCard?.flipped}
@@ -81,12 +77,6 @@ export default class StudyScreen extends React.Component {
 				{/* TODO: remove */}
 				<Text>Base Confidence: {this.currentCard.baseConfidence}</Text>
 				<Text>Confidence: {this.currentCard.confidence}</Text>
-				<Snackbar
-					visible={this.example && this.flippableCard.flipped}
-					onDismiss={(): void => {}}
-				>
-					{this.example}
-				</Snackbar>
 			</View>
 		)
 	}
