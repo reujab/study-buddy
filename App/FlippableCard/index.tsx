@@ -59,12 +59,7 @@ export default class FlippableCard extends React.Component<{
 					<Flip
 						flipped={this.flipped}
 						front={<Card card={this.props.card} />}
-						back={
-							<Card
-								card={this.props.card}
-								flipped
-							/>
-						}
+						back={<Card card={this.props.card} flipped />}
 					/>
 				</View>
 			</TouchableWithoutFeedback>
