@@ -87,21 +87,17 @@ class EditSetScreen extends React.Component<{
 					<View style={{ flexDirection: "row" }}>
 						<View style={{ flex: 1 }}>
 							<Text>Front language:</Text>
-							<Picker
-								selectedValue={this.context.selectedSet.language.front}
-								onValueChange={(lang): void => { this.context.selectedSet.language.front = lang }}
-							>
-								<Languages />
-							</Picker>
+							<Languages
+								value={this.context.selectedSet.language.front}
+								onChange={(lang): void => { this.context.selectedSet.language.front = lang }}
+							/>
 						</View>
 						<View style={{ flex: 1 }}>
 							<Text>Back language:</Text>
-							<Picker
-								selectedValue={this.context.selectedSet.language.back}
-								onValueChange={(lang): void => { this.context.selectedSet.language.back = lang }}
-							>
-								<Languages />
-							</Picker>
+							<Languages
+								value={this.context.selectedSet.language.back}
+								onChange={(lang): void => { this.context.selectedSet.language.back = lang }}
+							/>
 						</View>
 					</View>
 				</View>
