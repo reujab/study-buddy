@@ -28,4 +28,11 @@ export default class Set {
 					-1
 		))
 	}
+
+	@computed
+	get studyProgress(): number {
+		return this.cards.
+			map((card) => card.progress).
+			reduce((sum, confidence) => sum + confidence) / this.cards.length
+	}
 }

@@ -40,4 +40,9 @@ export default class Flashcard {
 		const hoursSinceLastStudy = (Date.now() - this.lastStudied) / (1000 * 60 * 60)
 		return Math.max(0.2, Math.min(1, 1.00214 * 0.990448 ** hoursSinceLastStudy * this.baseConfidence))
 	}
+
+	@computed
+	get progress(): number {
+		return Math.min(1, (this.confidence - 0.2) / 0.6)
+	}
 }

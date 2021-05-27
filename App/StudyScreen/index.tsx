@@ -8,8 +8,12 @@ import { computed, observable } from "mobx"
 import { observer } from "mobx-react"
 import { size as cardSize } from "../Card/constants"
 import FlippableCard from "../FlippableCard"
+import { ProgressBar } from "react-native-paper"
 
 const styles = StyleSheet.create({
+	totalProgressWrapper: {
+		padding: 20,
+	},
 	cardTouchWrapper: {
 		alignItems: "center",
 		aspectRatio: 1,
@@ -43,6 +47,9 @@ export default class StudyScreen extends React.Component {
 	render(): JSX.Element {
 		return this.currentCard && (
 			<View style={{ flex: 1 }}>
+				<View style={styles.totalProgressWrapper}>
+					<ProgressBar progress={this.context.selectedSet.studyProgress} />
+				</View>
 				<View style={styles.cardTouchWrapper}>
 					<FlippableCard
 						ref={(ref): void => { this.flippableCard = ref }}

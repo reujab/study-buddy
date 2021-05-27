@@ -46,7 +46,7 @@ export default class Card extends React.Component<{
 				<View style={[commonStyles.shadow, styles.card]}>
 					{this.props.flipped ? null : (
 						<View style={styles.confidenceWrapper}>
-							<ProgressBar progress={(this.props.card.confidence - 0.2) / 0.6} style={{ backgroundColor: "white" }} />
+							<ProgressBar progress={this.props.card.progress} style={{ backgroundColor: "white" }} />
 						</View>
 					)}
 					<View style={styles.textWrapper}>
