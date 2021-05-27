@@ -19,6 +19,9 @@ settings:
   react:
     version: detect
 
+globals:
+  JSX: readonly
+
 rules:
   # Possible Errors
   for-direction: warn
