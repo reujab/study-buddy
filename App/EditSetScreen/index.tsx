@@ -10,7 +10,6 @@ import context from "../context"
 import { FAB, TextInput } from "react-native-paper"
 import { Image, Platform, Text, TouchableWithoutFeedback, View, TouchableOpacity, StyleSheet, Clipboard } from "react-native"
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view"
-import { Picker } from "@react-native-picker/picker"
 import { observer } from "mobx-react"
 import { useActionSheet } from "@expo/react-native-action-sheet"
 

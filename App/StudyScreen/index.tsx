@@ -3,7 +3,7 @@ import Flashcard from "../Flashcard"
 import React from "react"
 import RootStore from "../RootStore"
 import context from "../context"
-import { View, Text, StyleSheet } from "react-native"
+import { View, StyleSheet } from "react-native"
 import { computed, observable } from "mobx"
 import { observer } from "mobx-react"
 import { size as cardSize } from "../Card/constants"
@@ -74,9 +74,6 @@ export default class StudyScreen extends React.Component {
 						onPress={(): void => { this.rate(1.6) }}
 					/>
 				</View>
-				{/* TODO: remove */}
-				<Text>Base Confidence: {this.currentCard.baseConfidence}</Text>
-				<Text>Confidence: {this.currentCard.confidence}</Text>
 			</View>
 		)
 	}
@@ -103,7 +100,11 @@ export default class StudyScreen extends React.Component {
 		currentCard.baseConfidence = Math.max(0.2, Math.min(1, this.currentCard.confidence * confidenceMultiplier))
 		currentCard.lastStudied = Date.now()
 
-		this.displayedCard.front = this.currentCard.front
+		Object.assign(this.displayedCard, this.currentCard, {
+			// keep example and back for seamless animation
+			back: this.displayedCard.back,
+			example: this.displayedCard.example,
+		})
 		this.flippableCard.flip()
 	}
 }

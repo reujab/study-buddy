@@ -23,7 +23,7 @@ export default class Flashcard {
 	lastStudied = 0
 
 	@observable
-	baseConfidence = 0.5
+	baseConfidence = 0
 
 	// (0, 1)
 	// (24, 0.8)

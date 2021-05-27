@@ -3,6 +3,7 @@ import React from "react"
 import commonStyles from "../commonStyles"
 import { Image, Text, View, StyleSheet } from "react-native"
 import { observer } from "mobx-react"
+import { ProgressBar } from "react-native-paper"
 
 const styles = StyleSheet.create({
 	container: {
@@ -20,6 +21,9 @@ const styles = StyleSheet.create({
 		height: "100%",
 		justifyContent: "center",
 		padding: 20,
+		width: "100%",
+	},
+	confidenceWrapper: {
 		width: "100%",
 	},
 	textWrapper: { flex: 1, justifyContent: "center" },
@@ -40,6 +44,11 @@ export default class Card extends React.Component<{
 		return (
 			<View style={styles.container}>
 				<View style={[commonStyles.shadow, styles.card]}>
+					{this.props.flipped ? null : (
+						<View style={styles.confidenceWrapper}>
+							<ProgressBar progress={(this.props.card.confidence - 0.2) / 0.6} style={{ backgroundColor: "white" }} />
+						</View>
+					)}
 					<View style={styles.textWrapper}>
 						<Text style={styles.text}>{this.props.card[this.props.flipped ? "back" : "front"]}</Text>
 					</View>
