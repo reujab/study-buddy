@@ -22,10 +22,16 @@ const styles = StyleSheet.create({
 
 	context: RootStore
 
+	// references to <FlippableCard> used for speech
+	private flippableCards = {}
+
 	// component does not automatically update after editing set
 	componentDidMount(): void {
 		this.props.navigation.addListener("focus", (): void => {
 			this.forceUpdate()
+		})
+		setImmediate((): void => {
+			this.flippableCards[this.context.selectedSet.cards[0].id].speak()
 		})
 	}
 
@@ -37,8 +43,15 @@ const styles = StyleSheet.create({
 					sliderWidth={Dimensions.get("window").width}
 					itemWidth={cardSize}
 					renderItem={({ item }): JSX.Element => (
-						<FlippableCard card={item} />
+						<FlippableCard
+							ref={(ref): void => { this.flippableCards[item.id] = ref }}
+							set={this.context.selectedSet}
+							card={item}
+						/>
 					)}
+					onSnapToItem={(i): void => {
+						this.flippableCards[this.context.selectedSet.cards[i].id].speak()
+					}}
 
 					// prevents the subviews from not being rendered on iOS
 					// https://github.com/archriss/react-native-snap-carousel/issues/238

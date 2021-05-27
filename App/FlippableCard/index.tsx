@@ -1,7 +1,9 @@
+import * as Speech from "expo-speech"
 import Card from "../Card"
-import Flip from "../Flip"
 import Flashcard from "../Flashcard"
+import Flip from "../Flip"
 import React from "react"
+import Set from "../Set"
 import { TouchableWithoutFeedback, View, StyleSheet } from "react-native"
 import { observable } from "mobx"
 import { observer } from "mobx-react"
@@ -16,20 +18,43 @@ const styles = StyleSheet.create({
 
 @observer
 export default class FlippableCard extends React.Component<{
+	set: Set
 	card: Flashcard
-}, {
-	flipped: boolean
+	flippable?: boolean
+	onFlip?: (boolean) => void
 }> {
 	@observable
-	private flipped = false
+	flipped = false
 
-	private flip(): void {
+	flip(): void {
 		this.flipped = !this.flipped
+
+		if (this.props.onFlip) {
+			this.props.onFlip(this.flipped)
+		}
+
+		this.speak()
+	}
+
+	speak(): void {
+		Speech.stop()
+
+		const side = this.flipped ? "back" : "front"
+		Speech.speak(this.props.card[side], {
+			language: this.props.set.language[side],
+			rate: 0.8,
+		})
 	}
 
 	render(): JSX.Element {
 		return (
-			<TouchableWithoutFeedback onPress={(): void => { this.flip() }}>
+			<TouchableWithoutFeedback
+				onPress={(): void => {
+					if (this.props.flippable !== false) {
+						this.flip()
+					}
+				}}
+			>
 				<View style={styles.card}>
 					<Flip
 						flipped={this.flipped}

@@ -2,6 +2,7 @@ import * as Haptics from "expo-haptics"
 import * as ImagePicker from "expo-image-picker"
 import Flashcard from "../Flashcard"
 import Icon from "react-native-vector-icons/FontAwesome5"
+import Languages from "./Languages"
 import React from "react"
 import RootStore from "../RootStore"
 import commonStyles from "../commonStyles"
@@ -9,6 +10,7 @@ import context from "../context"
 import { FAB, TextInput } from "react-native-paper"
 import { Image, Platform, Text, TouchableWithoutFeedback, View, TouchableOpacity, StyleSheet, Clipboard } from "react-native"
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view"
+import { Picker } from "@react-native-picker/picker"
 import { observer } from "mobx-react"
 import { useActionSheet } from "@expo/react-native-action-sheet"
 
@@ -80,7 +82,28 @@ class EditSetScreen extends React.Component<{
 						defaultValue={this.context.selectedSet.description}
 						onChangeText={(text): void => { this.context.selectedSet.description = text }}
 						blurOnSubmit={false}
+						style={{ marginBottom: 20 }}
 					/>
+					<View style={{ flexDirection: "row" }}>
+						<View style={{ flex: 1 }}>
+							<Text>Front language:</Text>
+							<Picker
+								selectedValue={this.context.selectedSet.language.front}
+								onValueChange={(lang): void => { this.context.selectedSet.language.front = lang }}
+							>
+								<Languages />
+							</Picker>
+						</View>
+						<View style={{ flex: 1 }}>
+							<Text>Back language:</Text>
+							<Picker
+								selectedValue={this.context.selectedSet.language.back}
+								onValueChange={(lang): void => { this.context.selectedSet.language.back = lang }}
+							>
+								<Languages />
+							</Picker>
+						</View>
+					</View>
 				</View>
 				{this.context.selectedSet.cards.map((card) => (
 					<View key={card.id} style={[commonStyles.shadow, styles.card]}>

@@ -1,16 +1,14 @@
-import Card from "../Card"
 import Face from "./Face"
 import Flashcard from "../Flashcard"
-import Flip from "../Flip"
 import React from "react"
 import RootStore from "../RootStore"
 import context from "../context"
 import { Snackbar } from "react-native-paper"
-import { TouchableWithoutFeedback } from "react-native-gesture-handler"
 import { View, Text, StyleSheet } from "react-native"
 import { computed, observable } from "mobx"
 import { observer } from "mobx-react"
 import { size as cardSize } from "../Card/constants"
+import FlippableCard from "../FlippableCard"
 
 const styles = StyleSheet.create({
 	cardTouchWrapper: {
@@ -37,16 +35,11 @@ export default class StudyScreen extends React.Component {
 
 	context: RootStore = null
 
-	@observable
-	flipped = false
+	flippableCard: FlippableCard
 
-	// these values are copied from this.currentCard so that the next card's answer isn't revealed
-	// during the flip card animation
+	// used for the infinite flip animation
 	@observable
-	front = null
-
-	@observable
-	back = null
+	displayedCard = new Flashcard()
 
 	@observable
 	example = null
@@ -55,17 +48,20 @@ export default class StudyScreen extends React.Component {
 		return this.currentCard && (
 			<View style={{ flex: 1 }}>
 				<View style={styles.cardTouchWrapper}>
-					<TouchableWithoutFeedback onPress={(): void => { this.update(true) }}>
-						<View style={styles.cardWrapper}>
-							<Flip
-								flipped={this.flipped}
-								front={this.front}
-								back={this.back}
-							/>
-						</View>
-					</TouchableWithoutFeedback>
+					<FlippableCard
+						ref={(ref): void => { this.flippableCard = ref }}
+						set={this.context.selectedSet}
+						card={this.displayedCard}
+						onFlip={(flipped): void => {
+							if (flipped) {
+								this.displayedCard.back = this.currentCard.back
+								this.example = this.currentCard.example
+							}
+						}}
+						flippable={!this.flippableCard?.flipped}
+					/>
 				</View>
-				<View style={[styles.faceWrapper, { display: this.flipped ? "flex" : "none" }]}>
+				<View style={[styles.faceWrapper, { display: this.flippableCard?.flipped ? "flex" : "none" }]}>
 					<Face
 						icon="frown"
 						color="#f44336"
@@ -86,7 +82,7 @@ export default class StudyScreen extends React.Component {
 				<Text>Base Confidence: {this.currentCard.baseConfidence}</Text>
 				<Text>Confidence: {this.currentCard.confidence}</Text>
 				<Snackbar
-					visible={this.example && this.flipped}
+					visible={this.example && this.flippableCard.flipped}
 					onDismiss={(): void => {}}
 				>
 					{this.example}
@@ -96,7 +92,10 @@ export default class StudyScreen extends React.Component {
 	}
 
 	componentDidMount(): void {
-		this.front = this.displayedCard
+		this.displayedCard = Object.assign(new Flashcard(), this.currentCard)
+		setImmediate((): void => {
+			this.flippableCard.speak()
+		})
 	}
 
 	@computed
@@ -105,28 +104,16 @@ export default class StudyScreen extends React.Component {
 	}
 
 	@computed
-	get displayedCard(): JSX.Element {
-		return <Card text={this.currentCard[this.flipped ? "back" : "front"]} />
-	}
-
-	update(flipped: boolean): void {
-		if (flipped === this.flipped) {
-			return
-		}
-
-		this.flipped = flipped
-		if (this.flipped) {
-			this.back = this.displayedCard
-			this.example = this.currentCard.example
-		} else {
-			this.front = this.displayedCard
-		}
+	get displayedText(): string {
+		return this.currentCard[this.flippableCard.flipped ? "back" : "front"]
 	}
 
 	rate(confidenceMultiplier: number): void {
 		const currentCard = this.currentCard
 		currentCard.baseConfidence = Math.max(0.2, Math.min(1, this.currentCard.confidence * confidenceMultiplier))
 		currentCard.lastStudied = Date.now()
-		this.update(false)
+
+		this.displayedCard.front = this.currentCard.front
+		this.flippableCard.flip()
 	}
 }

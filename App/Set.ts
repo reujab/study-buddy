@@ -12,6 +12,12 @@ export default class Set {
 	description = ""
 
 	@observable
+	language = {
+		front: "en",
+		back: "en",
+	}
+
+	@observable
 	cards: Flashcard[] = []
 
 	@computed
