@@ -20,6 +20,7 @@ export default class Face extends React.Component<{
 					onPressIn={(): void => { this.animateHoverScale(1.2) }}
 					onPressOut={(): void => { this.animateHoverScale(1) }}
 					onPress={this.props.onPress}
+					onLongPress={this.props.onPress}
 				>
 					<Icon
 						name={this.props.icon}
