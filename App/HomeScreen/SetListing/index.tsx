@@ -10,6 +10,7 @@ import { useNavigation } from "@react-navigation/native"
 
 const styles = StyleSheet.create({
 	listing: {
+		backgroundColor: "white",
 		borderRadius: 10,
 		display: "flex",
 		flexDirection: "row",

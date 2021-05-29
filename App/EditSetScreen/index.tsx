@@ -15,6 +15,7 @@ import { observer } from "mobx-react"
 
 const styles = StyleSheet.create({
 	card: {
+		backgroundColor: "white",
 		borderRadius: 4,
 		margin: 20,
 		marginBottom: 0,

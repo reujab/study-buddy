@@ -35,8 +35,8 @@ export default class Face extends React.Component<{
 	animateHoverScale(toValue: number): void {
 		Animated.spring(this.hoverScale, {
 			toValue,
-			speed: 45,
-			bounciness: 15,
+			speed: 50,
+			bounciness: 10,
 			useNativeDriver: true,
 		}).start()
 	}
