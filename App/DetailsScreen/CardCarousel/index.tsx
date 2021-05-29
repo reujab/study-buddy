@@ -30,9 +30,12 @@ const styles = StyleSheet.create({
 		this.props.navigation.addListener("focus", () => {
 			this.forceUpdate()
 		})
-		setImmediate(() => {
-			this.flippableCards[this.context.selectedSet.cards[0].id].speak()
-		})
+
+		if (this.context.selectedSet.cards.length) {
+			setImmediate(() => {
+				this.flippableCards[this.context.selectedSet.cards[0].id].speak()
+			})
+		}
 	}
 
 	render(): JSX.Element {
