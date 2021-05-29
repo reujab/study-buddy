@@ -1,3 +1,4 @@
+import Button from "../Button"
 import EditableCard from "./EditableCard"
 import Flashcard from "../Flashcard"
 import Icon from "react-native-vector-icons/FontAwesome5"
@@ -6,10 +7,10 @@ import React from "react"
 import RootStore from "../RootStore"
 import commonStyles from "../commonStyles"
 import context from "../context"
-import { FAB, TextInput } from "react-native-paper"
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view"
 import { Platform, Text, TextInput as NativeTextInput, View, StyleSheet } from "react-native"
 import { Side } from "./side"
+import { TextInput } from "react-native-paper"
 import { observer } from "mobx-react"
 
 const styles = StyleSheet.create({
@@ -33,7 +34,10 @@ const styles = StyleSheet.create({
 		alignSelf: "center",
 		marginVertical: 20,
 	},
-	addButton: { backgroundColor: "#673ab7" },
+	addButton: {
+		aspectRatio: 1,
+		justifyContent: "center",
+	},
 })
 
 @observer
@@ -100,12 +104,13 @@ export default class EditSetScreen extends React.Component {
 					/>
 				))}
 				<View style={styles.addButtonWrapper}>
-					{/* eslint-disable-next-line react/jsx-pascal-case */}
-					<FAB
-						icon="plus"
-						style={styles.addButton}
-						onPress={(): void => { this.addCard() }}
-					/>
+					<Button buttonStyle={styles.addButton} onPress={(): void => { this.addCard() }}>
+						<Icon
+							name="plus"
+							color="white"
+							size={24}
+						/>
+					</Button>
 				</View>
 			</KeyboardAwareScrollView>
 		)

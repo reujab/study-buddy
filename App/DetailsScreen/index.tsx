@@ -1,8 +1,8 @@
+import Button from "../Button"
 import CardCarousel from "./CardCarousel"
 import React from "react"
 import RootStore from "../RootStore"
 import context from "../context"
-import { Button } from "react-native-paper"
 import { ScrollView, Text, View, StyleSheet } from "react-native"
 import { observer } from "mobx-react"
 import { useNavigation } from "@react-navigation/native"
@@ -38,8 +38,8 @@ const styles = StyleSheet.create({
 					<CardCarousel />
 
 					<Button
-						mode="contained"
-						style={styles.studyButton}
+						buttonStyle={styles.studyButton}
+						haptics
 						onPress={(): void => { this.props.navigation.navigate("study") }}
 					>
 						Study
