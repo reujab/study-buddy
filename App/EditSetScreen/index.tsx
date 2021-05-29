@@ -10,7 +10,7 @@ import commonStyles from "../commonStyles"
 import context from "../context"
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view"
 import { Platform, Text, TextInput as NativeTextInput, View, StyleSheet, TouchableOpacity } from "react-native"
-import { Side } from "./side"
+import { Side, styles as cardStyles } from "./common"
 import { TextInput } from "react-native-paper"
 import { observable } from "mobx"
 import { observer } from "mobx-react"
@@ -36,23 +36,6 @@ const styles = StyleSheet.create({
 		flex: 1,
 	},
 	clearSearchIcon: { marginRight: 8 },
-	card: {
-		backgroundColor: "white",
-		borderRadius: 4,
-		margin: 20,
-		marginBottom: 0,
-		padding: 20,
-	},
-	buttons: { flexDirection: "row" },
-	button: {
-		alignItems: "center",
-		flex: 1,
-		justifyContent: "center",
-	},
-	image: {
-		height: 32,
-		width: 32,
-	},
 	addButtonWrapper: {
 		alignSelf: "center",
 		marginVertical: 20,
@@ -121,7 +104,7 @@ export default class EditSetScreen extends React.Component {
 						</TouchableOpacity>
 					</View>
 				</View>
-				<View style={[commonStyles.shadow, styles.card]}>
+				<View style={[commonStyles.shadow, cardStyles.card]}>
 					<TextInput
 						mode="outlined"
 						label="Title"

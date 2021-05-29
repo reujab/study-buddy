@@ -5,19 +5,12 @@ import Icon from "react-native-vector-icons/FontAwesome5"
 import React from "react"
 import commonStyles from "../../commonStyles"
 import { Animated, Image, StyleSheet, Text, TouchableWithoutFeedback, View, TouchableOpacity, Clipboard } from "react-native"
-import { Side } from "../side"
+import { Side, styles as cardStyles } from "../common"
 import { TextInput } from "react-native-paper"
 import { observer } from "mobx-react"
 import { useActionSheet } from "@expo/react-native-action-sheet"
 
 const styles = StyleSheet.create({
-	card: {
-		backgroundColor: "white",
-		borderRadius: 4,
-		margin: 20,
-		marginBottom: 0,
-		padding: 20,
-	},
 	buttons: { flexDirection: "row" },
 	button: {
 		alignItems: "center",
@@ -62,7 +55,7 @@ class EditableCard extends React.Component<{
 		return (
 			<Animated.View
 				key={card.id}
-				style={[{ transform: [{ scaleY: this.scale }] }, commonStyles.shadow, styles.card]}
+				style={[{ transform: [{ scaleY: this.scale }] }, commonStyles.shadow, cardStyles.card]}
 			>
 				<TextInput
 					ref={(ref) => { this.props.addInput(ref, card.id, Side.front) }}
