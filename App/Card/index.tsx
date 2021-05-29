@@ -52,7 +52,7 @@ export default class Card extends React.Component<{
 					<View style={styles.textWrapper}>
 						<Text style={styles.text}>{this.props.card[this.props.flipped ? "back" : "front"]}</Text>
 					</View>
-					{this.props.card.image ? (
+					{this.props.card.image && this.props.flipped ? (
 						<Image
 							source={{ uri: this.props.card.image }}
 							style={styles.image}
