@@ -66,8 +66,8 @@ export default class StudyScreen extends React.Component {
 
 							Animated.spring(this.faceScale, {
 								toValue: flipped ? 1 : 0,
-								speed: 45,
-								bounciness: flipped ? 15 : 0,
+								speed: flipped ? 10 : 50,
+								bounciness: flipped ? 10 : 0,
 								useNativeDriver: true,
 							}).start()
 						}}
