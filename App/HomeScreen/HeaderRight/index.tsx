@@ -17,7 +17,7 @@ import { useNavigation } from "@react-navigation/native"
 	render(): JSX.Element {
 		return (
 			<HeaderButtons
-				HeaderButtonComponent={(props): JSX.Element => (
+				HeaderButtonComponent={(props) => (
 					<HeaderButton
 						IconComponent={Icon}
 						iconSize={24}
@@ -29,7 +29,7 @@ import { useNavigation } from "@react-navigation/native"
 				<HeaderItem
 					title="Add"
 					iconName="md-add"
-					onPress={(): void => { this.addSet() }}
+					onPress={() => { this.addSet() }}
 				/>
 			</HeaderButtons>
 		)

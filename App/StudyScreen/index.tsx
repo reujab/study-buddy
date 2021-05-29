@@ -55,10 +55,10 @@ export default class StudyScreen extends React.Component {
 				</View>
 				<View style={styles.cardTouchWrapper}>
 					<FlippableCard
-						ref={(ref): void => { this.flippableCard = ref }}
+						ref={(ref) => { this.flippableCard = ref }}
 						set={this.context.selectedSet}
 						card={this.displayedCard}
-						onFlip={(flipped): void => {
+						onFlip={(flipped) => {
 							if (flipped) {
 								this.displayedCard.back = this.currentCard.back
 								this.displayedCard.example = this.currentCard.example
@@ -79,19 +79,19 @@ export default class StudyScreen extends React.Component {
 						icon="frown"
 						scale={this.faceScale}
 						color="#f44336"
-						onPress={(): void => { this.rate(0.6) }}
+						onPress={() => { this.rate(0.6) }}
 					/>
 					<Face
 						icon="meh"
 						scale={this.faceScale}
 						color="#ffc107"
-						onPress={(): void => { this.rate(1) }}
+						onPress={() => { this.rate(1) }}
 					/>
 					<Face
 						icon="smile"
 						scale={this.faceScale}
 						color="#4caf50"
-						onPress={(): void => { this.rate(1.6) }}
+						onPress={() => { this.rate(1.6) }}
 					/>
 				</View>
 			</View>
@@ -100,7 +100,7 @@ export default class StudyScreen extends React.Component {
 
 	componentDidMount(): void {
 		this.displayedCard = Object.assign(new Flashcard(), this.currentCard)
-		setImmediate((): void => {
+		setImmediate(() => {
 			this.flippableCard.speak()
 		})
 	}

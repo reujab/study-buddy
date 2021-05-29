@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
 	render(): JSX.Element {
 		return (
 			<TouchableOpacity
-				onPress={(): void => {
+				onPress={() => {
 					this.context.selectedSet = this.props.set
 					this.props.navigation.navigate("details")
 				}}

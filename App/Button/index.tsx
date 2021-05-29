@@ -31,8 +31,8 @@ export default class Button extends React.Component<{
 		return (
 			<TouchableOpacity
 				activeOpacity={1}
-				onPressIn={(): void => { this.scaleTo(0.9) }}
-				onPressOut={(): void => { this.scaleTo(1) }}
+				onPressIn={() => { this.scaleTo(0.9) }}
+				onPressOut={() => { this.scaleTo(1) }}
 				onPress={this.props.onPress}
 			>
 				<Animated.View

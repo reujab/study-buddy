@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
 					<Button
 						buttonStyle={styles.studyButton}
 						haptics
-						onPress={(): void => { this.props.navigation.navigate("study") }}
+						onPress={() => { this.props.navigation.navigate("study") }}
 					>
 						Study
 					</Button>

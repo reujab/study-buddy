@@ -17,7 +17,7 @@ import { useNavigation } from "@react-navigation/native"
 	render(): JSX.Element {
 		return (
 			<HeaderButtons
-				HeaderButtonComponent={(props): JSX.Element => (
+				HeaderButtonComponent={(props) => (
 					<HeaderButton
 						IconComponent={Icon}
 						iconSize={18}
@@ -29,12 +29,12 @@ import { useNavigation } from "@react-navigation/native"
 				<HeaderItem
 					title="Edit"
 					iconName="edit"
-					onPress={(): void => { this.editSet() }}
+					onPress={() => { this.editSet() }}
 				/>
 				<HeaderItem
 					title="Add"
 					iconName="trash"
-					onPress={(): void => { this.promptDeleteSet() }}
+					onPress={() => { this.promptDeleteSet() }}
 				/>
 			</HeaderButtons>
 		)
@@ -53,7 +53,7 @@ import { useNavigation } from "@react-navigation/native"
 				},
 				{
 					text: "Yes",
-					onPress: (): void => {
+					onPress: () => {
 						this.context.sets.splice(this.context.sets.indexOf(this.context.selectedSet), 1)
 						this.props.navigation.navigate("home-screen")
 					},

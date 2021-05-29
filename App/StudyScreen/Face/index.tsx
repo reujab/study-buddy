@@ -17,8 +17,8 @@ export default class Face extends React.Component<{
 			<Animated.View style={{ transform: [{ scale: Animated.multiply(this.props.scale, this.hoverScale) }] }}>
 				<TouchableOpacity
 					activeOpacity={1}
-					onPressIn={(): void => { this.animateHoverScale(1.2) }}
-					onPressOut={(): void => { this.animateHoverScale(1) }}
+					onPressIn={() => { this.animateHoverScale(1.2) }}
+					onPressOut={() => { this.animateHoverScale(1) }}
 					onPress={this.props.onPress}
 					onLongPress={this.props.onPress}
 				>

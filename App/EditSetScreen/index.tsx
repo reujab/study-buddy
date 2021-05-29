@@ -102,16 +102,16 @@ export default class EditSetScreen extends React.Component {
 							returnKeyType="search"
 							value={this.unsubmittedQuery}
 							style={styles.searchInput}
-							onChangeText={(query): void => {
+							onChangeText={(query) => {
 								this.unsubmittedQuery = query
 
 								if (!query) {
 									this.query = ""
 								}
 							}}
-							onSubmitEditing={(e): void => { this.query = e.nativeEvent.text }}
+							onSubmitEditing={(e) => { this.query = e.nativeEvent.text }}
 						/>
-						<TouchableOpacity onPress={(): void => { this.unsubmittedQuery = this.query = "" }}>
+						<TouchableOpacity onPress={() => { this.unsubmittedQuery = this.query = "" }}>
 							<MDIcon
 								name="cancel"
 								color="#00000033"
@@ -126,19 +126,19 @@ export default class EditSetScreen extends React.Component {
 						mode="outlined"
 						label="Title"
 						defaultValue={this.context.selectedSet.title}
-						onChangeText={(text): void => { this.context.selectedSet.title = text }}
+						onChangeText={(text) => { this.context.selectedSet.title = text }}
 						returnKeyType="next"
 						blurOnSubmit={false}
-						onSubmitEditing={(): void => { this.descriptionRef.focus() }}
+						onSubmitEditing={() => { this.descriptionRef.focus() }}
 						style={{ marginBottom: 20 }}
 					/>
 					<TextInput
 						mode="outlined"
 						multiline
-						ref={(ref): void => { this.descriptionRef = ref }}
+						ref={(ref) => { this.descriptionRef = ref }}
 						label="Description"
 						defaultValue={this.context.selectedSet.description}
-						onChangeText={(text): void => { this.context.selectedSet.description = text }}
+						onChangeText={(text) => { this.context.selectedSet.description = text }}
 						blurOnSubmit={false}
 						style={{ marginBottom: 20 }}
 					/>
@@ -147,14 +147,14 @@ export default class EditSetScreen extends React.Component {
 							<Text>Front language:</Text>
 							<Languages
 								value={this.context.selectedSet.language.front}
-								onChange={(lang): void => { this.context.selectedSet.language.front = lang }}
+								onChange={(lang) => { this.context.selectedSet.language.front = lang }}
 							/>
 						</View>
 						<View style={{ flex: 1 }}>
 							<Text>Back language:</Text>
 							<Languages
 								value={this.context.selectedSet.language.back}
-								onChange={(lang): void => { this.context.selectedSet.language.back = lang }}
+								onChange={(lang) => { this.context.selectedSet.language.back = lang }}
 							/>
 						</View>
 					</View>
@@ -168,7 +168,7 @@ export default class EditSetScreen extends React.Component {
 					/>
 				))}
 				<View style={[styles.addButtonWrapper, { display: this.query ? "none" : "flex" }]}>
-					<Button buttonStyle={styles.addButton} onPress={(): void => { this.addCard() }}>
+					<Button buttonStyle={styles.addButton} onPress={() => { this.addCard() }}>
 						<Icon
 							name="plus"
 							color="white"

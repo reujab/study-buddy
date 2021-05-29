@@ -49,7 +49,7 @@ export default class FlippableCard extends React.Component<{
 	render(): JSX.Element {
 		return (
 			<TouchableWithoutFeedback
-				onPress={(): void => {
+				onPress={() => {
 					if (this.props.flippable !== false) {
 						this.flip()
 					}

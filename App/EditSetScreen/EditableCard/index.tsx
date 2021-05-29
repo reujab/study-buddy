@@ -65,26 +65,26 @@ class EditableCard extends React.Component<{
 				style={[{ transform: [{ scaleY: this.scale }] }, commonStyles.shadow, styles.card]}
 			>
 				<TextInput
-					ref={(ref): void => { this.props.addInput(ref, card.id, Side.front) }}
+					ref={(ref) => { this.props.addInput(ref, card.id, Side.front) }}
 					mode="outlined"
 					label="Front"
 					defaultValue={card.front}
-					onChangeText={(text): void => { card.front = text }}
+					onChangeText={(text) => { card.front = text }}
 					returnKeyType="next"
 					blurOnSubmit={false}
-					onSubmitEditing={(): void => { this.props.focusNextInput(card, Side.front) }}
+					onSubmitEditing={() => { this.props.focusNextInput(card, Side.front) }}
 					autoCapitalize="none"
 					style={{ marginBottom: 20 }}
 				/>
 				<TextInput
-					ref={(ref): void => { this.props.addInput(ref, card.id, Side.back) }}
+					ref={(ref) => { this.props.addInput(ref, card.id, Side.back) }}
 					mode="outlined"
 					label="Back"
 					defaultValue={card.back}
-					onChangeText={(text): void => { card.back = text }}
+					onChangeText={(text) => { card.back = text }}
 					returnKeyType="next"
 					blurOnSubmit={false}
-					onSubmitEditing={(): void => { this.props.focusNextInput(card, Side.back) }}
+					onSubmitEditing={() => { this.props.focusNextInput(card, Side.back) }}
 					autoCapitalize="none"
 					style={{ marginBottom: 20 }}
 				/>
@@ -93,14 +93,14 @@ class EditableCard extends React.Component<{
 					multiline
 					label="Example"
 					defaultValue={card.example}
-					onChangeText={(text): void => { card.example = text }}
+					onChangeText={(text) => { card.example = text }}
 					blurOnSubmit={false}
 					autoCapitalize="none"
 					style={{ marginBottom: 20 }}
 				/>
 				<View style={styles.buttons}>
 					<View style={styles.button}>
-						<TouchableWithoutFeedback onPress={(): void => { EditableCard.master(card) }}>
+						<TouchableWithoutFeedback onPress={() => { EditableCard.master(card) }}>
 							<Icon
 								name="star"
 								color="#ff9800"
@@ -111,7 +111,7 @@ class EditableCard extends React.Component<{
 						<Text>Mastered</Text>
 					</View>
 					<View style={styles.button}>
-						<TouchableOpacity onPress={(): void => { this.addImage(card) }}>
+						<TouchableOpacity onPress={() => { this.addImage(card) }}>
 							{card.image ? (
 								<Image
 									source={{ uri: card.image }}

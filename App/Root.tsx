@@ -43,7 +43,7 @@ export default class Root extends React.Component {
 							component={HomeScreen}
 							options={{
 								title: "Study Buddy",
-								headerRight: (): JSX.Element => <HomeScreenHeaderRight />,
+								headerRight: () => <HomeScreenHeaderRight />,
 							}}
 						/>
 						<Stack.Screen
@@ -57,8 +57,8 @@ export default class Root extends React.Component {
 							name="details"
 							component={DetailsScreen}
 							options={{
-								title: this.context.selectedSet && this.context.selectedSet.title,
-								headerRight: (): JSX.Element => <DetailsScreenHeaderRight />,
+								title: this.context.selectedSet?.title,
+								headerRight: () => <DetailsScreenHeaderRight />,
 							}}
 						/>
 						<Stack.Screen
