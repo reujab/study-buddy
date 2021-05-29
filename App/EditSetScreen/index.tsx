@@ -3,17 +3,39 @@ import EditableCard from "./EditableCard"
 import Flashcard from "../Flashcard"
 import Icon from "react-native-vector-icons/FontAwesome5"
 import Languages from "./Languages"
+import MDIcon from "react-native-vector-icons/MaterialIcons"
 import React from "react"
 import RootStore from "../RootStore"
 import commonStyles from "../commonStyles"
 import context from "../context"
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view"
-import { Platform, Text, TextInput as NativeTextInput, View, StyleSheet } from "react-native"
+import { Platform, Text, TextInput as NativeTextInput, View, StyleSheet, TouchableOpacity } from "react-native"
 import { Side } from "./side"
 import { TextInput } from "react-native-paper"
+import { observable } from "mobx"
 import { observer } from "mobx-react"
 
 const styles = StyleSheet.create({
+	searchWrapper: {
+		height: 48,
+		padding: 16,
+		paddingBottom: 0,
+	},
+	searchBar: {
+		alignItems: "center",
+		backgroundColor: "#00000011",
+		borderRadius: 5,
+		flexDirection: "row",
+		height: "100%",
+	},
+	searchIcon: { marginLeft: 8 },
+	searchInput: {
+		fontSize: 16,
+		height: "100%",
+		padding: 8,
+		flex: 1,
+	},
+	clearSearchIcon: { marginRight: 8 },
 	card: {
 		backgroundColor: "white",
 		borderRadius: 4,
@@ -51,13 +73,54 @@ export default class EditSetScreen extends React.Component {
 
 	inputs = {}
 
+	@observable
+	unsubmittedQuery = ""
+
+	@observable
+	query = ""
+
 	render(): JSX.Element {
 		return (
 			<KeyboardAwareScrollView
 				enableOnAndroid
 				contentContainerStyle={{ flexGrow: 1 }}
 				extraScrollHeight={Platform.OS === "android" ? 100 : 0}
+				contentOffset={{ x: 0, y: styles.searchWrapper.height }}
+				snapToOffsets={[styles.searchWrapper.height]}
+				snapToEnd={false}
 			>
+				<View style={styles.searchWrapper}>
+					<View style={styles.searchBar}>
+						<Icon
+							name="search"
+							color="#00000033"
+							size={16}
+							style={styles.searchIcon}
+						/>
+						<NativeTextInput
+							placeholder="Search"
+							returnKeyType="search"
+							value={this.unsubmittedQuery}
+							style={styles.searchInput}
+							onChangeText={(query): void => {
+								this.unsubmittedQuery = query
+
+								if (!query) {
+									this.query = ""
+								}
+							}}
+							onSubmitEditing={(e): void => { this.query = e.nativeEvent.text }}
+						/>
+						<TouchableOpacity onPress={(): void => { this.unsubmittedQuery = this.query = "" }}>
+							<MDIcon
+								name="cancel"
+								color="#00000033"
+								size={16}
+								style={[styles.clearSearchIcon, { display: this.unsubmittedQuery ? "flex" : "none" }]}
+							/>
+						</TouchableOpacity>
+					</View>
+				</View>
 				<View style={[commonStyles.shadow, styles.card]}>
 					<TextInput
 						mode="outlined"
@@ -96,7 +159,7 @@ export default class EditSetScreen extends React.Component {
 						</View>
 					</View>
 				</View>
-				{this.context.selectedSet.cards.map((card) => (
+				{this.context.selectedSet.cards.filter((card) => this.cardMatchesQuery(card)).map((card) => (
 					<EditableCard
 						key={card.id}
 						card={card}
@@ -104,7 +167,7 @@ export default class EditSetScreen extends React.Component {
 						focusNextInput={this.focusNextInput.bind(this)}
 					/>
 				))}
-				<View style={styles.addButtonWrapper}>
+				<View style={[styles.addButtonWrapper, { display: this.query ? "none" : "flex" }]}>
 					<Button buttonStyle={styles.addButton} onPress={(): void => { this.addCard() }}>
 						<Icon
 							name="plus"
@@ -146,5 +209,12 @@ export default class EditSetScreen extends React.Component {
 		} else {
 			this.inputs[card.id][side + 1].focus()
 		}
+	}
+
+	cardMatchesQuery(card: Flashcard): boolean {
+		const query = this.query.toLowerCase()
+		return card.front.toLowerCase().includes(query) ||
+			card.back.toLowerCase().includes(query) ||
+			card.example.toLowerCase().includes(query)
 	}
 }
