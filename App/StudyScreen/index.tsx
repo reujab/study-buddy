@@ -61,6 +61,7 @@ export default class StudyScreen extends React.Component {
 						onFlip={(flipped) => {
 							if (flipped) {
 								this.displayedCard.back = this.currentCard.back
+								this.displayedCard.image = this.currentCard.image
 								this.displayedCard.example = this.currentCard.example
 							}
 
@@ -123,8 +124,9 @@ export default class StudyScreen extends React.Component {
 		currentCard.lastStudied = Date.now()
 
 		Object.assign(this.displayedCard, this.currentCard, {
-			// keep example and back for seamless animation
+			// keep example, image, and back for seamless animation
 			back: this.displayedCard.back,
+			image: this.displayedCard.image,
 			example: this.displayedCard.example,
 		})
 		this.flippableCard.flip()
