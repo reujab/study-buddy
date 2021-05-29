@@ -11,7 +11,11 @@ import { observer } from "mobx-react"
 import { useActionSheet } from "@expo/react-native-action-sheet"
 
 const styles = StyleSheet.create({
-	buttons: { flexDirection: "row" },
+	buttons: {
+		flexDirection: "row",
+		// fixes bug on Android where height increases by a pixel when master star icon is solid
+		height: 42,
+	},
 	button: {
 		alignItems: "center",
 		flex: 1,
