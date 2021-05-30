@@ -5,7 +5,7 @@ import Icon from "react-native-vector-icons/FontAwesome5"
 import React from "react"
 import commonStyles from "../../commonStyles"
 import { Animated, Image, StyleSheet, Text, View, TouchableOpacity, Clipboard } from "react-native"
-import { Side, styles as cardStyles } from "../common"
+import { Side, cardStyles } from "../common"
 import { TextInput } from "react-native-paper"
 import { observer } from "mobx-react"
 import { useActionSheet } from "@expo/react-native-action-sheet"
@@ -39,8 +39,8 @@ const styles = StyleSheet.create({
 class EditableCard extends React.Component<{
 		actionSheet: any
 		card: Flashcard
-		addInput: (ref: React.Component, id: string, side: Side) => void
-		focusNextInput: (card: Flashcard, side: Side) => void
+		addInput: (ref: React.Component, side: Side) => void
+		focusNextInput: (side: Side) => void
 	}> {
 	scale = new Animated.Value(0)
 
@@ -62,26 +62,26 @@ class EditableCard extends React.Component<{
 				style={[{ transform: [{ scaleY: this.scale }] }, commonStyles.shadow, cardStyles.card]}
 			>
 				<TextInput
-					ref={(ref) => { this.props.addInput(ref, card.id, Side.front) }}
+					ref={(ref) => { this.props.addInput(ref, Side.front) }}
 					mode="outlined"
 					label="Front"
 					defaultValue={card.front}
 					onChangeText={(text) => { card.front = text }}
 					returnKeyType="next"
 					blurOnSubmit={false}
-					onSubmitEditing={() => { this.props.focusNextInput(card, Side.front) }}
+					onSubmitEditing={() => { this.props.focusNextInput(Side.front) }}
 					autoCapitalize="none"
 					style={{ marginBottom: 20 }}
 				/>
 				<TextInput
-					ref={(ref) => { this.props.addInput(ref, card.id, Side.back) }}
+					ref={(ref) => { this.props.addInput(ref, Side.back) }}
 					mode="outlined"
 					label="Back"
 					defaultValue={card.back}
 					onChangeText={(text) => { card.back = text }}
 					returnKeyType="next"
 					blurOnSubmit={false}
-					onSubmitEditing={() => { this.props.focusNextInput(card, Side.back) }}
+					onSubmitEditing={() => { this.props.focusNextInput(Side.back) }}
 					autoCapitalize="none"
 					style={{ marginBottom: 20 }}
 				/>

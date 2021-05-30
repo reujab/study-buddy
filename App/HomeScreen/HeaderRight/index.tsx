@@ -1,8 +1,8 @@
 import Icon from "react-native-vector-icons/Ionicons"
 import React from "react"
-import { context, RootStore } from "../../RootStore"
 import Set from "../../Set"
 import { HeaderButton, HeaderButtons, Item as HeaderItem } from "react-navigation-header-buttons"
+import { context, RootStore } from "../../RootStore"
 import { observer } from "mobx-react"
 import { useNavigation } from "@react-navigation/native"
 
@@ -40,6 +40,4 @@ import { useNavigation } from "@react-navigation/native"
 	}
 }
 
-export default (props): JSX.Element => (
-	<HeaderRight navigation={useNavigation()} {...props} />
-)
+export default (props): JSX.Element => <HeaderRight navigation={useNavigation()} {...props} />

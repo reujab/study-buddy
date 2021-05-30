@@ -4,21 +4,18 @@ import Thumbnail from "./Thumbnail"
 import Title from "./Title"
 import commonStyles from "../../commonStyles"
 import { Text, TouchableOpacity, View, StyleSheet } from "react-native"
-import { context, RootStore} from "../../RootStore"
+import { context, RootStore } from "../../RootStore"
 import { observer } from "mobx-react"
 import { useNavigation } from "@react-navigation/native"
 
 const styles = StyleSheet.create({
 	listing: {
 		backgroundColor: "white",
-		borderRadius: 10,
+		borderRadius: 8,
 		display: "flex",
 		flexDirection: "row",
-		margin: 16,
+		margin: 8,
 		padding: 8,
-
-		// FIXME: last item won't have a margin
-		marginBottom: 0,
 	},
 	listingRight: { flexShrink: 1 },
 })

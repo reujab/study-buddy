@@ -1,8 +1,8 @@
 import Button from "../Button"
 import CardCarousel from "./CardCarousel"
 import React from "react"
-import { context, RootStore } from "../RootStore"
 import { ScrollView, Text, View, StyleSheet } from "react-native"
+import { context, RootStore } from "../RootStore"
 import { observer } from "mobx-react"
 import { useNavigation } from "@react-navigation/native"
 

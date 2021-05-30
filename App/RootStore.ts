@@ -7,6 +7,7 @@ export class RootStore {
 	@observable
 	sets: Set[] = []
 
+	// refers to the set the user is currently viewing
 	@observable
 	@ignore
 	selectedSet: Set | null = null

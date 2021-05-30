@@ -9,7 +9,7 @@ import React from "react"
 import commonStyles from "../commonStyles"
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view"
 import { Platform, Text, TextInput as NativeTextInput, View, StyleSheet, TouchableOpacity } from "react-native"
-import { Side, styles as cardStyles } from "./common"
+import { Side, cardStyles } from "./common"
 import { TextInput } from "react-native-paper"
 import { computed, observable } from "mobx"
 import { context, RootStore } from "../RootStore"
@@ -17,25 +17,23 @@ import { observer } from "mobx-react"
 
 const styles = StyleSheet.create({
 	container: {
-		marginBottom: 10,
-	},
-	searchWrapper: {
-		height: 64,
-		padding: 16,
+		flexGrow: 1,
+		padding: 8,
 	},
 	searchBar: {
 		alignItems: "center",
 		backgroundColor: "#00000011",
 		borderRadius: 5,
 		flexDirection: "row",
-		height: "100%",
+		height: 48,
+		marginBottom: 8,
 	},
 	searchIcon: { marginLeft: 8 },
 	searchInput: {
+		flex: 1,
 		fontSize: 16,
 		height: "100%",
 		paddingLeft: 8,
-		flex: 1,
 	},
 	clearSearchIcon: { marginRight: 8 },
 	noResultsWrapper: {
@@ -77,46 +75,43 @@ export default class EditSetScreen extends React.Component {
 		return (
 			<KeyboardAwareScrollView
 				enableOnAndroid
-				contentContainerStyle={{ flexGrow: 1 }}
 				extraScrollHeight={Platform.OS === "android" ? 100 : 0}
-				contentOffset={{ x: 0, y: 48 }}
-				snapToOffsets={[48]}
+				contentOffset={{ x: 0, y: 56 }}
+				snapToOffsets={[56]}
 				snapToEnd={false}
-				style={styles.container}
+				contentContainerStyle={styles.container}
 			>
-				<View style={styles.searchWrapper}>
-					<View style={styles.searchBar}>
-						<Icon
-							name="search"
+				<View style={styles.searchBar}>
+					<Icon
+						name="search"
+						color="#00000033"
+						size={16}
+						style={styles.searchIcon}
+					/>
+					<NativeTextInput
+						placeholder="Search"
+						returnKeyType="search"
+						value={this.unsubmittedQuery}
+						style={styles.searchInput}
+						onChangeText={(query) => {
+							this.unsubmittedQuery = query
+
+							if (!query) {
+								this.query = ""
+							}
+						}}
+						onSubmitEditing={(e) => { this.query = e.nativeEvent.text }}
+					/>
+					<TouchableOpacity onPress={() => { this.unsubmittedQuery = this.query = "" }}>
+						<MDIcon
+							name="cancel"
 							color="#00000033"
 							size={16}
-							style={styles.searchIcon}
+							style={[styles.clearSearchIcon, { display: this.unsubmittedQuery ? "flex" : "none" }]}
 						/>
-						<NativeTextInput
-							placeholder="Search"
-							returnKeyType="search"
-							value={this.unsubmittedQuery}
-							style={styles.searchInput}
-							onChangeText={(query) => {
-								this.unsubmittedQuery = query
-
-								if (!query) {
-									this.query = ""
-								}
-							}}
-							onSubmitEditing={(e) => { this.query = e.nativeEvent.text }}
-						/>
-						<TouchableOpacity onPress={() => { this.unsubmittedQuery = this.query = "" }}>
-							<MDIcon
-								name="cancel"
-								color="#00000033"
-								size={16}
-								style={[styles.clearSearchIcon, { display: this.unsubmittedQuery ? "flex" : "none" }]}
-							/>
-						</TouchableOpacity>
-					</View>
+					</TouchableOpacity>
 				</View>
-				<View style={[commonStyles.shadow, cardStyles.card]}>
+				<View style={[commonStyles.shadow, cardStyles.card, { display: this.query ? "none" : "flex" }]}>
 					<TextInput
 						mode="outlined"
 						label="Title"
@@ -158,8 +153,8 @@ export default class EditSetScreen extends React.Component {
 					<EditableCard
 						key={card.id}
 						card={card}
-						addInput={this.addInput.bind(this)}
-						focusNextInput={this.focusNextInput.bind(this)}
+						addInput={(ref: any, side: Side) => { this.addInput(ref, card.id, side) }}
+						focusNextInput={(side: Side) => { this.focusNextInput(card, side) }}
 					/>
 				))}
 				{this.query && !this.searchResults.length ? (
@@ -216,6 +211,7 @@ export default class EditSetScreen extends React.Component {
 	@computed
 	get searchResults(): Flashcard[] {
 		if (this.query) {
+			// eslint-disable-next-line @typescript-eslint/no-extra-parens
 			return this.context.selectedSet.cards.filter((card) => (
 				`${card.front} ${card.back} ${card.example}`.
 					toLowerCase().

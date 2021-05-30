@@ -22,6 +22,7 @@ export default class App extends React.Component {
 	constructor(props) {
 		super(props)
 
+		// initializes mobx store used to persist values on restart
 		const trunk = new AsyncTrunk(this.store, {
 			storage: AsyncStorage,
 		})

@@ -64,6 +64,4 @@ import { useNavigation } from "@react-navigation/native"
 	}
 }
 
-export default (props): JSX.Element => (
-	<HeaderRight navigation={useNavigation()} {...props} />
-)
+export default (props): JSX.Element => <HeaderRight navigation={useNavigation()} {...props} />
