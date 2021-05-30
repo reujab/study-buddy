@@ -1,9 +1,8 @@
 import Icon from "react-native-vector-icons/FontAwesome5"
 import React from "react"
-import RootStore from "../../RootStore"
-import context from "../../context"
 import { Alert } from "react-native"
 import { HeaderButton, HeaderButtons, Item as HeaderItem } from "react-navigation-header-buttons"
+import { context, RootStore } from "../../RootStore"
 import { observer } from "mobx-react"
 import { useNavigation } from "@react-navigation/native"
 

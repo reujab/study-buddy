@@ -1,8 +1,9 @@
+import React from "react"
 import Set from "./Set"
 import { ignore } from "mobx-sync"
 import { observable } from "mobx"
 
-export default class RootStore {
+export class RootStore {
 	@observable
 	sets: Set[] = []
 
@@ -10,3 +11,6 @@ export default class RootStore {
 	@ignore
 	selectedSet: Set | null = null
 }
+
+
+export const context = React.createContext<RootStore>(null)

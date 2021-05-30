@@ -1,12 +1,14 @@
 import React from "react"
 import SetListing from "./SetListing"
-import context from "../context"
+import { context, RootStore } from "../RootStore"
 import { ScrollView } from "react-native-gesture-handler"
 import { observer } from "mobx-react"
 
 @observer
 export default class HomeScreen extends React.Component {
 	static contextType = context
+
+	context: RootStore
 
 	render(): JSX.Element {
 		return (

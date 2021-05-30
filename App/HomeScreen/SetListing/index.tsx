@@ -1,10 +1,10 @@
 import React from "react"
+import Set from "../../Set"
 import Thumbnail from "./Thumbnail"
 import Title from "./Title"
-import context from "../../context"
 import commonStyles from "../../commonStyles"
-import Set from "../../Set"
 import { Text, TouchableOpacity, View, StyleSheet } from "react-native"
+import { context, RootStore} from "../../RootStore"
 import { observer } from "mobx-react"
 import { useNavigation } from "@react-navigation/native"
 
@@ -28,6 +28,8 @@ const styles = StyleSheet.create({
 	set: Set
 }> {
 	static contextType = context
+
+	context: RootStore
 
 	render(): JSX.Element {
 		return (
