@@ -4,7 +4,7 @@ import Flashcard from "../../Flashcard"
 import Icon from "react-native-vector-icons/FontAwesome5"
 import React from "react"
 import commonStyles from "../../commonStyles"
-import { Animated, Image, StyleSheet, Text, TouchableWithoutFeedback, View, TouchableOpacity, Clipboard } from "react-native"
+import { Animated, Image, StyleSheet, Text, View, TouchableOpacity, Clipboard } from "react-native"
 import { Side, styles as cardStyles } from "../common"
 import { TextInput } from "react-native-paper"
 import { observer } from "mobx-react"
@@ -97,14 +97,14 @@ class EditableCard extends React.Component<{
 				/>
 				<View style={styles.buttons}>
 					<View style={styles.button}>
-						<TouchableWithoutFeedback onPress={() => { EditableCard.master(card) }}>
+						<TouchableOpacity activeOpacity={1} onPress={() => { EditableCard.master(card) }}>
 							<Icon
 								name="star"
 								color="#ff9800"
 								size={32}
 								solid={card.mastered}
 							/>
-						</TouchableWithoutFeedback>
+						</TouchableOpacity>
 						<Text>Mastered</Text>
 					</View>
 					<View style={styles.button}>
