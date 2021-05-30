@@ -1,5 +1,6 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet } from "react-native"
 
+// eslint-disable-next-line no-shadow
 export enum Side {
 	front,
 	back,
