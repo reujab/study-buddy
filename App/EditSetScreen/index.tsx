@@ -1,3 +1,4 @@
+import * as Haptics from "expo-haptics"
 import Button from "../Button"
 import EditableCard from "./EditableCard"
 import Flashcard from "../Flashcard"
@@ -166,6 +167,8 @@ export default class EditSetScreen extends React.Component {
 	}
 
 	addCard(): void {
+		Haptics.selectionAsync()
+
 		if (!this.context.sets.includes(this.context.selectedSet)) {
 			this.context.sets.push(this.context.selectedSet)
 		}
