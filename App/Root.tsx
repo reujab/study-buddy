@@ -12,6 +12,7 @@ import { context, RootStore } from "./RootStore"
 import { createStackNavigator } from "@react-navigation/stack"
 import { observer } from "mobx-react"
 
+// eslint-disable-next-line @typescript-eslint/naming-convention
 const Stack = createStackNavigator()
 const styles = StyleSheet.create({
 	header: {
