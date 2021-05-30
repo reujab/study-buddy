@@ -9,8 +9,8 @@ export const styles = StyleSheet.create({
 	card: {
 		backgroundColor: "white",
 		borderRadius: 4,
-		margin: 20,
-		marginBottom: 0,
+		marginHorizontal: 20,
+		marginVertical: 10,
 		padding: 20,
 	},
 })

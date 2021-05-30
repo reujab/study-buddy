@@ -16,10 +16,12 @@ import { observable } from "mobx"
 import { observer } from "mobx-react"
 
 const styles = StyleSheet.create({
+	container: {
+		marginBottom: 10,
+	},
 	searchWrapper: {
-		height: 48,
+		height: 64,
 		padding: 16,
-		paddingBottom: 0,
 	},
 	searchBar: {
 		alignItems: "center",
@@ -32,13 +34,13 @@ const styles = StyleSheet.create({
 	searchInput: {
 		fontSize: 16,
 		height: "100%",
-		padding: 8,
+		paddingLeft: 8,
 		flex: 1,
 	},
 	clearSearchIcon: { marginRight: 8 },
 	addButtonWrapper: {
 		alignSelf: "center",
-		marginVertical: 20,
+		marginVertical: 10,
 	},
 	addButton: {
 		aspectRatio: 1,
@@ -68,9 +70,10 @@ export default class EditSetScreen extends React.Component {
 				enableOnAndroid
 				contentContainerStyle={{ flexGrow: 1 }}
 				extraScrollHeight={Platform.OS === "android" ? 100 : 0}
-				contentOffset={{ x: 0, y: styles.searchWrapper.height }}
-				snapToOffsets={[styles.searchWrapper.height]}
+				contentOffset={{ x: 0, y: 48 }}
+				snapToOffsets={[48]}
 				snapToEnd={false}
+				style={styles.container}
 			>
 				<View style={styles.searchWrapper}>
 					<View style={styles.searchBar}>
