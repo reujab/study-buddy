@@ -11,8 +11,8 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 import { Platform, Text, TextInput as NativeTextInput, View, StyleSheet, TouchableOpacity } from "react-native"
 import { Side, styles as cardStyles } from "./common"
 import { TextInput } from "react-native-paper"
+import { computed, observable } from "mobx"
 import { context, RootStore } from "../RootStore"
-import { observable } from "mobx"
 import { observer } from "mobx-react"
 
 const styles = StyleSheet.create({
@@ -38,6 +38,15 @@ const styles = StyleSheet.create({
 		flex: 1,
 	},
 	clearSearchIcon: { marginRight: 8 },
+	noResultsWrapper: {
+		alignItems: "center",
+		flex: 1,
+		justifyContent: "center",
+	},
+	noResults: {
+		opacity: 0.5,
+		fontSize: 48,
+	},
 	addButtonWrapper: {
 		alignSelf: "center",
 		marginVertical: 10,
@@ -145,7 +154,7 @@ export default class EditSetScreen extends React.Component {
 						</View>
 					</View>
 				</View>
-				{this.context.selectedSet.cards.filter((card) => this.cardMatchesQuery(card)).map((card) => (
+				{this.searchResults.map((card) => (
 					<EditableCard
 						key={card.id}
 						card={card}
@@ -153,6 +162,11 @@ export default class EditSetScreen extends React.Component {
 						focusNextInput={this.focusNextInput.bind(this)}
 					/>
 				))}
+				{this.query && !this.searchResults.length ? (
+					<View style={styles.noResultsWrapper}>
+						<Text style={styles.noResults}>No results</Text>
+					</View>
+				) : null}
 				<View style={[styles.addButtonWrapper, { display: this.query ? "none" : "flex" }]}>
 					<Button buttonStyle={styles.addButton} onPress={() => { this.addCard() }}>
 						<Icon
@@ -199,10 +213,16 @@ export default class EditSetScreen extends React.Component {
 		}
 	}
 
-	cardMatchesQuery(card: Flashcard): boolean {
-		const query = this.query.toLowerCase()
-		return card.front.toLowerCase().includes(query) ||
-			card.back.toLowerCase().includes(query) ||
-			card.example.toLowerCase().includes(query)
+	@computed
+	get searchResults(): Flashcard[] {
+		if (this.query) {
+			return this.context.selectedSet.cards.filter((card) => (
+				`${card.front} ${card.back} ${card.example}`.
+					toLowerCase().
+					includes(this.query.toLowerCase())
+			))
+		}
+
+		return this.context.selectedSet.cards
 	}
 }
