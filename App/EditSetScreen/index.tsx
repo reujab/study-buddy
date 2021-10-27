@@ -8,8 +8,7 @@ import MDIcon from "react-native-vector-icons/MaterialIcons"
 import React from "react"
 import commonStyles from "../commonStyles"
 import styles from "./styles"
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view"
-import { Platform, Text, TextInput as NativeTextInput, View, TouchableOpacity } from "react-native"
+import { Text, TextInput as NativeTextInput, View, TouchableOpacity, ScrollView } from "react-native"
 import { Side, cardStyles } from "./common"
 import { TextInput } from "react-native-paper"
 import { action, computed, makeObservable, observable } from "mobx"
@@ -119,14 +118,7 @@ export default observer(class EditSetScreen extends React.Component {
 
 	render(): JSX.Element {
 		return (
-			<KeyboardAwareScrollView
-				enableOnAndroid
-				extraScrollHeight={Platform.OS === "android" ? 100 : 0}
-				contentOffset={{ x: 0, y: 56 }}
-				snapToOffsets={[56]}
-				snapToEnd={false}
-				contentContainerStyle={styles.container}
-			>
+			<ScrollView contentContainerStyle={{ paddingBottom: 400 }}>
 				<View style={styles.searchBar}>
 					<Icon
 						name="search"
@@ -222,7 +214,7 @@ export default observer(class EditSetScreen extends React.Component {
 						/>
 					</Button>
 				</View>
-			</KeyboardAwareScrollView>
+			</ScrollView>
 		)
 	}
 })
