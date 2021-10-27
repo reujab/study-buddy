@@ -4,44 +4,21 @@ import Flashcard from "../../Flashcard"
 import Icon from "react-native-vector-icons/FontAwesome5"
 import React from "react"
 import commonStyles from "../../commonStyles"
-import { Animated, Image, StyleSheet, Text, View, TouchableOpacity, Clipboard } from "react-native"
+import styles from "./styles"
+import { Animated, Image, Text, View, TouchableOpacity, Clipboard } from "react-native"
 import { Side, cardStyles } from "../common"
 import { TextInput } from "react-native-paper"
 import { observer } from "mobx-react"
 import { useActionSheet } from "@expo/react-native-action-sheet"
 
-const styles = StyleSheet.create({
-	buttons: {
-		flexDirection: "row",
-		// fixes bug on Android where height increases by a pixel when master star icon is solid
-		height: 42,
-	},
-	button: {
-		alignItems: "center",
-		flex: 1,
-		justifyContent: "center",
-	},
-	image: {
-		height: 32,
-		width: 32,
-	},
-	addButtonWrapper: {
-		alignSelf: "center",
-		marginVertical: 20,
-	},
-	addButton: {
-		aspectRatio: 1,
-		justifyContent: "center",
-	},
-})
+interface Props {
+	actionSheet: any
+	card: Flashcard
+	addInput: (ref: React.Component, side: Side) => void
+	focusNextInput: (side: Side) => void
+}
 
-@observer
-class EditableCard extends React.Component<{
-		actionSheet: any
-		card: Flashcard
-		addInput: (ref: React.Component, side: Side) => void
-		focusNextInput: (side: Side) => void
-	}> {
+const EditableCard = observer(class EditableCard extends React.Component<Props> {
 	scale = new Animated.Value(0)
 
 	componentDidMount(): void {
@@ -186,6 +163,6 @@ class EditableCard extends React.Component<{
 			}
 		})
 	}
-}
+})
 
 export default (props): JSX.Element => <EditableCard actionSheet={useActionSheet()} {...props} />

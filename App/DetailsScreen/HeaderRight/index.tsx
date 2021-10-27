@@ -6,9 +6,11 @@ import { context, RootStore } from "../../RootStore"
 import { observer } from "mobx-react"
 import { useNavigation } from "@react-navigation/native"
 
-@observer class HeaderRight extends React.Component<{
+interface Props {
 	navigation: any
-}> {
+}
+
+const HeaderRight = observer(class HeaderRight extends React.Component<Props> {
 	static contextType = context
 
 	context: RootStore
@@ -62,6 +64,6 @@ import { useNavigation } from "@react-navigation/native"
 			console.error("set not found while trying to delete")
 		}
 	}
-}
+})
 
 export default (props): JSX.Element => <HeaderRight navigation={useNavigation()} {...props} />

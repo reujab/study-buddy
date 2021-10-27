@@ -1,22 +1,18 @@
 import Carousel from "react-native-snap-carousel"
 import FlippableCard from "../../FlippableCard"
 import React from "react"
-import { Dimensions, Platform, View, StyleSheet } from "react-native"
+import styles from "./styles"
+import { Dimensions, Platform, View } from "react-native"
 import { context, RootStore } from "../../RootStore"
 import { observer } from "mobx-react"
 import { size as cardSize } from "../../Card/constants"
 import { useNavigation } from "@react-navigation/native"
 
-const styles = StyleSheet.create({
-	carouselWrapper: {
-		height: cardSize + 16,
-		marginBottom: 32,
-	},
-})
-
-@observer class CardCarousel extends React.Component<{
+interface Props {
 	navigation: any
-}> {
+}
+
+const CardCarousel = observer(class CardCarousel extends React.Component<Props> {
 	static contextType = context
 
 	context: RootStore
@@ -62,6 +58,6 @@ const styles = StyleSheet.create({
 			</View>
 		)
 	}
-}
+})
 
 export default (props): JSX.Element => <CardCarousel navigation={useNavigation()} {...props} />

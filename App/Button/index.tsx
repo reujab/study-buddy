@@ -1,30 +1,19 @@
 import * as Haptics from "expo-haptics"
 import React from "react"
 import commonStyles from "../commonStyles"
-import { Animated, StyleSheet, Text } from "react-native"
+import styles from "./styles"
+import { Animated, Text } from "react-native"
 import { TouchableOpacity } from "react-native-gesture-handler"
 import { observer } from "mobx-react"
 
-const styles = StyleSheet.create({
-	view: {
-		alignItems: "center",
-		backgroundColor: "#5856d6",
-		borderRadius: 100,
-		padding: "5%",
-	},
-	text: {
-		color: "white",
-		fontSize: 24,
-	},
-})
-
-@observer
-export default class Button extends React.Component<{
+interface Props {
 	buttonStyle?: any
 	textStyle?: any
 	haptics?: boolean
 	onPress: () => void
-}> {
+}
+
+export default observer(class Button extends React.Component<Props> {
 	scale = new Animated.Value(1)
 
 	render(): JSX.Element {
@@ -61,4 +50,4 @@ export default class Button extends React.Component<{
 			useNativeDriver: true,
 		}).start()
 	}
-}
+})

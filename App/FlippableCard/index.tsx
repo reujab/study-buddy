@@ -4,27 +4,30 @@ import Flashcard from "../Flashcard"
 import Flip from "../Flip"
 import React from "react"
 import Set from "../Set"
-import { TouchableWithoutFeedback, View, StyleSheet } from "react-native"
-import { observable } from "mobx"
+import styles from "./styles"
+import { TouchableWithoutFeedback, View } from "react-native"
+import { action, makeObservable, observable } from "mobx"
 import { observer } from "mobx-react"
-import { size } from "../Card/constants"
 
-const styles = StyleSheet.create({
-	card: {
-		height: size,
-		width: size,
-	},
-})
-
-@observer
-export default class FlippableCard extends React.Component<{
+interface Props {
 	set: Set
 	card: Flashcard
 	flippable?: boolean
 	onFlip?: (boolean) => void
-}> {
-	@observable
+}
+
+export default observer(class FlippableCard extends React.Component<Props> {
 	flipped = false
+
+	constructor(props) {
+		super(props)
+
+		makeObservable(this, {
+			flipped: observable,
+
+			flip: action,
+		})
+	}
 
 	flip(): void {
 		this.flipped = !this.flipped
@@ -65,4 +68,4 @@ export default class FlippableCard extends React.Component<{
 			</TouchableWithoutFeedback>
 		)
 	}
-}
+})

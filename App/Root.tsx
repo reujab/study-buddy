@@ -21,8 +21,7 @@ const styles = StyleSheet.create({
 	},
 })
 
-@observer
-export default class Root extends React.Component {
+export default observer(class Root extends React.Component {
 	static contextType = context
 
 	context: RootStore
@@ -73,4 +72,4 @@ export default class Root extends React.Component {
 			</NavigationContainer>
 		)
 	}
-}
+})

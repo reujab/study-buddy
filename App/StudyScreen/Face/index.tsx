@@ -3,13 +3,14 @@ import React from "react"
 import { Animated, TouchableOpacity } from "react-native"
 import { observer } from "mobx-react"
 
-@observer
-export default class Face extends React.Component<{
+interface Props {
 	icon: string
 	color: string
 	scale: Animated.Value
 	onPress: any
-}> {
+}
+
+export default observer(class Face extends React.Component<Props> {
 	hoverScale = new Animated.Value(1)
 
 	render(): JSX.Element {
@@ -40,4 +41,4 @@ export default class Face extends React.Component<{
 			useNativeDriver: true,
 		}).start()
 	}
-}
+})

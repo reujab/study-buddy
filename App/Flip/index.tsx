@@ -1,23 +1,15 @@
 import React from "react"
-import { Animated, StyleSheet } from "react-native"
+import styles from "./styles"
+import { Animated } from "react-native"
 import { observer } from "mobx-react"
 
-const styles = StyleSheet.create({
-	view: {
-		backfaceVisibility: "hidden",
-		height: "100%",
-		position: "absolute",
-		top: 0,
-		width: "100%",
-	},
-})
-
-@observer
-export default class Flip extends React.Component<{
+interface Props {
 	flipped: boolean
 	front: JSX.Element
 	back: JSX.Element
-}> {
+}
+
+export default observer(class Flip extends React.Component<Props> {
 	private animatedValue = new Animated.Value(0)
 
 	private frontInterpolate = null
@@ -67,4 +59,4 @@ export default class Flip extends React.Component<{
 			</>
 		)
 	}
-}
+})

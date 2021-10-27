@@ -3,37 +3,14 @@ import Face from "./Face"
 import Flashcard from "../Flashcard"
 import FlippableCard from "../FlippableCard"
 import React from "react"
-import { Animated, View, StyleSheet } from "react-native"
+import styles from "./styles"
+import { Animated, View } from "react-native"
 import { ProgressBar } from "react-native-paper"
-import { computed, observable } from "mobx"
+import { action, computed, makeObservable, observable } from "mobx"
 import { context, RootStore } from "../RootStore"
 import { observer } from "mobx-react"
-import { size as cardSize } from "../Card/constants"
 
-const styles = StyleSheet.create({
-	totalProgressWrapper: {
-		padding: 20,
-	},
-	cardTouchWrapper: {
-		alignItems: "center",
-		aspectRatio: 1,
-		justifyContent: "center",
-		width: "100%",
-	},
-	cardWrapper: {
-		width: cardSize,
-		height: cardSize,
-	},
-	faceWrapper: {
-		alignItems: "center",
-		flex: 1,
-		flexDirection: "row",
-		justifyContent: "space-evenly",
-	},
-})
-
-@observer
-export default class StudyScreen extends React.Component {
+export default observer(class StudyScreen extends React.Component {
 	static contextType = context
 
 	context: RootStore = null
@@ -41,10 +18,68 @@ export default class StudyScreen extends React.Component {
 	flippableCard: FlippableCard
 
 	// used for the infinite flip animation
-	@observable
 	displayedCard = new Flashcard()
 
 	faceScale = new Animated.Value(0)
+
+	constructor(props) {
+		super(props)
+
+		makeObservable(this, {
+			displayedCard: observable,
+
+			currentCard: computed,
+			displayedText: computed,
+
+			flip: action,
+		})
+	}
+
+	get currentCard(): Flashcard | null {
+		return this.context.selectedSet.studyCards[0] || null
+	}
+
+	get displayedText(): string {
+		return this.currentCard[this.flippableCard.flipped ? "back" : "front"]
+	}
+
+	componentDidMount(): void {
+		this.displayedCard = Object.assign(new Flashcard(), this.currentCard)
+		setImmediate(() => {
+			this.flippableCard.speak()
+		})
+	}
+
+	rate(confidenceMultiplier: number): void {
+		Haptics.impactAsync()
+
+		const currentCard = this.currentCard
+		currentCard.baseConfidence = Math.max(0.2, Math.min(1, this.currentCard.confidence * confidenceMultiplier))
+		currentCard.lastStudied = Date.now()
+
+		Object.assign(this.displayedCard, this.currentCard, {
+			// keep example, image, and back for seamless animation
+			back: this.displayedCard.back,
+			image: this.displayedCard.image,
+			example: this.displayedCard.example,
+		})
+		this.flippableCard.flip()
+	}
+
+	flip(flipped: boolean): void {
+		if (flipped) {
+			this.displayedCard.back = this.currentCard.back
+			this.displayedCard.image = this.currentCard.image
+			this.displayedCard.example = this.currentCard.example
+		}
+
+		Animated.spring(this.faceScale, {
+			toValue: flipped ? 1 : 0,
+			speed: flipped ? 10 : 50,
+			bounciness: flipped ? 10 : 0,
+			useNativeDriver: true,
+		}).start()
+	}
 
 	render(): JSX.Element {
 		return this.currentCard && (
@@ -57,20 +92,7 @@ export default class StudyScreen extends React.Component {
 						ref={(ref) => { this.flippableCard = ref }}
 						set={this.context.selectedSet}
 						card={this.displayedCard}
-						onFlip={(flipped) => {
-							if (flipped) {
-								this.displayedCard.back = this.currentCard.back
-								this.displayedCard.image = this.currentCard.image
-								this.displayedCard.example = this.currentCard.example
-							}
-
-							Animated.spring(this.faceScale, {
-								toValue: flipped ? 1 : 0,
-								speed: flipped ? 10 : 50,
-								bounciness: flipped ? 10 : 0,
-								useNativeDriver: true,
-							}).start()
-						}}
+						onFlip={(flipped) => { this.flip(flipped) }}
 						flippable={!this.flippableCard?.flipped}
 					/>
 				</View>
@@ -97,37 +119,4 @@ export default class StudyScreen extends React.Component {
 			</View>
 		)
 	}
-
-	componentDidMount(): void {
-		this.displayedCard = Object.assign(new Flashcard(), this.currentCard)
-		setImmediate(() => {
-			this.flippableCard.speak()
-		})
-	}
-
-	@computed
-	get currentCard(): Flashcard | null {
-		return this.context.selectedSet.studyCards[0] || null
-	}
-
-	@computed
-	get displayedText(): string {
-		return this.currentCard[this.flippableCard.flipped ? "back" : "front"]
-	}
-
-	rate(confidenceMultiplier: number): void {
-		Haptics.impactAsync()
-
-		const currentCard = this.currentCard
-		currentCard.baseConfidence = Math.max(0.2, Math.min(1, this.currentCard.confidence * confidenceMultiplier))
-		currentCard.lastStudied = Date.now()
-
-		Object.assign(this.displayedCard, this.currentCard, {
-			// keep example, image, and back for seamless animation
-			back: this.displayedCard.back,
-			image: this.displayedCard.image,
-			example: this.displayedCard.example,
-		})
-		this.flippableCard.flip()
-	}
-}
+})

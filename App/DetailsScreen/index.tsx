@@ -1,27 +1,17 @@
 import Button from "../Button"
 import CardCarousel from "./CardCarousel"
 import React from "react"
-import { ScrollView, Text, View, StyleSheet } from "react-native"
+import styles from "./styles"
+import { ScrollView, Text, View } from "react-native"
 import { context, RootStore } from "../RootStore"
 import { observer } from "mobx-react"
 import { useNavigation } from "@react-navigation/native"
 
-const styles = StyleSheet.create({
-	details: {
-		flex: 1,
-		padding: 20,
-	},
-	title: { fontSize: 32 },
-	description: { fontSize: 18 },
-	studyButton: {
-		margin: 20,
-		marginTop: 0,
-	},
-})
-
-@observer class Details extends React.Component<{
+interface Props {
 	navigation: any
-}> {
+}
+
+const Details = observer(class Details extends React.Component<Props> {
 	static contextType = context
 
 	context: RootStore
@@ -47,6 +37,6 @@ const styles = StyleSheet.create({
 			</View>
 		)
 	}
-}
+})
 
 export default (props): JSX.Element => <Details navigation={useNavigation()} {...props} />

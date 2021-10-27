@@ -1,16 +1,18 @@
 import React from "react"
 import Set from "./Set"
 import { ignore } from "mobx-sync"
-import { observable } from "mobx"
+import { makeAutoObservable } from "mobx"
 
 export class RootStore {
-	@observable
 	sets: Set[] = []
 
 	// refers to the set the user is currently viewing
-	@observable
-	@ignore
 	selectedSet: Set | null = null
+
+	constructor() {
+		makeAutoObservable(this)
+		ignore(this, "selectedSet")
+	}
 }
 
 

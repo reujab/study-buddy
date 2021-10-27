@@ -1,29 +1,37 @@
 import shortid from "shortid"
-import { computed, observable } from "mobx"
+import { computed, makeObservable, observable } from "mobx"
 
 export default class Flashcard {
 	id: string = shortid.generate()
 
-	@observable
 	front = ""
 
-	@observable
 	back = ""
 
-	@observable
 	example = ""
 
-	@observable
 	mastered = false
 
-	@observable
 	image: null | string = null
 
-	@observable
 	lastStudied = 0
 
-	@observable
 	baseConfidence = 0
+
+	constructor() {
+		makeObservable(this, {
+			front: observable,
+			back: observable,
+			example: observable,
+			mastered: observable,
+			image: observable,
+			lastStudied: observable,
+			baseConfidence: observable,
+
+			confidence: computed,
+			progress: computed,
+		})
+	}
 
 	// (0, 1)
 	// (24, 0.8)
@@ -31,7 +39,6 @@ export default class Flashcard {
 	// y_1~ab^(x_1)
 	// a = 1.00214
 	// b = 0.990448
-	@computed
 	get confidence(): number {
 		if (this.mastered) {
 			return 1
@@ -41,7 +48,6 @@ export default class Flashcard {
 		return Math.max(0.2, Math.min(1, 1.00214 * 0.990448 ** hoursSinceLastStudy * this.baseConfidence))
 	}
 
-	@computed
 	get progress(): number {
 		return Math.min(1, (this.confidence - 0.2) / 0.6)
 	}
